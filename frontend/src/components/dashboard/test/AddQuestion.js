@@ -105,7 +105,7 @@ render(){
                 </Col>
                 <Form.Select
                     style={{
-                        margin: '10px 0 10px'
+                        margin: '10px 0 30px'
                     }}
                     name="concept_tested"
                     onChange={(event) => this.props.onChange(event.target.value, event.target.name)}

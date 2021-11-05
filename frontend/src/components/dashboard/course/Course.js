@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
+import { logoutUser } from "../../../actions/authActions";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import CourseCard from "./CourseCard";
 
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
 
 class Course extends Component {
     onLogoutClick = e => {

@@ -15,10 +15,12 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
-import Course from "./components/dashboard/Course";
-import AddCourse from "./components/dashboard/AddCourse";
-import ViewCourse from "./components/dashboard/ViewCourse";
-import AddTest from "./components/dashboard/AddTest";
+import Course from "./components/dashboard/course/Course";
+import AddCourse from "./components/dashboard/course/AddCourse";
+import ViewCourse from "./components/dashboard/course/ViewCourse";
+import AddTest from "./components/dashboard/test/AddTest";
+import YourTest from "./components/dashboard/test/YourTest";
+import DoTest from "./components/dashboard/test/DoTest";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -56,6 +58,8 @@ class App extends Component {
                 <PrivateRoute exact path="/viewcourse/:id" component={ViewCourse} />
                 <PrivateRoute exact path="/addcourse" component={AddCourse} />
                 <PrivateRoute exact path="/addtest/:id" component={AddTest} />
+                <PrivateRoute exact path="/yourtests" component={YourTest} />
+                <PrivateRoute exact path="/test/:id" component={DoTest} />
               </Switch>
             </div>
           </div>

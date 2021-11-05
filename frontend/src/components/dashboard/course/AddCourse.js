@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Col, FloatingLabel, Form, Button } from "react-bootstrap";
 import axios from 'axios';
 
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
 import AddLesson from "./AddLesson";
 
 class AddCourse extends Component {

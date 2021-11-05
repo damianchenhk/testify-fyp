@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 
-import Sidebar from "../layout/Sidebar";
+import Sidebar from "../../layout/Sidebar";
 
 class ViewCourse extends Component {
 
