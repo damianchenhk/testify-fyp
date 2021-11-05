@@ -1,0 +1,54 @@
+.logo{
+  margin-left: 20px;
+}
+
+.logout-nav{
+  float: right;
+  margin-right: 20px;
+  margin-top: -66px;
+}
+
+.previous-button{
+  float: left;
+}
+
+.next-button{
+  float: right;
+}
+
+.sidebar{
+  min-height: 100vh;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.App{
+  background-color: aliceblue;
+}
+
+.dashboard{
+  background-color: white;
+  text-align: center;
+}
+
+.main-page{
+  padding: 0;
+}
+
+.top-nav{
+  float: left;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+  position: absolute;
+  left: -70px;
+  text-align: left;
+}
+
+[type="radio"]:not(:checked), [type="radio"]:checked  {
+  position: relative;
+  opacity: 100%;
+  pointer-events: all;
+}
