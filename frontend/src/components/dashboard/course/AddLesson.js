@@ -109,7 +109,7 @@ render(){
                     />
                     {this.state.uploadPercentage > 0 && <ProgressBar 
                         now={this.state.uploadPercentage}
-                        active
+                        active="true"
                         label={`${this.state.uploadPercentage}%`}
                         style={{
                             height: '15px',

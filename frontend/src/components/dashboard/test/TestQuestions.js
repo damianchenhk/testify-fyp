@@ -21,6 +21,7 @@ const TestQuestion = (props) => {
                             style={{
                                 paddingTop: '2.5px'
                             }}
+                            onChange={(event) => props.onChange(event.target.value)}
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>
@@ -29,13 +30,14 @@ const TestQuestion = (props) => {
                     <Col sm={1}>
                         <Form.Check
                             type="radio"
-                            aria-label="answer-a"
+                            aria-label="answer-b"
                             name={`answer-options-${indexValue}`}
                             id="answer-options"
-                            value="A"
+                            value="B"
                             style={{
                                 paddingTop: '2.5px'
                             }}
+                            onChange={(event) => props.onChange(event.target.value)}
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>
@@ -44,13 +46,14 @@ const TestQuestion = (props) => {
                     <Col sm={1}>
                         <Form.Check
                             type="radio"
-                            aria-label="answer-a"
+                            aria-label="answer-c"
                             name={`answer-options-${indexValue}`}
                             id="answer-options"
-                            value="A"
+                            value="C"
                             style={{
                                 paddingTop: '2.5px'
                             }}
+                            onChange={(event) => props.onChange(event.target.value)}
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>

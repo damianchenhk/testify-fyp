@@ -37,6 +37,7 @@ render(){
                 />
             </FloatingLabel>
             <Form.Group as={Row} className="mb-3" style={{width: '60%'}}>
+            <p style={{textAlign: 'left', color:'#26A69A'}}>Select the correct answer:</p>
                 <Col sm={1} style={{padding: '0'}}>
                     <Form.Check
                         type="radio"

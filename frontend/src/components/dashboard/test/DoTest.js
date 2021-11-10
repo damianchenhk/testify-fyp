@@ -11,7 +11,9 @@ class DoTest extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          test: {}
+          test: {},
+          answer_selected: [],
+          score: 0
         };
       }
     
@@ -28,6 +30,23 @@ class DoTest extends Component {
           })
       };
 
+    onChange(value, index) {
+      let items = [...this.state.answer_selected];
+      let answers = [...this.state.test.answers];
+      let item = {...items[index]};
+      var currentScore = 0;
+      item.answer_selected = value;
+      items[index] = item.answer_selected;
+
+      this.setState({answer_selected: items});
+      for(var i=0; i < answers.length; i++){
+        if(items[i] === answers[i]){
+          currentScore++;
+        }
+      }
+      this.setState({score: currentScore})
+    }
+
     render() {
 
         const questions = this.state.test.questions;
@@ -38,7 +57,12 @@ class DoTest extends Component {
             questionList = "there is no questions record!";
         } else {
             questionList = questions.map((question, k) =>
-            <TestQuestion question={question} options={options} key={k} indexValue={k}/>
+            <TestQuestion
+              onChange={(value) => {this.onChange(value, k)}}
+              question={question}
+              options={options}
+              key={k}
+              indexValue={k}/>
           );
         }
 

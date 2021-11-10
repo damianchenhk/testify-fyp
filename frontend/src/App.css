@@ -52,3 +52,7 @@
   opacity: 100%;
   pointer-events: all;
 }
+
+.progress-bar{
+  background-color: #26A69A;
+}
