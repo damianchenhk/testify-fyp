@@ -49,7 +49,6 @@ class AddLesson extends Component{
 
     }
 render(){
-    const {uploadPercentage} = this.state.uploadPercentage;
     return (
         <>
             <hr></hr>

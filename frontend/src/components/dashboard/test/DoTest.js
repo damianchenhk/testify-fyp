@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
@@ -79,6 +80,15 @@ class DoTest extends Component {
                             <Form>
                                 {questionList}
                                 <Button type="submit">Submit</Button>
+                                <br></br>
+                                <Link
+                                  to={{
+                                    pathname: `/feedback/${this.props.match.params.id}`,
+                                    state: {course_id: this.state.test.course_id}
+                                  }}
+                                  className="btn btn-large waves-effect waves-light hoverable accent-3">
+                                  Provide Feedback
+                                </Link>
                             </Form>
                         </Container>
                     </Col>
