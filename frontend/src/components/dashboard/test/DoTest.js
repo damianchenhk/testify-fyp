@@ -48,6 +48,19 @@ class DoTest extends Component {
       this.setState({score: currentScore})
     }
 
+    onSubmit = e => {
+      e.preventDefault();
+
+      this.props.history.push({
+        pathname: '/result',
+        state: {
+          score: this.state.score,
+          answer_selected: this.state.answer_selected,
+          test: this.state.test
+        }
+      });
+    }
+
     render() {
 
         const questions = this.state.test.questions;
@@ -77,18 +90,10 @@ class DoTest extends Component {
                         <h2>{this.state.test.test_name}</h2>
                         <br></br>
                         <Container>
-                            <Form>
+                            <Form onSubmit={this.onSubmit}>
                                 {questionList}
                                 <Button type="submit">Submit</Button>
                                 <br></br>
-                                <Link
-                                  to={{
-                                    pathname: `/feedback/${this.props.match.params.id}`,
-                                    state: {course_id: this.state.test.course_id}
-                                  }}
-                                  className="btn btn-large waves-effect waves-light hoverable accent-3">
-                                  Provide Feedback
-                                </Link>
                             </Form>
                         </Container>
                     </Col>

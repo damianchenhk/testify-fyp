@@ -1,6 +1,4 @@
 import React, { Component, useState } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Col, FloatingLabel, Form, Button } from "react-bootstrap";
 import axios from 'axios';
@@ -31,11 +29,9 @@ class AddTest extends Component {
     }
 
     componentDidMount() {
-        //console.log("Print id: " + this.props.match.params.id);
         axios
             .get('/api/courses/'+this.props.match.params.id)
             .then(res => {
-            // console.log("Print-showBookDetails-API-response: " + res.data);
                 this.setState({
                     course: res.data
                 })

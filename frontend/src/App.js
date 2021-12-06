@@ -22,6 +22,7 @@ import AddTest from "./components/dashboard/test/AddTest";
 import YourTest from "./components/dashboard/test/YourTest";
 import DoTest from "./components/dashboard/test/DoTest";
 import Feedback from "./components/dashboard/feedback/Feedback";
+import TestResult from "./components/dashboard/test/TestResult";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -62,6 +63,7 @@ class App extends Component {
                 <PrivateRoute exact path="/yourtests" component={YourTest} />
                 <PrivateRoute exact path="/test/:id" component={DoTest} />
                 <PrivateRoute exact path="/feedback/:id" component={Feedback} />
+                <PrivateRoute exact path="/result" component={TestResult} />
               </Switch>
             </div>
           </div>
