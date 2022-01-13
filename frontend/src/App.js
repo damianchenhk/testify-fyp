@@ -18,6 +18,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Course from "./components/dashboard/course/Course";
 import AddCourse from "./components/dashboard/course/AddCourse";
 import ViewCourse from "./components/dashboard/course/ViewCourse";
+import CourseDetails from "./components/dashboard/course/CourseDetails";
 import AddTest from "./components/dashboard/test/AddTest";
 import YourTest from "./components/dashboard/test/YourTest";
 import DoTest from "./components/dashboard/test/DoTest";
@@ -57,6 +58,7 @@ class App extends Component {
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                 <PrivateRoute exact path="/course" component={Course} />
+                <PrivateRoute exact path="/coursedetails/:id" component={CourseDetails} />
                 <PrivateRoute exact path="/viewcourse/:id" component={ViewCourse} />
                 <PrivateRoute exact path="/addcourse" component={AddCourse} />
                 <PrivateRoute exact path="/addtest/:id" component={AddTest} />
