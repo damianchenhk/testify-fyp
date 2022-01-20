@@ -1,80 +1,49 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { logoutUser } from "../../../actions/authActions";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import CourseCard from "./CourseCard";
 
 import Sidebar from "../../layout/Sidebar";
 
-class Course extends Component {
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
+const Course = () => {
+  
+  const [courses, setCourses] = useState([]);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          courses: []
-        };
-      }
-    
-      componentDidMount() {
-        axios
-          .get('/api/courses')
-          .then(res => {
-            this.setState({
-              courses: res.data
-            })
-          })
-          .catch(err =>{
-            console.log('Error from ShowCourseList');
-          })
-      };
+  useEffect(() => {
+    axios
+      .get('/api/courses')
+      .then(res => {
+        setCourses(res.data)
+      })
+      .catch(err =>{
+        console.log('Error from ShowCourseList');
+      })
+  })
 
-    render() {
+  let courseList;
 
-        const courses = this.state.courses;
-        console.log("PrintCourse: " + courses);
-        let courseList;
-    
-        if(!courses) {
-            courseList = "there is no course record!";
-        } else {
-            courseList = courses.map((course, k) =>
-            <CourseCard course={course} key={k} />
-          );
-        }
+  if(!courses) {
+      courseList = "there is no course record!";
+  } else {
+      courseList = courses.map((course, k) =>
+      <CourseCard course={course} key={k} />
+    );
+  }
 
-        return (
-            <>
-                <Row>
-                    <Col xs={2}>
-                        <Sidebar/>
-                    </Col>
-                    <Col xs={10} className="align-items-center dashboard">
-                    <div className="list">
-                        {courseList}
-                    </div>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
+    return (
+        <>
+            <Row>
+                <Col xs={2}>
+                    <Sidebar/>
+                </Col>
+                <Col xs={10} className="align-items-center dashboard">
+                <div className="list">
+                    {courseList}
+                </div>
+                </Col>
+            </Row>
+        </>
+    );
 }
 
-Course.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default connect(
-    mapStateToProps,
-    {logoutUser}
-)(Course);
+export default Course;

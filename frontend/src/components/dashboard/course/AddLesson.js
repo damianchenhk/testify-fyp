@@ -1,6 +1,4 @@
-import React, { Component, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { Component } from "react";
 import { FloatingLabel, Form, ProgressBar } from "react-bootstrap";
 import axios from "axios";
 
