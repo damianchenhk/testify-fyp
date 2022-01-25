@@ -14,7 +14,7 @@ const CourseCard = (props) => {
                         { course.course_name }
                     </Link>
                 </h2>
-                <h3>{course.instructor_id}</h3>
+                <h3>{course.instructor_name}</h3>
                 <p>{course.course_description}</p>
             </div>
         </div>

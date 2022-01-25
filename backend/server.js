@@ -9,6 +9,7 @@ const users = require("./routes/api/users");
 const courses = require("./routes/api/courses");
 const tests = require("./routes/api/tests");
 const feedback = require("./routes/api/feedback");
+const reports = require("./routes/api/reports");
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.use("/api/users", users);
 app.use("/api/courses", courses);
 app.use("/api/tests", tests);
 app.use("/api/feedback", feedback);
+app.use("/api/reports", reports);
 
 const port = process.env.PORT || 5000;
 

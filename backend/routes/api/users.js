@@ -94,4 +94,10 @@ router.post("/login", (req, res) => {
     });
 });
 
+router.get('/:id', (req, res) => {
+    User.findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json({error: 'Unable to find this user'}));
+});
+
 module.exports = router;

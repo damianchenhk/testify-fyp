@@ -13,6 +13,7 @@ const AddCourse = ({ auth }) => {
     const [inputList, setInputList] = useState([]);
     const [course_name, setCourseName] = useState('');
     const [instructor_id, setInstructorId] = useState(auth.user.id);
+    const [instructor_name, setInstructorName] = useState(auth.user.name);
     const [course_description, setCourseDescription] = useState('');
     const [lesson_names, setLessonNames] = useState([]);
     const [lesson_urls, setLessonURLs] = useState([]);
@@ -28,6 +29,7 @@ const AddCourse = ({ auth }) => {
         const data = {
             course_name: course_name,
             instructor_id: instructor_id,
+            instructor_name: instructor_name,
             course_description: course_description,
             lesson_names: lesson_names,
             lesson_urls: lesson_urls,
@@ -42,6 +44,7 @@ const AddCourse = ({ auth }) => {
         .then(res => {
             setCourseName('')
             setInstructorId(auth.user.id)
+            setInstructorName(auth.user.name)
             setCourseDescription('')
             setLessonNames([])
             setLessonURLs([])

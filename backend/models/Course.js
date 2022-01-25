@@ -11,6 +11,10 @@ const CourseSchema = new Schema({
     type: String,
     required: true
   },
+  instructor_name: {
+    type: String,
+    required: true
+  },
   course_description: {
     type: String,
     required: true
