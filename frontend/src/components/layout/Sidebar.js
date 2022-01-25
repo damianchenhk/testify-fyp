@@ -1,81 +1,55 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { BsHouse,BsPen, BsGear, BsLaptop } from "react-icons/bs";
 import { connect } from "react-redux";
-import { Nav } from "react-bootstrap";
-import { Menu, Switch } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
 import 'antd/dist/antd.css';
 
 const { SubMenu } = Menu;
 
-class Sidebar extends Component {
-    state = {
-        theme: 'dark',
-        current: '1',
-      };
-    
-      changeTheme = value => {
-        this.setState({
-          theme: value ? 'dark' : 'light',
-        });
-      };
-    
-      handleClick = e => {
-        console.log('click ', e);
-        this.setState({
-          current: e.key,
-        });
-      };
-    render() {
+const Sidebar = () => {
 
-        return (
-            <>
-        <Switch
-          checked={this.state.theme === 'dark'}
-          onChange={this.changeTheme}
-          checkedChildren="Dark"
-          unCheckedChildren="Light"
-        />
-        <br />
-        <br />
+  const [current, setCurrent] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+    
+  const handleClick = e => {
+    setCurrent(e.key)
+  };
+
+  const subMenuOpen = () => {
+    switch(location.pathname) {
+      case '/course':
+        return 'courses';
+      case '/yourtests':
+        return 'tests';
+      default:
+        return 'courses';
+    }
+  }
+
+  return (
+    <>
+      <div className="sidebar">
         <Menu
-          theme={this.state.theme}
-          onClick={this.handleClick}
-          style={{ width: 256 }}
-          defaultOpenKeys={['sub1']}
-          selectedKeys={[this.state.current]}
+          onClick={handleClick}
+          defaultSelectedKeys={[location.pathname]}
+          defaultOpenKeys={[subMenuOpen()]}
           mode="inline"
         >
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
-            <Menu.Item key="1">Option 1</Menu.Item>
-            <Menu.Item key="2">Option 2</Menu.Item>
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
+          <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
+          <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
+            <Menu.Item key="mycourses">My Courses</Menu.Item>
+            <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item>
           </SubMenu>
-          <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="7">Option 7</Menu.Item>
-              <Menu.Item key="8">Option 8</Menu.Item>
-            </SubMenu>
+          <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
+            <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>Your Tests</Menu.Item>
           </SubMenu>
-          <SubMenu key="sub4" icon={<SettingOutlined />} title="Navigation Three">
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
-          </SubMenu>
+          <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>
         </Menu>
-      </>
-            // <>
-            // <Nav defaultActiveKey="/dashboard" className="flex-column sidebar">
-            //     <Nav.Link href="/dashboard">Home</Nav.Link>
-            //     <Nav.Link href="/course">Courses</Nav.Link>
-            //     <Nav.Link href="/yourtests">Your Tests</Nav.Link>
-            // </Nav>
-            // </>
-        );
-    }
+      </div>
+    </>
+  );
 }
 
 export default connect()(Sidebar);

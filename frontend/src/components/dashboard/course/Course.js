@@ -18,7 +18,7 @@ const Course = () => {
       .catch(err =>{
         console.log('Error from ShowCourseList');
       })
-  })
+  }, [])
 
   let courseList;
 
