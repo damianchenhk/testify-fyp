@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container, Table } from "react-bootstrap";
 import axios from "axios";
 import CourseCard from "./CourseCard";
 
@@ -37,9 +37,22 @@ const Course = () => {
                     <Sidebar/>
                 </Col>
                 <Col xs={10} className="align-items-center dashboard">
-                <div className="list">
-                    {courseList}
-                </div>
+                  <Container>
+                    <br></br>
+                    <h3>All Courses</h3>
+                    <Table responsive>
+                      <thead>
+                        <tr>
+                          <td style={{width:'33%'}}></td>
+                          <td></td>
+                          <td style={{width:'10%'}}></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {courseList}
+                      </tbody>
+                    </Table>
+                  </Container>
                 </Col>
             </Row>
         </>

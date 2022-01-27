@@ -44,6 +44,7 @@ const Sidebar = () => {
           </SubMenu>
           <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
             <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>Your Tests</Menu.Item>
+            <Menu.Item key="pendingtests">Pending Tests</Menu.Item>
           </SubMenu>
           <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>
         </Menu>

@@ -5,19 +5,31 @@ const CourseCard = (props) => {
     const  course  = props.course;
 
     return(
-        <div className="card-container">
-            <div className="desc">
-                <h2>
+        <tr>
+            <td>
+                <h5>
                     <Link to={{
                         pathname: `/coursedetails/${course._id}`,
                     }}>
                         { course.course_name }
                     </Link>
-                </h2>
-                <h3>{course.instructor_name}</h3>
+                </h5>
+                <h6>{course.instructor_name}</h6>
+            </td>
+            <td>
                 <p>{course.course_description}</p>
-            </div>
-        </div>
+            </td>
+            <td style={{textAlign:'center'}}>
+                <Link to={{
+                    pathname: `/coursedetails/${course._id}`,
+                }}
+                    style={{width:'110px', fontSize:'10px'}}
+                    className='btn waves-effect waves-light hoverable accent-3'
+                >
+                    View Details
+                </Link>
+            </td>
+        </tr>
     )
 };
 
