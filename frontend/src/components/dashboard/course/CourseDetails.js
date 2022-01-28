@@ -1,14 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Table, Container } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
+import RegisterPopUp from "./RegisterPopUp";
 
-const CourseDetails = ({props}) => {
+const CourseDetails = ({ auth }) => {
+
+    const { id } = useParams()
 
     const [course, setCourse] = useState({});
-    const { id } = useParams()
+    const [seen, setSeen] = useState(false);
+    const [registered, setRegistered] = useState(false);
+
+    const [student_id, setStudentId] = useState(auth.user.id);
+    const [course_id, setCourseId] = useState(id)
+    const [beta_tester, setBetaTester] = useState(false);
+
+    const onSubmit = e => {
+        e.preventDefault();
+
+        const data = {
+            student_id: student_id,
+            course_id: course_id,
+            beta_tester: beta_tester
+        };
+
+        axios
+        .post('/api/reports/', data)
+        .then(res => {
+            setStudentId(auth.user.id)
+            setCourseId(auth.user.id)
+            setBetaTester(false)
+
+            setRegistered(true);
+            togglePop();
+        })
+        .catch(err => {
+            console.log("Error in RegisterCourse!");
+        })
+    }
 
     useEffect(() => {
         axios
@@ -35,6 +69,17 @@ const CourseDetails = ({props}) => {
         return table
     }
 
+    const togglePop = () => {
+        setSeen(value => !value)
+        if(seen){
+            setBetaTester(false)
+        }
+    }
+
+    const toggleTester = () => {
+        setBetaTester(value => !value)
+    }
+
     return (
         <>
             <Row>
@@ -42,6 +87,7 @@ const CourseDetails = ({props}) => {
                     <Sidebar/>
                 </Col>
                 <Col xs={10} className="align-items-center dashboard">
+                    <br></br>
                     <h2>{course.course_name}</h2>
                     <h6>{course.course_description}</h6>
                     <br></br>
@@ -61,17 +107,34 @@ const CourseDetails = ({props}) => {
                         </Table>
                     </Container>
                     <br></br>
-                    <Link to={{
+                    {registered ? <Link to={{
                             pathname: `/viewcourse/${course._id}`,
                         }}
                         className="btn btn-large waves-effect waves-light hoverable accent-3"
+                        style={{zIndex:'0'}}
                     >
                         Start Course
-                    </Link>
+                    </Link> : null}
+                    {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{zIndex:'0'}}>Register</Button> : null}
+                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
+                        <h5>Register for {course.course_name}?</h5>
+                        <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
+                        <br></br>
+                    </RegisterPopUp>
                 </Col>
             </Row>
         </>
     );
 }
 
-export default CourseDetails;
+CourseDetails.propTypes = {
+    auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(
+    mapStateToProps,
+)(CourseDetails);
