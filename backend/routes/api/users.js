@@ -69,7 +69,8 @@ router.post("/login", (req, res) => {
             const payload = {
                 id: user.id,
                 name: user.name,
-                role: user.role
+                role: user.role,
+                ongoing_courses: user.ongoing_courses
             };
     // Sign token
             jwt.sign(
@@ -98,6 +99,12 @@ router.get('/:id', (req, res) => {
     User.findById(req.params.id)
         .then(user => res.json(user))
         .catch(err => res.status(400).json({error: 'Unable to find this user'}));
+});
+
+router.put('/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body)
+        .then(user => res.json({msg: 'Updated successfully'}))
+        .catch(err => res.status(400).json({error: 'Unable to update the Database'}));
 });
 
 module.exports = router;

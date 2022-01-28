@@ -14,11 +14,13 @@ const CourseDetails = ({ auth }) => {
 
     const [course, setCourse] = useState({});
     const [seen, setSeen] = useState(false);
-    const [registered, setRegistered] = useState(false);
 
     const [student_id, setStudentId] = useState(auth.user.id);
     const [course_id, setCourseId] = useState(id)
     const [beta_tester, setBetaTester] = useState(false);
+
+    const [courses_taken, setStudentCourses] = useState(auth.user.ongoing_courses);
+    const [registered, setRegistered] = useState(courses_taken.includes(id));
 
     const onSubmit = e => {
         e.preventDefault();
@@ -36,11 +38,16 @@ const CourseDetails = ({ auth }) => {
             setCourseId(auth.user.id)
             setBetaTester(false)
 
-            setRegistered(true);
-            togglePop();
-        })
-        .catch(err => {
-            console.log("Error in RegisterCourse!");
+            setStudentCourses([...courses_taken, id]);
+            axios
+            .put('/api/users/'+auth.user.id, {ongoing_courses: courses_taken})
+            .then(res => {
+                setRegistered(true);
+                togglePop();
+            })
+            .catch(err => {
+                console.log("Error in RegisterCourse!");
+            });
         })
     }
 
@@ -74,6 +81,7 @@ const CourseDetails = ({ auth }) => {
         if(seen){
             setBetaTester(false)
         }
+        
     }
 
     const toggleTester = () => {
@@ -116,7 +124,7 @@ const CourseDetails = ({ auth }) => {
                         Start Course
                     </Link> : null}
                     {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{zIndex:'0'}}>Register</Button> : null}
-                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
+                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit} key={1}>
                         <h5>Register for {course.course_name}?</h5>
                         <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
                         <br></br>
