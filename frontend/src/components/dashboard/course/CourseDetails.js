@@ -31,16 +31,24 @@ const CourseDetails = ({ auth }) => {
             beta_tester: beta_tester
         };
 
+        let registerCourse = courses_taken.concat(id)
+        setStudentCourses(registerCourse);
+        console.log(courses_taken)
+        console.log(registerCourse)
+
         axios
         .post('/api/reports/', data)
         .then(res => {
             setStudentId(auth.user.id)
             setCourseId(auth.user.id)
             setBetaTester(false)
-
-            setStudentCourses([...courses_taken, id]);
+            
+            const data2 = {
+                ongoing_courses: registerCourse
+            };
+            console.log(data2);
             axios
-            .put('/api/users/'+auth.user.id, {ongoing_courses: courses_taken})
+            .put('/api/users/'+auth.user.id, data2)
             .then(res => {
                 setRegistered(true);
                 togglePop();
@@ -81,7 +89,6 @@ const CourseDetails = ({ auth }) => {
         if(seen){
             setBetaTester(false)
         }
-        
     }
 
     const toggleTester = () => {
