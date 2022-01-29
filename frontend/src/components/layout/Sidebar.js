@@ -39,7 +39,7 @@ const Sidebar = () => {
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
-            <Menu.Item key="mycourses">My Courses</Menu.Item>
+            <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item>
             <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item>
           </SubMenu>
           <SubMenu key="tests" title="Tests" icon={<BsPen/>}>

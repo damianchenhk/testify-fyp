@@ -1,5 +1,6 @@
 import {
     SET_CURRENT_USER,
+    UPDATE_COURSE_REGISTERED,
     USER_LOADING
 } from "../actions/types";
 
@@ -24,6 +25,13 @@ export default function(state = initialState, action) {
                 ...state,
                 loading: true
             };
+        case UPDATE_COURSE_REGISTERED: 
+            return { 
+               ...state, 
+               user: {...state.user, 
+                    ongoing_courses: [...state.user.ongoing_courses, action.payload] 
+                } 
+            }
         default:
             return state;
     }

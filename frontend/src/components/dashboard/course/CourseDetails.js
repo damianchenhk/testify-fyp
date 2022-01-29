@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
 import RegisterPopUp from "./RegisterPopUp";
+import { UPDATE_COURSE_REGISTERED } from "../../../actions/types";
+
+export const updateCourseRegistered = e => {
+    return {
+        type: UPDATE_COURSE_REGISTERED,
+        payload: e
+    };
+};
 
 const CourseDetails = ({ auth }) => {
 
@@ -21,6 +29,7 @@ const CourseDetails = ({ auth }) => {
 
     const [courses_taken, setStudentCourses] = useState(auth.user.ongoing_courses);
     const [registered, setRegistered] = useState(courses_taken.includes(id));
+    const dispatch = useDispatch();
 
     const onSubmit = e => {
         e.preventDefault();
@@ -50,6 +59,7 @@ const CourseDetails = ({ auth }) => {
             axios
             .put('/api/users/'+auth.user.id, data2)
             .then(res => {
+                dispatch(updateCourseRegistered(id));
                 setRegistered(true);
                 togglePop();
             })
@@ -131,7 +141,7 @@ const CourseDetails = ({ auth }) => {
                         Start Course
                     </Link> : null}
                     {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{zIndex:'0'}}>Register</Button> : null}
-                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit} key={1}>
+                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
                         <h5>Register for {course.course_name}?</h5>
                         <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
                         <br></br>

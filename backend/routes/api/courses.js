@@ -11,6 +11,12 @@ router.get('/', (req, res) => {
         .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
 });
 
+router.post('/mycourses', (req, res) => {
+    Course.find({_id:req.body.ongoing_courses})
+        .then(courses => res.json(courses))
+        .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
+});
+
 router.get('/:id', (req, res) => {
     Course.findById(req.params.id)
         .then(course => res.json(course))
