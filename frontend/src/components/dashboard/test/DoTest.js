@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
@@ -7,100 +7,118 @@ import axios from "axios";
 import Sidebar from "../../layout/Sidebar";
 import TestQuestion from "./TestQuestions";
 
-class DoTest extends Component {
+const DoTest = ({auth}) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          test: {},
-          answer_selected: [],
-          score: 0
-        };
-      }
+  const { id } = useParams();
+
+  const [test, setTest] = useState({});
+  const [report, setReport] = useState({});
+  const [answer_selected, setAnswerSelected] = useState([]);
+  const [score, setScore] = useState(0);
+  const history = useHistory();
     
-      componentDidMount() {
+  useEffect(() => {
+    axios
+      .get('/api/tests/'+id)
+      .then(res => {
+        setTest(res.data);
+
+        const data = {
+          student_id: auth.user.id,
+          course_id: res.data.course_id
+        }
         axios
-          .get('/api/tests/'+this.props.match.params.id)
-          .then(res => {
-            this.setState({
-              test: res.data
-            })
+          .post('/api/reports/getReportID', data)
+          .then(res2 => {
+            setReport(res2.data[0])
           })
           .catch(err =>{
             console.log('Error from ShowTestList');
           })
-      };
+      }).catch(err =>{
+        console.log('Error from Initial Setup');
+      })
+  }, []);
 
-    onChange(value, index) {
-      let items = [...this.state.answer_selected];
-      let answers = [...this.state.test.answers];
-      let item = {...items[index]};
-      var currentScore = 0;
-      item.answer_selected = value;
-      items[index] = item.answer_selected;
+  const onChange = (value, index) => {
+    let items = answer_selected;
+    let answers = [...test.answers];
+    let item = {...items[index]};
+    let currentScore = [];
+    item.answer_selected = value;
+    items[index] = item.answer_selected;
 
-      this.setState({answer_selected: items});
-      for(var i=0; i < answers.length; i++){
-        if(items[i] === answers[i]){
-          currentScore++;
-        }
+    setAnswerSelected(items);
+    for(var i=0; i < answers.length; i++){
+      if(items[i] === answers[i]){
+        currentScore[i] = 1;
+      }else{
+        currentScore[i] = 0;
       }
-      this.setState({score: currentScore})
     }
+    setScore(currentScore);
+  }
 
-    onSubmit = e => {
-      e.preventDefault();
+  const onSubmit = e => {
+    e.preventDefault();
 
-      this.props.history.push({
-        pathname: '/result',
-        state: {
-          score: this.state.score,
-          answer_selected: this.state.answer_selected,
-          test: this.state.test
-        }
+    const data = {
+      tests_taken: report.tests_taken.concat({
+        test_id: id,
+        answers: answer_selected,
+        weightage: test.concept_weightage,
+        result: score,
+        lesson_tested: test.concept_tested
+      })
+    }
+    axios
+      .put('/api/reports/'+report._id, data)
+      .then(res => {
+          history.push('/dashboard');
+      })
+      .catch(err => {
+          console.log("Error in Reports!");
       });
-    }
+  }
 
-    render() {
+  const questions = test.questions;
+  const options = test.options;
+  let questionList;
 
-        const questions = this.state.test.questions;
-        const options = this.state.test.options;
-        let questionList;
-    
-        if(!questions) {
-            questionList = "there is no questions record!";
-        } else {
-            questionList = questions.map((question, k) =>
-            <TestQuestion
-              onChange={(value) => {this.onChange(value, k)}}
-              question={question}
-              options={options}
-              key={k}
-              indexValue={k}/>
-          );
-        }
+  if(!questions) {
+      questionList = "there is no questions record!";
+  } else {
+      questionList = questions.map((question, k) =>
+      <TestQuestion
+        onChange={(value) => {onChange(value, k)}}
+        question={question}
+        options={options}
+        key={k}
+        indexValue={k}/>
+    );
+  }
 
-        return (
-            <>
-                <Row>
-                    <Col xs={2}>
-                        <Sidebar/>
-                    </Col>
-                    <Col xs={10} className="align-items-center dashboard">
-                        <h2>{this.state.test.test_name}</h2>
-                        <br></br>
-                        <Container>
-                            <Form onSubmit={this.onSubmit}>
-                                {questionList}
-                                <Button type="submit">Submit</Button>
-                                <br></br>
-                            </Form>
-                        </Container>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
+  return (
+    <>
+      <Row>
+          <Col xs={2}>
+              <Sidebar/>
+          </Col>
+          <Col xs={10} className="align-items-center dashboard">
+              <br></br>
+              <h2>{test.test_name}</h2>
+              <br></br>
+              <Container>
+                  <Form onSubmit={onSubmit}>
+                      {questionList}
+                      <Button type="submit">Submit</Button>
+                      <br></br>
+                  </Form>
+              </Container>
+          </Col>
+      </Row>
+    </>
+  );
 }
 
 const mapStateToProps = state => ({

@@ -14,6 +14,7 @@ const ReportSchema = new Schema({
     test_id: String,
     answers: [String],
     result: [Number],
+    weightage: [Number],
     lesson_tested: [String]
   }],
   beta_tester: {

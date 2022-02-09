@@ -14,6 +14,7 @@ class AddTest extends Component {
         this.state = {
             inputList: [],
             creator_id: this.props.auth.user.id,
+            creator_name: this.props.auth.user.name,
             course_id: this.props.match.params.id, 
             test_name: '',
             test_description: '',
@@ -21,6 +22,7 @@ class AddTest extends Component {
             options: [],
             answers: [],
             concept_tested: [],
+            concept_weightage: [],
             tester_id: [],
             students_completed_id: [],
             student_scores: [],
@@ -50,6 +52,7 @@ class AddTest extends Component {
 
         const data = {
             creator_id: this.state.creator_id,
+            creator_name: this.state.creator_name,
             course_id: this.state.course_id, 
             test_name: this.state.test_name,
             test_description: this.state.test_description,
@@ -57,6 +60,7 @@ class AddTest extends Component {
             options: this.state.options,
             answers: this.state.answers,
             concept_tested: this.state.concept_tested,
+            concept_weightage: this.state.concept_weightage,
             tester_id: this.state.tester_id,
             students_completed_id: this.state.students_completed_id,
             student_scores: this.state.student_scores,
@@ -75,6 +79,7 @@ class AddTest extends Component {
                     options: [],
                     answers: [],
                     concept_tested: [],
+                    concept_weightage: [],
                     tester_id: [],
                     students_completed_id: [],
                     student_scores: [],
@@ -150,10 +155,17 @@ class AddTest extends Component {
             case 'concept_tested':{
                 let items = [...this.state.concept_tested];
                 let item = {...items[index]};
-                item.concept_tested = value;
+                item.concept_tested = JSON.parse(value).value;
                 items[index] = item.concept_tested;
 
                 this.setState({concept_tested: items});
+
+                let items2 = [...this.state.concept_weightage];
+                let item2 = {...items2[index]};
+                item2.concept_weightage = this.state.course.lesson_weightage[JSON.parse(value).key];
+                items2[index] = item2.concept_weightage;
+
+                this.setState({concept_weightage: items2});
                 break;
             }
         }

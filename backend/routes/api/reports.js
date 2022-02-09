@@ -17,6 +17,12 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this report'}));
 });
 
+router.post('/getReportID', (req, res) => {
+    Report.find({student_id: req.body.student_id, course_id: req.body.course_id})
+        .then(report => res.json(report))
+        .catch(err => res.status(400).json({error: 'Unable to find this report'}));
+});
+
 router.post('/', (req, res) => {
     Report.create(req.body)
       .then(report => res.json({ msg: 'Report added successfully' }))

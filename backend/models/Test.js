@@ -7,6 +7,10 @@ const TestSchema = new Schema({
     type: String,
     required: true
   },
+  creator_name: {
+    type: String,
+    required: true
+  },
   course_id: {
     type: String,
     required: true
@@ -33,6 +37,10 @@ const TestSchema = new Schema({
   },
   concept_tested: {
     type: [String],
+    required: true
+  },
+  concept_weightage: {
+    type: [Number],
     required: true
   },
   tester_id: {

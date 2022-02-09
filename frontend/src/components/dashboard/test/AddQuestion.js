@@ -5,9 +5,9 @@ class AddQuestion extends Component{
 
 render(){
 
-    const options = this.props.courseLessons.map((item) => {
+    const options = this.props.courseLessons.map((item, key) => {
         return (
-            <option key={item} value={item}>
+            <option key={key} value={JSON.stringify({key, value:item})}>
                 {item}
             </option>
         )

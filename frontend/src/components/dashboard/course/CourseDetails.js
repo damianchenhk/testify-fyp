@@ -41,9 +41,6 @@ const CourseDetails = ({ auth }) => {
         };
 
         let registerCourse = courses_taken.concat(id)
-        setStudentCourses(registerCourse);
-        console.log(courses_taken)
-        console.log(registerCourse)
 
         axios
         .post('/api/reports/', data)

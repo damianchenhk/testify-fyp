@@ -8,6 +8,7 @@ const StudentDashboard = ({ auth }) => {
 
     return (
         <>
+            <br></br>
             <h4>
                 <b>Hey there,</b> {auth.user.name?.split(" ")[0]}
             </h4>
