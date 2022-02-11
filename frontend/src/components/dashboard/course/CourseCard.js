@@ -24,7 +24,7 @@ const CourseCard = (props) => {
                     pathname: `/coursedetails/${course._id}`,
                 }}
                     style={{width:'110px', fontSize:'10px'}}
-                    className='btn waves-effect waves-light hoverable accent-3'
+                    className='btn waves-effect waves-light accent-3'
                 >
                     View Details
                 </Link>

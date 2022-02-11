@@ -74,7 +74,7 @@ const DoTest = ({auth}) => {
     axios
       .put('/api/reports/'+report._id, data)
       .then(res => {
-          history.push('/dashboard');
+          history.push('/result', {answer: answer_selected, test: test, score: score});
       })
       .catch(err => {
           console.log("Error in Reports!");
@@ -111,7 +111,7 @@ const DoTest = ({auth}) => {
               <Container>
                   <Form onSubmit={onSubmit}>
                       {questionList}
-                      <Button type="submit">Submit</Button>
+                      <Button type="submit" className="btn btn-large waves-effect waves-light accent-3">Submit</Button>
                       <br></br>
                   </Form>
               </Container>

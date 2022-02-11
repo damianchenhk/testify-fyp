@@ -17,6 +17,12 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this test'}));
 });
 
+router.post('/courseTests', (req, res) => {
+    Test.find({course_id: req.body.course_id})
+        .then(test => res.json(test))
+        .catch(err => res.status(400).json({error: 'Unable to find this test'}));
+});
+
 router.post('/', (req, res) => {
     Test.create(req.body)
       .then(test => res.json({ msg: 'Test added successfully' }))

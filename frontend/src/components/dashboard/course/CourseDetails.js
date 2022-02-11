@@ -21,6 +21,7 @@ const CourseDetails = ({ auth }) => {
     const { id } = useParams()
 
     const [course, setCourse] = useState({});
+    const [tests, setTests] = useState({});
     const [seen, setSeen] = useState(false);
 
     const [student_id, setStudentId] = useState(auth.user.id);
@@ -70,8 +71,16 @@ const CourseDetails = ({ auth }) => {
         axios
             .get('/api/courses/'+id)
             .then(res => {
-            setCourse(res.data)
-        })
+                setCourse(res.data)
+            axios
+                .post('/api/tests/courseTests', {course_id: id})
+                .then(res => {
+                    setTests(res.data)
+                })
+                .catch(err => {
+                    console.log("Error from courseTests");
+                })
+            })
         .catch(err => {
             console.log("Error from CourseDetails");
         })
@@ -89,6 +98,34 @@ const CourseDetails = ({ auth }) => {
             table.push(<tr>{children}</tr>)
         }
         return table
+    }
+
+    const testTable = () => {
+        let table = []
+        if(tests.length){
+    
+            for (let i = 0; i < tests?.length; i++) {
+                let children = []
+
+                children.push(<td><h6>{tests[i].test_name ? tests[i].test_name : null}</h6>By: {tests[i].creator_name ? tests[i].creator_name : null}</td>)
+                children.push(<td>{tests[i].test_description ? tests[i].test_description : null}</td>)
+                children.push(
+                    <td>
+                        {tests[i]._id ? <Link 
+                            to={{pathname: `/test/${tests[i]._id}`,}}
+                            style={{width:'110px', fontSize:'9px'}}
+                            className='btn waves-effect waves-light accent-3'
+                            >
+                                Attempt Test
+                            </Link> : null}
+                    </td>)
+                table.push(<tr>{children}</tr>)
+            }
+            return table
+        }else{
+            table.push(<tr><td colSpan={2} style={{textAlign:'center'}}>There are no tests available</td></tr>)
+            return table
+        }
     }
 
     const togglePop = () => {
@@ -111,6 +148,7 @@ const CourseDetails = ({ auth }) => {
                 <Col xs={10} className="align-items-center dashboard">
                     <br></br>
                     <h2>{course.course_name}</h2>
+                    <h5>Instructor: {course.instructor_name}</h5>
                     <h6>{course.course_description}</h6>
                     <br></br>
                     <Container>
@@ -132,17 +170,34 @@ const CourseDetails = ({ auth }) => {
                     {registered ? <Link to={{
                             pathname: `/viewcourse/${course._id}`,
                         }}
-                        className="btn btn-large waves-effect waves-light hoverable accent-3"
+                        className="btn btn-large waves-effect waves-light accent-3"
                         style={{zIndex:'0'}}
                     >
                         Start Course
                     </Link> : null}
-                    {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{zIndex:'0'}}>Register</Button> : null}
+                    {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0'}}>Register</Button> : null}
                     <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
                         <h5>Register for {course.course_name}?</h5>
                         <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
                         <br></br>
                     </RegisterPopUp>
+                    {registered ? <Container>
+                        <br></br>
+                        <br></br>
+                        <h4>Tests Available</h4>
+                        <Table bordered responsive style={{border:'1'}}>
+                            <thead>
+                                <tr>
+                                    <th style={{textAlign:'center'}}>Test Name</th>
+                                    <th style={{textAlign:'center'}}>Test Description</th>
+                                    <th style={{textAlign:'center', width:'10%'}}></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {testTable()}
+                            </tbody>
+                        </Table>
+                    </Container> : null}
                 </Col>
             </Row>
         </>
