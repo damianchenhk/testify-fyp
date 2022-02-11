@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
 import { BsHouse,BsPen, BsGear, BsLaptop } from "react-icons/bs";
 import { connect } from "react-redux";
@@ -7,7 +8,7 @@ import 'antd/dist/antd.css';
 
 const { SubMenu } = Menu;
 
-const Sidebar = () => {
+const Sidebar = ({auth}) => {
 
   const [current, setCurrent] = useState('');
   const history = useHistory();
@@ -39,6 +40,7 @@ const Sidebar = () => {
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
+            {auth.user.role=='Instructor' ? <Menu.Item key="/addcourse" onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
             <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item>
             <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item>
           </SubMenu>
@@ -53,4 +55,14 @@ const Sidebar = () => {
   );
 }
 
-export default connect()(Sidebar);
+Sidebar.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+)(Sidebar);

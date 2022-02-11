@@ -109,6 +109,7 @@ const AddCourse = ({ auth }) => {
                     <Sidebar/>
                 </Col>
                 <Col xs={10} className="dashboard">
+                    <br></br>
                     <h4><b>Add Courses Here</b></h4>
                     <Form onSubmit={onSubmit}>
                         <FloatingLabel
