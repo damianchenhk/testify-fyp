@@ -6,6 +6,10 @@ const ReportSchema = new Schema({
     type: String,
     required: true
   },
+  student_name: {
+    type: String,
+    required: true
+  },
   course_id: {
     type: String,
     required: true
@@ -21,8 +25,12 @@ const ReportSchema = new Schema({
     type: Boolean,
     default: false
   },
+  tests_created: {
+    type: [String]
+  },
   participation_score: {
-      type: Number
+      type: Number,
+      default: 0
   }
 });
 module.exports = Report = mongoose.model("reports", ReportSchema);

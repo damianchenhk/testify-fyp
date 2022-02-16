@@ -40,9 +40,10 @@ const Sidebar = ({auth}) => {
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
-            {auth.user.role=='Instructor' ? <Menu.Item key="/addcourse" onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
-            <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item>
-            <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item>
+            {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
+            {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
+            {auth.user.role==='Student' ? <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item> : null}
+            {auth.user.role==='Student' ? <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item> : null}
           </SubMenu>
           <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
             <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>Your Tests</Menu.Item>

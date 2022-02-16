@@ -91,6 +91,7 @@ class Feedback extends Component {
                         <Sidebar/>
                     </Col>
                     <Col xs={10} className="align-items-center dashboard">
+                        <br></br>
                         <h2>Feedback</h2>
                         <hr></hr>
                         <br></br>

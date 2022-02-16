@@ -25,6 +25,7 @@ const CourseDetails = ({ auth }) => {
     const [seen, setSeen] = useState(false);
 
     const [student_id, setStudentId] = useState(auth.user.id);
+    const [student_name, setStudentName] = useState(auth.user.name);
     const [course_id, setCourseId] = useState(id)
     const [beta_tester, setBetaTester] = useState(false);
 
@@ -37,6 +38,7 @@ const CourseDetails = ({ auth }) => {
 
         const data = {
             student_id: student_id,
+            student_name: student_name,
             course_id: course_id,
             beta_tester: beta_tester
         };
@@ -47,6 +49,7 @@ const CourseDetails = ({ auth }) => {
         .post('/api/reports/', data)
         .then(res => {
             setStudentId(auth.user.id)
+            setStudentName(auth.user.name)
             setCourseId(auth.user.id)
             setBetaTester(false)
             

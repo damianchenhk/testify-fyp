@@ -25,7 +25,7 @@ router.post('/courseTests', (req, res) => {
 
 router.post('/', (req, res) => {
     Test.create(req.body)
-      .then(test => res.json({ msg: 'Test added successfully' }))
+      .then(test => res.json({ msg: 'Test added successfully', data: test}))
       .catch(err => res.status(400).json({ error: 'Unable to add this test' }));
 });
 

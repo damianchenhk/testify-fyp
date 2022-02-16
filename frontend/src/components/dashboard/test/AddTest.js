@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Col, FloatingLabel, Form, Button } from "react-bootstrap";
 import axios from 'axios';
@@ -26,7 +26,9 @@ class AddTest extends Component {
             tester_id: [],
             students_completed_id: [],
             student_scores: [],
-            course: {}
+            course: {},
+            report: {},
+            totalScore: ''
         };
     }
 
@@ -36,6 +38,20 @@ class AddTest extends Component {
             .then(res => {
                 this.setState({
                     course: res.data
+                })
+                const data = {
+                    student_id: this.props.auth.user.id,
+                    course_id: this.props.match.params.id
+                }
+                axios
+                .post('/api/reports/getReportID', data)
+                .then(res2 => {
+                    this.setState({
+                        report: res2.data[0]
+                    })
+                })
+                .catch(err =>{
+                    console.log('Error from GetReport');
                 })
             })
             .catch(err => {
@@ -69,22 +85,39 @@ class AddTest extends Component {
         axios
             .post('/api/tests/', data)
             .then(res => {
-                this.setState({
-                    inputList: [],
-                    creator_id: this.props.auth.user.id,
-                    course_id: this.props.match.params.id, 
-                    test_name: '',
-                    test_description: '',
-                    questions: [],
-                    options: [],
-                    answers: [],
-                    concept_tested: [],
-                    concept_weightage: [],
-                    tester_id: [],
-                    students_completed_id: [],
-                    student_scores: [],
-                })
-                this.props.history.push('/dashboard');
+                console.log(res.data.data._id)
+                let tests_created = this.state.report.tests_created;
+
+                tests_created.push(res.data.data._id)
+                let participation_score = this.state.report.participation_score;
+                participation_score += this.state.totalScore;
+                const data2 = {
+                    tests_created: tests_created,
+                    participation_score: participation_score
+                }
+                axios
+                    .put('/api/reports/'+this.state.report._id, data2)
+                    .then(res => {
+                        this.setState({
+                            inputList: [],
+                            creator_id: this.props.auth.user.id,
+                            course_id: this.props.match.params.id, 
+                            test_name: '',
+                            test_description: '',
+                            questions: [],
+                            options: [],
+                            answers: [],
+                            concept_tested: [],
+                            concept_weightage: [],
+                            tester_id: [],
+                            students_completed_id: [],
+                            student_scores: [],
+                        })
+                        this.props.history.push('/dashboard');
+                    })
+                    .catch(err => {
+                        console.log("Error in UpdateReport!");
+                    });
             })
             .catch(err => {
                 console.log("Error in AddTest!");
@@ -166,6 +199,11 @@ class AddTest extends Component {
                 items2[index] = item2.concept_weightage;
 
                 this.setState({concept_weightage: items2});
+                var totalScore = 0;
+                for(let i = 0; i < items2.length; i++){
+                    totalScore += items2[i];
+                }
+                this.setState({totalScore: totalScore});
                 break;
             }
         }
