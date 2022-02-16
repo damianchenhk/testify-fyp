@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { connect, useDispatch } from "react-redux";
-import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
-import { Link, useParams } from 'react-router-dom';
+import { connect } from "react-redux";
+import { Row, Col, Table, Container, Tabs, Tab, Form } from "react-bootstrap";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const InstructorReport = ({ auth }) => {
 
@@ -13,6 +17,7 @@ const InstructorReport = ({ auth }) => {
 
     const [course, setCourse] = useState({});
     const [reports, setReports] = useState({});
+    const [lessonStats, setLessonStats] = useState({});
 
     useEffect(() => {
         axios
@@ -32,6 +37,14 @@ const InstructorReport = ({ auth }) => {
             console.log("Error from CourseDetails");
         })
     }, [])
+
+    const options = course.lesson_names?.map((item, key) => {
+        return (
+            <option key={key} value={item}>
+                {item}
+            </option>
+        )
+    })
 
     const lessonTable = () => {
         let table = []
@@ -74,12 +87,14 @@ const InstructorReport = ({ auth }) => {
             for (let i = 0; i < sortedReports?.length; i++) {
 
                 sortedReports[i].percentageScore = (sortedReports[i].totalScore / totalPercentage * 100).toFixed(0);
+                sortedReports[i].ranking = i + 1;
 
             }
             return (
                 <Table bordered responsive style={{border:'1'}}>
                     <thead>
                         <tr>
+                            <th style={{textAlign:'center', width:'10%'}}>Ranking</th>
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
@@ -90,11 +105,12 @@ const InstructorReport = ({ auth }) => {
                     <tbody>
                         {sortedReports.map(report => (
                             <tr key={report.id}>
-                                <td><h6>{report.student_name}</h6></td>
-                                <td style={{textAlign:'center'}}>{report.tests_created.length}</td>
-                                <td style={{textAlign:'center'}}>{report.tests_taken.length}</td>
-                                <td style={{textAlign:'center'}}>{report.totalScore}</td>
-                                <td style={{textAlign:'center'}}>{report.percentageScore + "%"}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>{report.ranking}</td>
+                                <td style={{border:'solid 1px #dee2e6'}}>{report.student_name}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_created.length}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_taken.length}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.totalScore}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{report.percentageScore + "%"}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -102,7 +118,7 @@ const InstructorReport = ({ auth }) => {
             )
         }else{
             return (
-                <Table bordered responsive style={{border:'1'}}>
+                <Table bordered responsive>
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Student Name</th>
@@ -120,6 +136,64 @@ const InstructorReport = ({ auth }) => {
             )
         }
     }
+
+    const lessonBreakdownChart = (lesson) => {
+        let lessonStats = {
+            lesson_name: lesson,
+            student_report: [],
+            wrongAnswer: 0,
+            correctAnswer: 0
+        };
+        for(let reportIndex = 0; reportIndex < reports?.length; reportIndex++){
+            lessonStats.student_report.push({
+                student_name: reports[reportIndex].student_name,
+                test: []
+            })
+            for(let testIndex = 0; testIndex < reports[reportIndex].tests_taken?.length; testIndex++){
+                if(reports[reportIndex].tests_taken[testIndex].lesson_tested.includes(lesson)){
+                    lessonStats.student_report[reportIndex].test.push({
+                        test_id: reports[reportIndex].tests_taken[testIndex].test_id,
+                        questions: []
+                    })
+                    for(let questionIndex = 0; questionIndex < reports[reportIndex].tests_taken[testIndex].result?.length; questionIndex++){
+                        if(reports[reportIndex].tests_taken[testIndex].lesson_tested[questionIndex] === lesson){
+                            if(reports[reportIndex].tests_taken[testIndex].result[questionIndex] === 0){
+                                lessonStats.wrongAnswer++
+                            }else{
+                                lessonStats.correctAnswer++
+                            }
+                            lessonStats.student_report[reportIndex].test[testIndex].questions.push({
+                                question_num: questionIndex,
+                                answer: reports[reportIndex].tests_taken[testIndex].answers[questionIndex],
+                                result: reports[reportIndex].tests_taken[testIndex].result[questionIndex]
+                            })
+                        }
+                    }
+                }
+            }
+        }
+        setLessonStats(lessonStats);
+    }
+
+    const data = {
+        labels: ['Correct Answers', 'Wrong Answers'],
+        datasets: [
+            {
+                label: '# of Answers',
+                data: [lessonStats.correctAnswer, lessonStats.wrongAnswer],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1,
+                hoverOffset: 4
+            },
+        ],
+    };
 
     return (
         <>
@@ -151,8 +225,23 @@ const InstructorReport = ({ auth }) => {
                     <Container>
                         <br></br>
                         <br></br>
-                        <h4>Student Statistics</h4>
-                        {statsTable()}
+                        <h4>Course Statistics</h4>
+                        <Tabs defaultActiveKey="studentScores" id="uncontrolled-tab-example" className="mb-3">
+                            <Tab eventKey="studentScores" title="Student Scores">
+                                {statsTable()}
+                            </Tab>
+                            <Tab eventKey="lessonBreakdown" title="Lesson Breakdown">
+                                <Col xs={5}>
+                                    <Form.Select aria-label="Default select example"
+                                        onChange={(event => lessonBreakdownChart(event.target.value))}
+                                    >
+                                        <option>Select Lesson</option>
+                                        {options}
+                                    </Form.Select>
+                                    <Pie data={data}/>
+                                </Col>
+                            </Tab>
+                        </Tabs>
                     </Container>
                 </Col>
             </Row>
