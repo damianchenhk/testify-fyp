@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container, Tabs, Tab, Form } from "react-bootstrap";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, ArcElement, Tooltip, Legend);
 
 const InstructorReport = ({ auth }) => {
 
@@ -38,7 +39,7 @@ const InstructorReport = ({ auth }) => {
         })
     }, [])
 
-    const options = course.lesson_names?.map((item, key) => {
+    const lessonOptions = course.lesson_names?.map((item, key) => {
         return (
             <option key={key} value={item}>
                 {item}
@@ -94,7 +95,7 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive style={{border:'1'}}>
                     <thead>
                         <tr>
-                            <th style={{textAlign:'center', width:'10%'}}>Ranking</th>
+                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
@@ -121,15 +122,17 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive>
                     <thead>
                         <tr>
+                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
                             <th style={{textAlign:'center', width:'10%'}}>Participation Score</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Participation %</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colSpan={4} style={{textAlign:'center'}}>There are no students registered</td>
+                            <td colSpan={6} style={{textAlign:'center'}}>There are no students registered</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -175,7 +178,7 @@ const InstructorReport = ({ auth }) => {
         setLessonStats(lessonStats);
     }
 
-    const data = {
+    const pieData = {
         labels: ['Correct Answers', 'Wrong Answers'],
         datasets: [
             {
@@ -191,6 +194,80 @@ const InstructorReport = ({ auth }) => {
                 ],
                 borderWidth: 1,
                 hoverOffset: 4
+            },
+        ],
+    };
+
+    const clickedBar = (event) => {
+        console.log(event)
+    }
+
+    const options = {
+        indexAxis: 'y',
+        elements: {
+          bar: {
+            borderWidth: 2,
+          },
+        },
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Individual Student Breakdown',
+          },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        },
+        onClick: clickedBar
+      };
+      
+    const labels = lessonStats.student_report?.map((student_report) => student_report.student_name);
+
+    const barChartData = () => {
+        let barData = []
+        for (let reportIndex = 0; reportIndex < lessonStats.student_report?.length; reportIndex++){
+            var correctCount = 0;
+            var wrongCount = 0;
+            for(let testIndex = 0; testIndex < lessonStats.student_report[reportIndex].test.length; testIndex++){
+                for(let questionIndex = 0; questionIndex < lessonStats.student_report[reportIndex].test[testIndex].questions.length; questionIndex++){
+                    if(lessonStats.student_report[reportIndex].test[testIndex].questions[questionIndex].result === 0){
+                        wrongCount++
+                    }else{
+                        correctCount++
+                    }
+                }
+            }
+            barData.push({
+                student_name: lessonStats.student_report[reportIndex].student_name,
+                correctCount: correctCount,
+                wrongCount: wrongCount
+            })
+        }
+        return barData
+    }
+      
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Correct Answers',
+                data: barChartData()?.map((counts) => counts.correctCount),
+                borderColor: 'rgba(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            },
+            {
+                label: 'Wrong Answers',
+                data: barChartData()?.map((counts) => counts.wrongCount),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
         ],
     };
@@ -231,15 +308,20 @@ const InstructorReport = ({ auth }) => {
                                 {statsTable()}
                             </Tab>
                             <Tab eventKey="lessonBreakdown" title="Lesson Breakdown">
-                                <Col xs={5}>
-                                    <Form.Select aria-label="Default select example"
-                                        onChange={(event => lessonBreakdownChart(event.target.value))}
-                                    >
-                                        <option>Select Lesson</option>
-                                        {options}
-                                    </Form.Select>
-                                    <Pie data={data}/>
-                                </Col>
+                                <Row>
+                                    <Col xs={5}>
+                                        <Form.Select aria-label="Lesson Select"
+                                            onChange={(event => lessonBreakdownChart(event.target.value))}
+                                        >
+                                            <option>Select Lesson</option>
+                                            {lessonOptions}
+                                        </Form.Select>
+                                        <Pie data={pieData}/>
+                                    </Col>
+                                    <Col xs={7}>
+                                        <Bar options={options} data={data} />
+                                    </Col>
+                                </Row>
                             </Tab>
                         </Tabs>
                     </Container>
