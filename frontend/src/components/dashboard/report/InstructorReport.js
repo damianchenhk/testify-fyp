@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
+import ViewTestQuestions from "../test/ViewTestQuestions";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, ArcElement, Tooltip, Legend);
 
@@ -18,7 +19,16 @@ const InstructorReport = ({ auth }) => {
 
     const [course, setCourse] = useState({});
     const [reports, setReports] = useState({});
+    const [tests, setTests] = useState({});
     const [lessonStats, setLessonStats] = useState({});
+    const [questionOptions, setQuestionOptions] = useState();
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
+    const [testOptions, setTestOptions] = useState();
+    const [studentQuestionStats, setStudentQuestionStats] = useState({
+        studentIndex: '',
+        type: "",
+        filled: false
+    });
 
     useEffect(() => {
         axios
@@ -29,9 +39,17 @@ const InstructorReport = ({ auth }) => {
                 .post('/api/reports/getCourseStudents', {course_id: id})
                 .then(res => {
                     setReports(res.data)
+                axios
+                    .post('/api/tests/courseTests', {course_id: id})
+                    .then(res => {
+                        setTests(res.data)
+                    })
+                    .catch(err => {
+                        console.log("Error from courseTests")
+                    })
                 })
                 .catch(err => {
-                    console.log("Error from courseTests");
+                    console.log("Error from getCourseStudents");
                 })
             })
         .catch(err => {
@@ -176,6 +194,12 @@ const InstructorReport = ({ auth }) => {
             }
         }
         setLessonStats(lessonStats);
+        setStudentQuestionStats({
+            studentIndex: '',
+            type: "",
+            filled: false
+        })
+        setSelectedQuestion(null)
     }
 
     const pieData = {
@@ -193,14 +217,9 @@ const InstructorReport = ({ auth }) => {
                     'rgba(255, 99, 132, 1)',
                 ],
                 borderWidth: 1,
-                hoverOffset: 4
             },
         ],
     };
-
-    const clickedBar = (event) => {
-        console.log(event)
-    }
 
     const options = {
         indexAxis: 'y',
@@ -226,7 +245,34 @@ const InstructorReport = ({ auth }) => {
                 }
             }
         },
-        onClick: clickedBar
+        onClick: function(event, element){
+            setTestOptions()
+            setSelectedQuestion(null)
+            if(element.length > 0){
+                if(element[0].datasetIndex === 0){
+                    let studentQuestionParams = {
+                        studentIndex: element[0].index,
+                        type: "correct",
+                        filled: true
+                    }
+                    setStudentQuestionStats(studentQuestionParams)
+                    setQuestionOptions()
+                }else {
+                    let studentQuestionParams = {
+                        studentIndex: element[0].index,
+                        type: "wrong",
+                        filled: true
+                    }
+                    setStudentQuestionStats(studentQuestionParams)
+                    setQuestionOptions()
+                }
+            }
+            setTestOptions(
+                tests.filter((tests) => lessonStats.student_report[element[0].index].test.map(test => test.test_id).includes(tests._id)).map((filteredTests , index) => (
+                    <option key={index} value={JSON.stringify({index, test_id: filteredTests._id})}>{filteredTests.test_name}</option>
+                ))
+            )
+        }
       };
       
     const labels = lessonStats.student_report?.map((student_report) => student_report.student_name);
@@ -271,6 +317,36 @@ const InstructorReport = ({ auth }) => {
             },
         ],
     };
+    
+    const selectedQuestionOptions = (event) => {
+        setSelectedQuestion(null)
+        let tempOptions = []
+        if(event < 0){
+            setQuestionOptions();
+        }else {
+            for(let questionIndex = 0; questionIndex < lessonStats.student_report[studentQuestionStats.studentIndex].test[JSON.parse(event).index].questions?.length; questionIndex++){
+                tempOptions.push(<option key={questionIndex} value={JSON.stringify({test:JSON.parse(event).test_id, question:lessonStats.student_report[studentQuestionStats.studentIndex].test[JSON.parse(event).index].questions[questionIndex].question_num})}>Question {lessonStats.student_report[studentQuestionStats.studentIndex].test[JSON.parse(event).index].questions[questionIndex].question_num + 1}</option>)
+            }
+            setQuestionOptions(tempOptions)
+        }
+    }
+
+    const selectedQuestionSet = (event) => {
+        let tempQuestionNum = JSON.parse(event).question
+        let tempQuestionSelect = {
+            question: tests.filter((tests) => tests._id === JSON.parse(event).test)[0].questions[tempQuestionNum],
+            options: [
+                tests.filter((tests) => tests._id === JSON.parse(event).test)[0].options[tempQuestionNum + (tempQuestionNum * 2)],
+                tests.filter((tests) => tests._id === JSON.parse(event).test)[0].options[tempQuestionNum + (tempQuestionNum * 2) + 1],
+                tests.filter((tests) => tests._id === JSON.parse(event).test)[0].options[tempQuestionNum + (tempQuestionNum * 2) + 2]
+            ],
+            answer: [tests.filter((tests) => tests._id === JSON.parse(event).test)[0].answers[tempQuestionNum]],
+            answer_selected: [lessonStats.student_report[studentQuestionStats.studentIndex].test.filter((tests) => tests.test_id === JSON.parse(event).test)[0].questions.filter(question => question.question_num === tempQuestionNum)[0].answer],
+            key: 0,
+            indexValue: tempQuestionNum
+        }
+        setSelectedQuestion(tempQuestionSelect)
+    }
 
     return (
         <>
@@ -322,6 +398,41 @@ const InstructorReport = ({ auth }) => {
                                         <Bar options={options} data={data} />
                                     </Col>
                                 </Row>
+                                {studentQuestionStats.filled && <Row>
+                                    <h5>{lessonStats.student_report[studentQuestionStats.studentIndex].student_name}'s {lessonStats.lesson_name} Stats</h5>
+                                    <Col xs={6}>
+                                        <Form.Select aria-label="Test Select"
+                                            onChange={(event => selectedQuestionOptions(event.target.value))}
+                                        >
+                                            <option value={-1}>Select Test</option>
+                                            {testOptions}
+                                        </Form.Select>
+                                    </Col>
+                                    <Col xs={6}>
+                                        <Form.Select aria-label="Question Select"
+                                            onChange={(event => selectedQuestionSet(event.target.value))}
+                                        >
+                                            <option>Select Question</option>
+                                            {questionOptions}
+                                        </Form.Select>
+                                    </Col>
+                                </Row>}
+                                {selectedQuestion !== null && 
+                                    <Row style={{border: '1px solid rgb(222, 226, 230)', marginBottom: '10px'}}>
+                                        <h5 style={{marginTop: '10px'}}>Question {selectedQuestion.indexValue + 1}:</h5>
+                                        <ViewTestQuestions
+                                            question={selectedQuestion.question}
+                                            options={selectedQuestion.options}
+                                            answer={selectedQuestion.answer}
+                                            answer_selected={selectedQuestion.answer_selected}
+                                            key={selectedQuestion.indexValue}
+                                            indexValue={0}
+                                        />
+                                    </Row>
+                                }
+                            </Tab>
+                            <Tab eventKey="testBreakdown" title="Test Breakdown">
+                                
                             </Tab>
                         </Tabs>
                     </Container>

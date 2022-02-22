@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Form } from "react-bootstrap";
 
-const TestQuestion = (props) => {
+const ViewTestQuestion = (props) => {
     const question = props.question;
     const options = props.options;
     const indexValue = props.indexValue;
@@ -91,4 +91,4 @@ const TestQuestion = (props) => {
     )
 };
 
-export default TestQuestion;
+export default ViewTestQuestion;
