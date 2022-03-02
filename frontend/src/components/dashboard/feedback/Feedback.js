@@ -206,17 +206,16 @@ class Feedback extends Component {
                                         textAlign: 'left'
                                     }}
                                 >
-                                    2.  This test was of a sufficient difficulty.
+                                    2.  How difficult was the test?
                                 </p>
                                 <Table responsive>
                                     <thead>
                                         <tr>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Agree</th>
+                                            <th style={{textAlign: 'center', width: '20%'}}>Very Difficult</th>
+                                            <th style={{textAlign: 'center', width: '20%'}}>Difficult</th>
+                                            <th style={{textAlign: 'center', width: '20%'}}>Just Right</th>
+                                            <th style={{textAlign: 'center', width: '20%'}}>Easy</th>
+                                            <th style={{textAlign: 'center', width: '20%'}}>Very Easy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -280,19 +279,6 @@ class Feedback extends Component {
                                                     name="q2-feedback"
                                                     id="q2-feedback"
                                                     value="5"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-6"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="6"
                                                     style={{
                                                         textAlign: 'center'
                                                     }}

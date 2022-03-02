@@ -17,6 +17,12 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this feedback'}));
 });
 
+router.post('/getCourseFeedback', (req, res) => {
+    Feedback.find({course_id: req.body.course_id})
+        .then(feedback => res.json(feedback))
+        .catch(err => res.status(400).json({error: 'Unable to find this feedback'}));
+});
+
 router.post('/', (req, res) => {
     Feedback.create(req.body)
       .then(feedback => res.json({ msg: 'Feedback added successfully' }))

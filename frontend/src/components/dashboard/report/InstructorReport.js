@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row, Col, Table, Container, Tabs, Tab, Form } from "react-bootstrap";
+import { Row, Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
@@ -10,6 +10,7 @@ import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
 import ViewTestQuestions from "../test/ViewTestQuestions";
+import '../../../App.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, ArcElement, Tooltip, Legend);
 
@@ -20,6 +21,7 @@ const InstructorReport = ({ auth }) => {
     const [course, setCourse] = useState({});
     const [reports, setReports] = useState({});
     const [tests, setTests] = useState({});
+    const [feedbacks, setFeedbacks] = useState({});
     const [lessonStats, setLessonStats] = useState({});
     const [questionOptions, setQuestionOptions] = useState();
     const [selectedQuestion, setSelectedQuestion] = useState(null);
@@ -29,6 +31,7 @@ const InstructorReport = ({ auth }) => {
         type: "",
         filled: false
     });
+    const [testSort, setTestSort] = useState('students_completed');
 
     useEffect(() => {
         axios
@@ -43,6 +46,14 @@ const InstructorReport = ({ auth }) => {
                     .post('/api/tests/courseTests', {course_id: id})
                     .then(res => {
                         setTests(res.data)
+                    axios
+                        .post('/api/feedback/getCourseFeedback', {course_id: id})
+                        .then(res => [
+                            setFeedbacks(res.data)
+                        ])
+                        .catch(err => {
+                            console.log("Error from courseFeedback")    
+                        })
                     })
                     .catch(err => {
                         console.log("Error from courseTests")
@@ -319,8 +330,8 @@ const InstructorReport = ({ auth }) => {
     };
     
     const selectedQuestionOptions = (event) => {
-        setSelectedQuestion(null)
         let tempOptions = []
+        setSelectedQuestion(null)
         if(event < 0){
             setQuestionOptions();
         }else {
@@ -346,6 +357,115 @@ const InstructorReport = ({ auth }) => {
             indexValue: tempQuestionNum
         }
         setSelectedQuestion(tempQuestionSelect)
+    }
+
+    const testStatsTable = () => {
+        if(tests.length){
+            let sortedTests = [...tests];
+            for (let i = 0; i < sortedTests?.length; i++) {
+                var numStudentsCompleted = 0;
+                for(let reportIndex = 0; reportIndex < reports?.length; reportIndex++){
+                    for(let testTakenIndex = 0; testTakenIndex < reports[reportIndex].tests_taken.length; testTakenIndex++){
+                        if(reports[reportIndex].tests_taken[testTakenIndex].test_id === sortedTests[i]._id){
+                            numStudentsCompleted++;
+                        }
+                    }
+                }
+                sortedTests[i].students_completed = numStudentsCompleted;
+                
+                let tempEffective = 0;
+                let tempDifficulty = 0;
+                let tempPopularity = 0;
+                for(let feedbackIndex = 0; feedbackIndex < feedbacks?.length; feedbackIndex++){
+                    if(feedbacks[feedbackIndex].test_id === sortedTests[i]._id){
+                        tempEffective += Number(feedbacks[feedbackIndex].feedback_scores[0]);
+                        tempDifficulty += Number(feedbacks[feedbackIndex].feedback_scores[1]);
+                        tempPopularity += Number(feedbacks[feedbackIndex].feedback_scores[2]);
+                    }
+                }
+
+                sortedTests[i].test_effectiveness = ((tempEffective / numStudentsCompleted) / 6 * 100).toFixed(0);
+                sortedTests[i].test_popularity = (((tempPopularity / numStudentsCompleted) / 6 * 50) + ((sortedTests[i].students_completed / (reports?.length - 1)) * 50)).toFixed(0);
+
+                if(tempDifficulty / numStudentsCompleted < 2){
+                    sortedTests[i].test_difficulty = "Too Difficult"
+                } else if(tempDifficulty / numStudentsCompleted < 3){
+                    sortedTests[i].test_difficulty = "Difficult"
+                } else if(tempDifficulty / numStudentsCompleted < 4){
+                    sortedTests[i].test_difficulty = "Just Right"
+                } else if(tempDifficulty / numStudentsCompleted < 5){
+                    sortedTests[i].test_difficulty = "Easy"
+                } else{
+                    sortedTests[i].test_difficulty = "Too Easy"
+                }
+            }
+
+            sortedTests.sort((a, b) => {
+                if (a[testSort] < b[testSort]) {
+                    return 1;
+                }
+                if (a[testSort] > b[testSort]) {
+                    return -1;
+                }
+                    return 0;
+            });
+
+            for (let i = 0; i < sortedTests?.length; i++) {
+
+                sortedTests[i].index = i + 1;
+
+            }
+
+            return (
+                <Table bordered responsive style={{border:'1'}}>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Creator</th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('students_completed')}>No. Students Completed</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_effectiveness')}>Test Effectiveness</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_difficulty')}>Test Difficulty</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_popularity')}>Test Popularity</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sortedTests.map(test => (
+                            <tr key={test._id}>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>{test.index}</td>
+                                <td style={{border:'solid 1px #dee2e6'}}>{test.test_name}</td>
+                                <td style={{border:'solid 1px #dee2e6'}}>{test.creator_name}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.students_completed}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.test_effectiveness}%</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.test_difficulty}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{test.test_popularity}%</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            )
+        }else{
+            return (
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Creator</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. Students Completed</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Test Effectiveness</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Test Difficulty</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Test Popularity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={7} style={{textAlign:'center'}}>There are no tests created for your course</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            )
+        }
     }
 
     return (
@@ -432,7 +552,7 @@ const InstructorReport = ({ auth }) => {
                                 }
                             </Tab>
                             <Tab eventKey="testBreakdown" title="Test Breakdown">
-                                
+                                {testStatsTable()}
                             </Tab>
                         </Tabs>
                     </Container>

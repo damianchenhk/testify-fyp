@@ -56,3 +56,17 @@
 .progress-bar{
   background-color: #26A69A;
 }
+
+.table-header-click{
+  background-color: white;
+  border: none;
+  font-weight: bold;
+}
+
+.table-header-click:hover{
+  color: rgb(110, 110, 110);
+}
+
+.table-header-click:focus{
+  background-color: white;
+}
