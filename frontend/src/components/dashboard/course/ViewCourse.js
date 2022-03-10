@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
+import "../../../App.css";
 
 const ViewCourse = () => {
 
@@ -38,11 +39,11 @@ const ViewCourse = () => {
 
     return (
         <>
-            <Row>
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="align-items-center dashboard">
+                <Col className="align-items-center dashboard">
                     <ReactPlayer
                         className='react-player'
                         url={course.lesson_urls ? course.lesson_urls[lessonIndex] : null}
@@ -75,7 +76,7 @@ const ViewCourse = () => {
                         Create Test
                     </Link>
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

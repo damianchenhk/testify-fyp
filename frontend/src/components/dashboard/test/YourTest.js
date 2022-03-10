@@ -1,67 +1,70 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Table, Container } from "react-bootstrap";
 import axios from "axios";
 import TestCard from "./TestCard";
 
 import Sidebar from "../../layout/Sidebar";
+import "../../../App.css";
 
-class YourTest extends Component {
+const YourTest = ({ auth }) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          tests: []
-        };
-      }
-    
-      componentDidMount() {
-        axios
-          .get('/api/tests')
-          .then(res => {
-            this.setState({
-              tests: res.data
-            })
-          })
-          .catch(err =>{
-            console.log('Error from ShowTestList');
-          })
-      };
+  const [tests, setTests] = useState([]);
 
-    render() {
+  useEffect(() => {
+    axios
+      .post('/api/tests/myTests/', { creator_id: auth.user.id })
+      .then(res => {
+        setTests(res.data)
+      })
+      .catch(err => {
+        console.log('Error from Tests');
+      })
+  }, [])
 
-        const tests = this.state.tests;
-        let testList;
-    
-        if(!tests) {
-            testList = "there is no test record!";
-        } else {
-            testList = tests.map((test, k) =>
-            <TestCard test={test} key={k} />
-          );
-        }
+  let testList;
 
-        return (
-            <>
-                <Row>
-                    <Col xs={2}>
-                        <Sidebar/>
-                    </Col>
-                    <Col xs={10} className="align-items-center dashboard">
-                    <div className="list">
-                        {testList}
-                    </div>
-                    </Col>
-                </Row>
-            </>
-        );
-    }
+  if (!tests) {
+    testList = "there is no test record!";
+  } else {
+    testList = tests?.map((test, k) =>
+      <TestCard test={test} key={k} />
+    );
+  }
+
+  return (
+    <>
+      <div className="web-page">
+        <Col>
+          <Sidebar />
+        </Col>
+        <Col className="align-items-center dashboard">
+          <Container>
+            <br></br>
+            <h3>My Tests</h3>
+            <Table>
+              <thead>
+                <tr>
+                  <td style={{width:'33%'}}></td>
+                  <td></td>
+                  <td style={{width:'10%'}}></td>
+                </tr>
+              </thead>
+              <tbody>
+                {testList}
+              </tbody>
+            </Table>
+          </Container>
+        </Col>
+      </div>
+    </>
+  );
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+  auth: state.auth
 });
 
 export default connect(
-    mapStateToProps
+  mapStateToProps
 )(YourTest);

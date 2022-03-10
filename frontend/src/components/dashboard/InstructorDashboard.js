@@ -1,19 +1,107 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Row, Col, Table } from "react-bootstrap";
+import axios from "axios";
+
+import '../../App.css';
+
+import InstructorCourseSummary from "./homepage/InstructorCourseSummary";
 
 const InstructorDashboard = ({ auth }) => {
+
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+        axios
+            .post('/api/courses/instructorcoursesRecent/', {intructor_id: auth.user.id})
+            .then(res => {
+                setCourses(res.data)
+            })
+            .catch(err =>{
+                console.log('Error from InstructorCoursesRecent');
+            })
+    }, []);
+
+    const courseSummary = () => {
+        if(courses.length){
+            return (
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {courses.map((course, k) =>
+                            <InstructorCourseSummary course={course} key={k} />
+                        )}
+                    </tbody>
+                    <tfoot style={{border: 'none'}}>
+                        <tr>
+                            <td colSpan={3} style={{textAlign: 'center'}}>
+                                <Link to="/instructorcourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
+                                    View More
+                                </Link>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </Table>
+            )
+        }else {
+            return (
+                <Table bordered responsive>
+                    <thead>
+                    <tr>
+                            <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={3} style={{textAlign:'center'}}>You have no courses created</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style={{border: 'none'}}>
+                        <tr>
+                            <td colSpan={3} style={{textAlign: 'center'}}>
+                                <Link to="/addcourse" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
+                                    Add Course
+                                </Link>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </Table>
+            )
+        }
+    }
+
     return (
         <>
+            <br></br>
             <h4>
-                <b>Hey there,</b> {auth.user.name?.split(" ")[0]}
+                <strong>Hey there,</strong> {auth.user.name?.split(" ")[0]}
             </h4>
-            <Link to="/addcourse" className="btn btn-large waves-effect waves-light hoverable blue accent-3">
-                Add Course
-            </Link>
+            <Row>
+                <Col xs={5} className="course-summary">
+                    <h5 style={{marginTop: '10px'}}>My Courses</h5>
+                    {courseSummary()}
+                </Col>
+                <Col xs={5} className="course-summary">
+                    Test
+                </Col>
+            </Row>
         </>
     )
 }
+
+InstructorDashboard.propTypes = {
+    auth: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
     auth: state.auth

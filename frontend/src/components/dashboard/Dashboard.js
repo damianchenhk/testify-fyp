@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
@@ -7,36 +7,32 @@ import { Col } from "react-bootstrap";
 import Sidebar from "../layout/Sidebar";
 import StudentDashboard from "./StudentDashboard";
 import InstructorDashboard from "./InstructorDashboard";
+import "../../App.css";
 
-class Dashboard extends Component {
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
+const Dashboard = ({auth}) => {
 
-    renderSwitch(param){
+    function renderSwitch(param){
         switch(param){
             case 'Student':
                 return <StudentDashboard/>
             case 'Instructor':
                 return <InstructorDashboard/>
+            default:
+                return <StudentDashboard/>
         }
     }
+    const { user } = auth;
 
-    render() {
-        const { user } = this.props.auth;
-
-        return (
-            <div className="row">
-                <Col xs={2}>
-                    <Sidebar/>
-                </Col>
-                <Col xs={10} className="dashboard">
-                    {this.renderSwitch(user.role)}
-                </Col>
-            </div>
-        );
-    }
+    return (
+        <div className="web-page">
+            <Col>
+                <Sidebar/>
+            </Col>
+            <Col className="dashboard">
+                {renderSwitch(user.role)}
+            </Col>
+        </div>
+    );
 }
 
 Dashboard.propTypes = {

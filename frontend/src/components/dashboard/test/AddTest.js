@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import Sidebar from "../../layout/Sidebar";
 import AddQuestion from "./AddQuestion";
+import "../../../App.css";
 
 class AddTest extends Component {
 
@@ -214,11 +215,11 @@ class AddTest extends Component {
 
         return (
             <>
-                <div className="row">
-                    <Col xs={2}>
+                <div className="web-page">
+                    <Col>
                         <Sidebar/>
                     </Col>
-                    <Col xs={10} className="dashboard">
+                    <Col className="dashboard">
                         <br></br>
                         <h4><b>Add Test Here</b></h4>
                         <Form onSubmit={this.onSubmit}>

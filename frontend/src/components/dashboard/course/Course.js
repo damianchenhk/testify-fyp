@@ -4,6 +4,7 @@ import axios from "axios";
 import CourseCard from "./CourseCard";
 
 import Sidebar from "../../layout/Sidebar";
+import "../../../App.css";
 
 const Course = () => {
   
@@ -32,11 +33,11 @@ const Course = () => {
 
     return (
         <>
-            <Row>
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="align-items-center dashboard">
+                <Col className="align-items-center dashboard">
                   <Container>
                     <br></br>
                     <h3>All Courses</h3>
@@ -54,7 +55,7 @@ const Course = () => {
                     </Table>
                   </Container>
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

@@ -8,6 +8,7 @@ import axios from "axios";
 import Sidebar from "../../layout/Sidebar";
 import RegisterPopUp from "./RegisterPopUp";
 import { UPDATE_COURSE_REGISTERED } from "../../../actions/types";
+import "../../../App.css";
 
 export const updateCourseRegistered = e => {
     return {
@@ -23,6 +24,7 @@ const CourseDetails = ({ auth }) => {
     const [course, setCourse] = useState({});
     const [tests, setTests] = useState({});
     const [seen, setSeen] = useState(false);
+    const [report, setReport] = useState({});
 
     const [student_id, setStudentId] = useState(auth.user.id);
     const [student_name, setStudentName] = useState(auth.user.name);
@@ -56,7 +58,6 @@ const CourseDetails = ({ auth }) => {
             const data2 = {
                 ongoing_courses: registerCourse
             };
-            console.log(data2);
             axios
             .put('/api/users/'+auth.user.id, data2)
             .then(res => {
@@ -79,6 +80,13 @@ const CourseDetails = ({ auth }) => {
                 .post('/api/tests/courseTests', {course_id: id})
                 .then(res => {
                     setTests(res.data)
+                    if(registered){
+                        axios
+                            .post('/api/reports/getReportID/', {student_id: auth.user.id, course_id: id})
+                            .then(res => {
+                                setReport(res.data[0])
+                            })
+                    }
                 })
                 .catch(err => {
                     console.log("Error from courseTests");
@@ -110,19 +118,27 @@ const CourseDetails = ({ auth }) => {
             for (let i = 0; i < tests?.length; i++) {
                 let children = []
 
-                children.push(<td><h6>{tests[i].test_name ? tests[i].test_name : null}</h6>By: {tests[i].creator_name ? tests[i].creator_name : null}</td>)
-                children.push(<td>{tests[i].test_description ? tests[i].test_description : null}</td>)
-                children.push(
-                    <td>
-                        {tests[i]._id ? <Link 
-                            to={{pathname: `/test/${tests[i]._id}`,}}
-                            style={{width:'110px', fontSize:'9px'}}
-                            className='btn waves-effect waves-light accent-3'
-                            >
-                                Attempt Test
-                            </Link> : null}
-                    </td>)
-                table.push(<tr>{children}</tr>)
+                if(tests[i].creator_id !== auth.user.id){
+                    children.push(<td><h6>{tests[i].test_name ? tests[i].test_name : null}</h6>By: {tests[i].creator_name ? tests[i].creator_name : null}</td>)
+                    children.push(<td>{tests[i].test_description ? tests[i].test_description : null}</td>)
+                    children.push(
+                        <td>
+                            {report.tests_taken?.map(test => test.test_id).includes(tests[i]._id) ? <Button 
+                                    style={{width:'130px', fontSize:'9px'}}
+                                    className='btn waves-effect waves-light accent-3'
+                                    disabled
+                                >
+                                    Test Completed
+                                </Button> : <Link 
+                                    to={{pathname: `/test/${tests[i]._id}`,}}
+                                    style={{width:'130px', fontSize:'9px'}}
+                                    className='btn waves-effect waves-light accent-3'
+                                >
+                                    Attempt Test
+                                </Link>}
+                        </td>)
+                    table.push(<tr>{children}</tr>)
+                }
             }
             return table
         }else{
@@ -144,11 +160,11 @@ const CourseDetails = ({ auth }) => {
 
     return (
         <>
-            <Row>
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="align-items-center dashboard">
+                <Col className="align-items-center dashboard">
                     <br></br>
                     <h2>{course.course_name}</h2>
                     <h5>Instructor: {course.instructor_name}</h5>
@@ -187,7 +203,7 @@ const CourseDetails = ({ auth }) => {
                     {registered ? <Container>
                         <br></br>
                         <br></br>
-                        <h4>Tests Available</h4>
+                        <h4>Course Tests</h4>
                         <Table bordered responsive style={{border:'1'}}>
                             <thead>
                                 <tr>
@@ -202,7 +218,7 @@ const CourseDetails = ({ auth }) => {
                         </Table>
                     </Container> : null}
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

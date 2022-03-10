@@ -6,6 +6,7 @@ import axios from "axios";
 import InstructorCourseCard from "./InstructorCourseCard";
 
 import Sidebar from "../../layout/Sidebar";
+import "../../../App.css";
 
 const InstructorMyCourse = ({auth}) => {
   
@@ -13,7 +14,7 @@ const InstructorMyCourse = ({auth}) => {
 
   useEffect(() => {
     axios
-      .post('/api/courses/instructorcourses/', {_id: auth.user.id})
+      .post('/api/courses/instructorcourses/', {intructor_id: auth.user.id})
       .then(res => {
         setCourses(res.data)
       })
@@ -34,11 +35,11 @@ const InstructorMyCourse = ({auth}) => {
 
     return (
         <>
-            <Row>
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="align-items-center dashboard">
+                <Col className="align-items-center dashboard">
                   <Container>
                     <br></br>
                     <h3>My Courses</h3>
@@ -56,7 +57,7 @@ const InstructorMyCourse = ({auth}) => {
                     </Table>
                   </Container>
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

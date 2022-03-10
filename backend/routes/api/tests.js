@@ -17,11 +17,23 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this test'}));
 });
 
+router.post('/myTests', (req, res) => {
+    Test.find({creator_id: req.body.creator_id}).sort({ $natural: -1 })
+        .then(test => res.json(test))
+        .catch(err => res.status(400).json({error: 'Unable to find this test'}));
+});
+
 router.post('/courseTests', (req, res) => {
     Test.find({course_id: req.body.course_id})
         .then(test => res.json(test))
         .catch(err => res.status(400).json({error: 'Unable to find this test'}));
 });
+
+router.post('/getCourseTestCount', (req, res) => {
+    Test.count({course_id: req.body.course_id})
+        .then(test => res.json(test))
+        .catch(err => res.status(400).json({error: 'Unable to find count for course'}));
+})
 
 router.post('/', (req, res) => {
     Test.create(req.body)

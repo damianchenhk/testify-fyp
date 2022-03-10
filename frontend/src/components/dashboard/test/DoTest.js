@@ -100,11 +100,11 @@ const DoTest = ({auth}) => {
 
   return (
     <>
-      <Row>
-          <Col xs={2}>
+      <div className="web-page">
+          <Col>
               <Sidebar/>
           </Col>
-          <Col xs={10} className="align-items-center dashboard">
+          <Col className="align-items-center dashboard">
               <br></br>
               <h2>{test.test_name}</h2>
               <br></br>
@@ -116,7 +116,7 @@ const DoTest = ({auth}) => {
                   </Form>
               </Container>
           </Col>
-      </Row>
+      </div>
     </>
   );
 }

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Row, Col, Container, Form, Button, Table, FloatingLabel } from "react-bootstrap";
+import { Col, Container, Form, Button, Table, FloatingLabel } from "react-bootstrap";
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
+import "../../../App.css";
 
 class Feedback extends Component {
 
@@ -86,11 +87,11 @@ class Feedback extends Component {
 
         return (
             <>
-                <Row>
-                    <Col xs={2}>
+                <div className="web-page">
+                    <Col>
                         <Sidebar/>
                     </Col>
-                    <Col xs={10} className="align-items-center dashboard">
+                    <Col className="align-items-center dashboard">
                         <br></br>
                         <h2>Feedback</h2>
                         <hr></hr>
@@ -423,7 +424,7 @@ class Feedback extends Component {
                             </Form>
                         </Container>
                     </Col>
-                </Row>
+                </div>
             </>
         );
     }

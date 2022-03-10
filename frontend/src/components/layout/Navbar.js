@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logoutUser } from "../../actions/authActions";
 
-import { Navbar, NavDropdown, Nav, Container } from "react-bootstrap";
+import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import '../../App.css';
 
 class TopNavbar extends Component {

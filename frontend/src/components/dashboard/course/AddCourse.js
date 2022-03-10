@@ -7,6 +7,7 @@ import axios from 'axios';
 import Sidebar from "../../layout/Sidebar";
 import AddLesson from "./AddLesson";
 import { useHistory } from "react-router-dom";
+import "../../../App.css";
 
 const AddCourse = ({ auth }) => {
 
@@ -104,11 +105,11 @@ const AddCourse = ({ auth }) => {
 
     return (
         <>
-            <div className="row">
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="dashboard">
+                <Col className="dashboard">
                     <br></br>
                     <h4><b>Add Courses Here</b></h4>
                     <Form onSubmit={onSubmit}>

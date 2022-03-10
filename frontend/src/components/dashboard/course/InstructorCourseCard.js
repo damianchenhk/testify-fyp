@@ -9,7 +9,7 @@ const CourseCard = (props) => {
             <td>
                 <h5>
                     <Link to={{
-                        pathname: `/coursedetails/${course._id}`,
+                        pathname: `/coursereport/${course._id}`,
                     }}>
                         { course.course_name }
                     </Link>

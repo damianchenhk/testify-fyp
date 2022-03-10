@@ -26,8 +26,14 @@ router.post('/getReportID', (req, res) => {
 router.post('/getCourseStudents', (req, res) => {
     Report.find({course_id: req.body.course_id})
         .then(report => res.json(report))
-        .catch(err => res.status(400).json({error: 'Unable to find this report'}));
+        .catch(err => res.status(400).json({error: 'Unable to find this reports for course'}));
 });
+
+router.post('/getCourseStudentsCount', (req, res) => {
+    Report.count({course_id: req.body.course_id})
+        .then(report => res.json(report))
+        .catch(err => res.status(400).json({error: 'Unable to find count for course'}));
+})
 
 router.post('/', (req, res) => {
     Report.create(req.body)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row, Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
+import { Row , Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
@@ -470,11 +470,11 @@ const InstructorReport = ({ auth }) => {
 
     return (
         <>
-            <Row>
-                <Col xs={2}>
+            <div className="web-page">
+                <Col>
                     <Sidebar/>
                 </Col>
-                <Col xs={10} className="align-items-center dashboard">
+                <Col className="align-items-center dashboard">
                     <br></br>
                     <h2>{course.course_name}</h2>
                     <h6>{course.course_description}</h6>
@@ -557,7 +557,7 @@ const InstructorReport = ({ auth }) => {
                         </Tabs>
                     </Container>
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

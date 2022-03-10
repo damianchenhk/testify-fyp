@@ -5,6 +5,7 @@ import { Row, Col, Container, Form } from "react-bootstrap";
 
 import Sidebar from "../../layout/Sidebar";
 import ViewTestQuestions from "../test/ViewTestQuestions";
+import "../../../App.css";
 
 const TestResult = (props) => {
 
@@ -29,7 +30,7 @@ const TestResult = (props) => {
 
     return (
         <>
-            <Row>
+            <div className="web-page">
                 <Col xs={2}>
                     <Sidebar/>
                 </Col>
@@ -49,7 +50,7 @@ const TestResult = (props) => {
                         </Link>
                     </Container>
                 </Col>
-            </Row>
+            </div>
         </>
     );
 }

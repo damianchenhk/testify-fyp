@@ -47,6 +47,11 @@
   text-align: left;
 }
 
+.web-page {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}
+
 [type="radio"]:not(:checked), [type="radio"]:checked  {
   position: relative;
   opacity: 100%;
@@ -69,4 +74,10 @@
 
 .table-header-click:focus{
   background-color: white;
+}
+
+.course-summary{
+  border: solid 1px #dee2e6;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 3px 3px 5px 0 rgba(0, 0, 0, 0.19);
+  margin: auto;
 }
