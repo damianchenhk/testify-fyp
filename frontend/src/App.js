@@ -27,6 +27,7 @@ import TestResult from "./components/dashboard/test/TestResult";
 import MyCourses from "./components/dashboard/course/MyCourses";
 import InstructorMyCourse from "./components/dashboard/course/InstructorMyCourse";
 import InstructorReport from "./components/dashboard/report/InstructorReport";
+import TestDetails from "./components/dashboard/test/TestDetails";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -70,6 +71,7 @@ class App extends Component {
                 <PrivateRoute exact path="/addtest/:id" component={AddTest} />
                 <PrivateRoute exact path="/yourtests" component={YourTest} />
                 <PrivateRoute exact path="/test/:id" component={DoTest} />
+                <PrivateRoute exact path="/testdetails/:id" component={TestDetails} />
                 <PrivateRoute exact path="/feedback/:id" component={Feedback} />
                 <PrivateRoute exact path="/result" component={TestResult} />
               </Switch>

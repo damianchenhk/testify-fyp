@@ -86,6 +86,9 @@ const CourseDetails = ({ auth }) => {
                             .then(res => {
                                 setReport(res.data[0])
                             })
+                            .catch(err => {
+                                console.log("Error from getReportID");
+                            })
                     }
                 })
                 .catch(err => {

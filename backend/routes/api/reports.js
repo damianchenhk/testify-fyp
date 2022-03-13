@@ -23,6 +23,36 @@ router.post('/getReportID', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this report'}));
 });
 
+router.post('/isRegistered', (req, res) => {
+    Report.count({student_id: req.body.student_id, course_id: req.body.course_id})
+        .then(report => {
+            if(report > 0){
+                res.json(true)
+            }else{
+                res.json(false)
+            }
+        })
+        .catch(err => res.status(400).json({error: 'Unable to find this report'}));
+});
+
+router.post('/registeredReportsRecent', (req, res) => {
+    Report.find({student_id: req.body.student_id}).sort({ $natural: -1 }).limit(5)
+        .then(report => res.json(report))
+        .catch(err => res.status(400).json({error: 'Unable to find this report'}));
+});
+
+router.post('/studentTestReports', (req, res) => {
+    Report.find({tests_taken: {$elemMatch: {test_id: req.body.test_id}}}).sort({ $natural: -1 })
+        .then(reports => res.json(reports))
+        .catch(err => res.status(404).json({error: 'No Reports Found'}));
+});
+
+router.post('/studentTestReportsCount', (req, res) => {
+    Report.count({tests_taken: {$elemMatch: {test_id: req.body.test_id}}})
+        .then(reports => res.json(reports))
+        .catch(err => res.status(404).json({error: 'No Reports Found'}));
+});
+
 router.post('/getCourseStudents', (req, res) => {
     Report.find({course_id: req.body.course_id})
         .then(report => res.json(report))

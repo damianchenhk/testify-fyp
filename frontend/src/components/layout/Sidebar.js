@@ -37,7 +37,7 @@ const Sidebar = ({auth}) => {
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={[subMenuOpen()]}
           mode="inline"
-          style={{position: 'fixed', width: '300px'}}
+          style={{position: 'fixed', width: '250px'}}
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>

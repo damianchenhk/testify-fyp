@@ -11,6 +11,12 @@ router.get('/', (req, res) => {
         .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
 });
 
+router.get('/allCoursesRecent', (req, res) => {
+    Course.find().sort({ $natural: -1 }).limit(5)
+        .then(courses => res.json(courses))
+        .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
+});
+
 router.post('/mycourses', (req, res) => {
     Course.find({_id:req.body.ongoing_courses}).sort({ $natural: -1 })
         .then(courses => res.json(courses))
@@ -18,13 +24,13 @@ router.post('/mycourses', (req, res) => {
 });
 
 router.post('/instructorcourses', (req, res) => {
-    Course.find({intructor_id:req.body._id}).sort({ $natural: -1 })
+    Course.find({instructor_id:req.body.instructor_id}).sort({ $natural: -1 })
         .then(courses => res.json(courses))
         .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
 });
 
 router.post('/instructorcoursesRecent', (req, res) => {
-    Course.find({intructor_id:req.body._id}).sort({ $natural: -1 }).limit(5)
+    Course.find({instructor_id:req.body.instructor_id}).sort({ $natural: -1 }).limit(5)
         .then(courses => res.json(courses))
         .catch(err => res.status(404).json({nocoursesfound: 'No Courses Found'}));
 });

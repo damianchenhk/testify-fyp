@@ -15,7 +15,7 @@ const InstructorDashboard = ({ auth }) => {
 
     useEffect(() => {
         axios
-            .post('/api/courses/instructorcoursesRecent/', {intructor_id: auth.user.id})
+            .post('/api/courses/instructorcoursesRecent/', {instructor_id: auth.user.id})
             .then(res => {
                 setCourses(res.data)
             })

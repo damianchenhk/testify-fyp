@@ -14,7 +14,7 @@ const InstructorMyCourse = ({auth}) => {
 
   useEffect(() => {
     axios
-      .post('/api/courses/instructorcourses/', {intructor_id: auth.user.id})
+      .post('/api/courses/instructorcourses/', {instructor_id: auth.user.id})
       .then(res => {
         setCourses(res.data)
       })
