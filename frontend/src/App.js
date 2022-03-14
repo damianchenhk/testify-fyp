@@ -28,6 +28,10 @@ import MyCourses from "./components/dashboard/course/MyCourses";
 import InstructorMyCourse from "./components/dashboard/course/InstructorMyCourse";
 import InstructorReport from "./components/dashboard/report/InstructorReport";
 import TestDetails from "./components/dashboard/test/TestDetails";
+import BetaTest from "./components/dashboard/test/BetaTest";
+import BetaTestResult from "./components/dashboard/test/BetaTestResult";
+import BetaFeedback from "./components/dashboard/feedback/BetaFeedback";
+import PendingTests from "./components/dashboard/test/PendingTests";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -70,10 +74,14 @@ class App extends Component {
                 <PrivateRoute exact path="/addcourse" component={AddCourse} />
                 <PrivateRoute exact path="/addtest/:id" component={AddTest} />
                 <PrivateRoute exact path="/yourtests" component={YourTest} />
+                <PrivateRoute exact path="/pendingtests" component={PendingTests} />
                 <PrivateRoute exact path="/test/:id" component={DoTest} />
+                <PrivateRoute exact path="/betatest/:id" component={BetaTest} />
                 <PrivateRoute exact path="/testdetails/:id" component={TestDetails} />
                 <PrivateRoute exact path="/feedback/:id" component={Feedback} />
+                <PrivateRoute exact path="/betafeedback/:id" component={BetaFeedback} />
                 <PrivateRoute exact path="/result" component={TestResult} />
+                <PrivateRoute exact path="/betaresult" component={BetaTestResult} />
               </Switch>
             </div>
           </div>

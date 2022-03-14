@@ -7,14 +7,16 @@ import Sidebar from "../../layout/Sidebar";
 import ViewTestQuestions from "../test/ViewTestQuestions";
 import "../../../App.css";
 
-const TestResult = (props) => {
+const BetaTestResult = (props) => {
 
     const test = props.location.state.test;
     const answer = props.location.state.answer;
     var score = 0;
     
     for(let i = 0; i < props.location.state.score.length; i++){
-        score = score + props.location.state.score[i];
+        if(props.location.state.score[i] !== 0){
+            score = score + 1;
+        }
     }
 
     let questionList;
@@ -42,8 +44,8 @@ const TestResult = (props) => {
                         {questionList}
                         <Link
                             to={{
-                            pathname: `/feedback/${test._id}`,
-                                state: {course_id: test.course_id}
+                            pathname: `/betafeedback/${test._id}`,
+                                state: {course_id: test.course_id, tester_id: test.tester_id}
                             }}
                             className="btn btn-large waves-effect waves-light accent-3">
                             Provide Feedback
@@ -61,4 +63,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-)(TestResult);
+)(BetaTestResult);

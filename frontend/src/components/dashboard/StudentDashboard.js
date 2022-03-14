@@ -7,6 +7,7 @@ import axios from "axios";
 import StudentNewCourses from "./homepage/StudentNewCourses";
 import StudentMyCourses from "./homepage/StudentMyCourses";
 import StudentMyTests from "./homepage/StudentMyTests";
+import StudentPendingTests from "./homepage/StudentPendingTests";
 import '../../App.css';
 
 const StudentDashboard = ({ auth }) => {
@@ -205,6 +206,59 @@ const StudentDashboard = ({ auth }) => {
         }
     }
 
+    const pendingTestsSummary = () => {
+        if(myTests.length){
+            return (
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test</th>
+                            <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Students Approved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {myTests.filter(test => test.tester_id.length < 2).map((test, k) =>
+                            <StudentPendingTests key={k} test={test}/>
+                        )}
+                    </tbody>
+                    <tfoot style={{border: 'none'}}>
+                        <tr>
+                            <td colSpan={3} style={{textAlign: 'center'}}>
+                                <Link to="/yourtests" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
+                                    View More
+                                </Link>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </Table>
+            )
+        }else {
+            return (
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test</th>
+                            <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={3} style={{textAlign:'center'}}>You have not created any tests</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style={{border: 'none'}}>
+                        <tr>
+                            <td colSpan={3} style={{textAlign: 'center'}}>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </Table>
+            )
+        }
+    }
+
     return (
         <>
             <br></br>
@@ -223,11 +277,12 @@ const StudentDashboard = ({ auth }) => {
             </Row>
             <Row>
                 <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>My Tests</h5>
-                    {myTestsSummary()}
+                    <h5 style={{marginTop: '10px'}}>Tests Pending Approval</h5>
+                    {pendingTestsSummary()}
                 </Col>
                 <Col xs={12} lg md className="course-summary">
-                    <h5 style={{marginTop: '10px'}}>Pending Tests</h5>
+                    <h5 style={{marginTop: '10px'}}>My Tests</h5>
+                    {myTestsSummary()}
                 </Col>
             </Row>
         </>

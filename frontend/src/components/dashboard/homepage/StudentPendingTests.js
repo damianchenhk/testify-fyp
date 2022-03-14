@@ -2,27 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const StudentMyTests = (props) => {
+const StudentPendingTests = (props) => {
     const  test  = props.test;
-    const [studentCount, setStudentCount] = useState(0);
     const [course_name, setCourseName] = useState('');
 
     useEffect(() => {
         axios
-            .post('/api/reports/studentTestReportsCount/', {test_id: test._id})
+            .get('/api/courses/'+test.course_id)
             .then(res => {
-                setStudentCount(res.data)
-                axios
-                    .get('/api/courses/'+test.course_id)
-                    .then(res => {
-                        setCourseName(res.data.course_name)
-                    })
-                    .catch(err => {
-                        console.log('Error in Courses: ' + err);
-                    })
+                setCourseName(res.data.course_name)
             })
-            .catch(err =>{
-                console.log('Error from studentTestReportsCount: ' + err);
+            .catch(err => {
+                console.log('Error in Courses: ' + err);
             })
     }, []);
 
@@ -42,9 +33,9 @@ const StudentMyTests = (props) => {
                         { course_name }
                 </Link>
             </td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{studentCount}</td>
+            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{test.tester_id.length}</td>
         </tr>
     )
 };
 
-export default StudentMyTests;
+export default StudentPendingTests;

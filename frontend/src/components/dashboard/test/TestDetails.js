@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row, Col, Table, Container, Pagination } from "react-bootstrap";
+import { Row, Col, Table, Container } from "react-bootstrap";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
-import FeedbackCard from "../feedback/FeedbackCard";
 import FeedbackList from "../feedback/FeedbackList";
 import "../../../App.css";
 
@@ -159,6 +158,7 @@ const TestDetails = ({ auth }) => {
 
             return(
                 <>
+                    <h6><strong>No. Students Checked: </strong>{test.tester_id?.length}</h6>
                     <h6><strong>No. Students Attempted: </strong>{reports?.length}</h6>
                     <h6><strong>Test Effectiveness: </strong>{((effective / reports?.length) / 6 * 100).toFixed(0)}%</h6>
                     <h6><strong>Test Difficulty: </strong>{difficulty}</h6>
@@ -168,6 +168,7 @@ const TestDetails = ({ auth }) => {
         } else {
             return(
                 <>
+                    <h6><strong>No. Students Checked: </strong>0</h6>
                     <h6><strong>No. Students Attempted: </strong>0</h6>
                     <h6><strong>Test Effectiveness: </strong>0%</h6>
                     <h6><strong>Test Difficulty: </strong></h6>

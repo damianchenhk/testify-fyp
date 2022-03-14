@@ -121,7 +121,7 @@ const CourseDetails = ({ auth }) => {
             for (let i = 0; i < tests?.length; i++) {
                 let children = []
 
-                if(tests[i].creator_id !== auth.user.id){
+                if(tests[i].creator_id !== auth.user.id && tests[i].tester_id.length === 2){
                     children.push(<td><h6>{tests[i].test_name ? tests[i].test_name : null}</h6>By: {tests[i].creator_name ? tests[i].creator_name : null}</td>)
                     children.push(<td>{tests[i].test_description ? tests[i].test_description : null}</td>)
                     children.push(
@@ -145,7 +145,7 @@ const CourseDetails = ({ auth }) => {
             }
             return table
         }else{
-            table.push(<tr><td colSpan={2} style={{textAlign:'center'}}>There are no tests available</td></tr>)
+            table.push(<tr><td colSpan={3} style={{textAlign:'center'}}>There are no tests available</td></tr>)
             return table
         }
     }
@@ -159,6 +159,131 @@ const CourseDetails = ({ auth }) => {
 
     const toggleTester = () => {
         setBetaTester(value => !value)
+    }
+
+    const myTestsTable = () => {
+        let myTestTable = []
+        if(tests.length){
+            for(let testIndex = 0; testIndex < tests?.length; testIndex++){
+                if(tests[testIndex].creator_id === auth.user.id){
+                    myTestTable.push(
+                        <tr>
+                            <td><h6>{tests[testIndex].test_name}</h6></td>
+                            <td>{tests[testIndex].test_description}</td>
+                            <td>
+                                <Link 
+                                    to={{pathname: `/testdetails/${tests[testIndex]._id}`,}}
+                                    style={{width:'130px', fontSize:'9px'}}
+                                    className='btn waves-effect waves-light accent-3'
+                                >
+                                    View Details
+                                </Link>
+                            </td>
+                        </tr>
+                    )
+                }
+            }
+            return(
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Description</th>
+                            <th style={{textAlign:'center', width:'10%'}}></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {myTestTable}
+                    </tbody>
+                </Table>
+            )
+        }else{
+            return(
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Description</th>
+                            <th style={{textAlign:'center', width:'10%'}}></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={3} style={{textAlign:'center'}}>You have not created any tests</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            )
+        }
+    }
+
+    const pendingTestsTable = () => {
+        let tempPendingTestTable = []
+        if(tests.length){
+            for(let testIndex = 0; testIndex < tests?.length; testIndex++){
+                if(tests[testIndex].creator_id !== auth.user.id && tests[testIndex].tester_id.length !== 2){
+                    tempPendingTestTable.push(
+                        <tr>
+                            <td><h6>{tests[testIndex].test_name}</h6></td>
+                            <td>{tests[testIndex].test_description}</td>
+                            <td>
+                                {report.tests_taken?.map(test => test.test_id).includes(tests[testIndex]._id) ? <Button 
+                                    style={{width:'130px', fontSize:'9px'}}
+                                    className='btn waves-effect waves-light accent-3'
+                                    disabled
+                                >
+                                    Test Completed
+                                </Button> : <Link 
+                                    to={{pathname: `/betatest/${tests[testIndex]._id}`,}}
+                                    style={{width:'130px', fontSize:'9px'}}
+                                    className='btn waves-effect waves-light accent-3'
+                                >
+                                    Attempt Test
+                                </Link>}
+                            </td>
+                        </tr>
+                    )
+                }
+            }
+            if(tempPendingTestTable.length < 1){
+                tempPendingTestTable.push(
+                    <tr>
+                        <td colSpan={3} style={{textAlign:'center'}}>There are no tests requiring testing</td>
+                    </tr>
+                )
+            }
+            return(
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Description</th>
+                            <th style={{textAlign:'center', width:'10%'}}></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tempPendingTestTable}
+                    </tbody>
+                </Table>
+            )
+        }else{
+            return(
+                <Table bordered responsive>
+                    <thead>
+                        <tr>
+                            <th style={{textAlign:'center'}}>Test Name</th>
+                            <th style={{textAlign:'center'}}>Test Description</th>
+                            <th style={{textAlign:'center', width:'10%'}}></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colSpan={3} style={{textAlign:'center'}}>There are no tests requiring testing</td>
+                        </tr>
+                    </tbody>
+                </Table>
+            )
+        }
     }
 
     return (
@@ -203,6 +328,12 @@ const CourseDetails = ({ auth }) => {
                         <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
                         <br></br>
                     </RegisterPopUp>
+                    {report.beta_tester ? <Container>
+                        <br></br>
+                        <br></br>
+                        <h4>Tests Requiring Checks</h4>
+                        {pendingTestsTable()}
+                    </Container> : null}
                     {registered ? <Container>
                         <br></br>
                         <br></br>
@@ -219,6 +350,9 @@ const CourseDetails = ({ auth }) => {
                                 {testTable()}
                             </tbody>
                         </Table>
+                        <br></br>
+                        <h4>My Tests</h4>
+                        {myTestsTable()}
                     </Container> : null}
                 </Col>
             </div>

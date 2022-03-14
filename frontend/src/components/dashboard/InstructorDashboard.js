@@ -87,11 +87,11 @@ const InstructorDashboard = ({ auth }) => {
                 <strong>Hey there,</strong> {auth.user.name?.split(" ")[0]}
             </h4>
             <Row>
-                <Col xs={5} className="course-summary">
+                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
                     <h5 style={{marginTop: '10px'}}>My Courses</h5>
                     {courseSummary()}
                 </Col>
-                <Col xs={5} className="course-summary">
+                <Col xs={12} lg md className="course-summary">
                     Test
                 </Col>
             </Row>

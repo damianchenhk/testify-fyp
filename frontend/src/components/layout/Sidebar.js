@@ -24,6 +24,8 @@ const Sidebar = ({auth}) => {
         return 'courses';
       case '/yourtests':
         return 'tests';
+      case '/pendingtests':
+          return 'tests';
       default:
         return 'courses';
     }
@@ -48,7 +50,7 @@ const Sidebar = ({auth}) => {
           </SubMenu>
           <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
             <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>Your Tests</Menu.Item>
-            <Menu.Item key="pendingtests">Pending Tests</Menu.Item>
+            <Menu.Item key="/pendingtests" onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
           </SubMenu>
           <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>
         </Menu>
