@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const InstructorCourseSummary = (props) => {
+const AdminCourseSummary = (props) => {
     const  course  = props.course;
     const [student_count, setStudentCount] = useState('');
     const [test_count, setTestCount] = useState('');
@@ -30,7 +30,7 @@ const InstructorCourseSummary = (props) => {
         <tr key={course._id}>
             <td style={{border:'solid 1px #dee2e6', borderLeft:'none'}}>
                 <Link to={{
-                        pathname: `/coursereport/${course._id}`,
+                        pathname: `/admincourseview/${course._id}`,
                     }}>
                         { course.course_name }
                 </Link>
@@ -43,4 +43,4 @@ const InstructorCourseSummary = (props) => {
     )
 };
 
-export default InstructorCourseSummary;
+export default AdminCourseSummary;

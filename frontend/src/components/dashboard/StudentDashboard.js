@@ -15,6 +15,7 @@ const StudentDashboard = ({ auth }) => {
     const [newCourses, setNewCourses] = useState([]);
     const [registeredCourses, setRegisteredCourses] = useState([]);
     const [myTests, setMyTests] = useState([]);
+    const [myPendingTests, setMyPendingTests] = useState([]);
 
     useEffect(() => {
         axios
@@ -29,6 +30,14 @@ const StudentDashboard = ({ auth }) => {
                             .post('/api/tests/myTestsRecent/', {creator_id: auth.user.id})
                             .then(res => {
                                 setMyTests(res.data)
+                                axios
+                                    .post('/api/tests/myPendingTestsRecent/', {creator_id: auth.user.id})
+                                    .then(res => {
+                                        setMyPendingTests(res.data)
+                                    })
+                                    .catch(err => {
+                                        console.log('Error from myPendingTestsRecent: ' + err);
+                                    })
                             })
                             .catch(err => {
                                 console.log('Error from myTests: ' + err);
@@ -207,7 +216,7 @@ const StudentDashboard = ({ auth }) => {
     }
 
     const pendingTestsSummary = () => {
-        if(myTests.length){
+        if(myPendingTests.length){
             return (
                 <Table bordered responsive>
                     <thead>
@@ -218,7 +227,7 @@ const StudentDashboard = ({ auth }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {myTests.filter(test => test.tester_id.length < 2).map((test, k) =>
+                        {myPendingTests.map((test, k) =>
                             <StudentPendingTests key={k} test={test}/>
                         )}
                     </tbody>
@@ -245,7 +254,7 @@ const StudentDashboard = ({ auth }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td colSpan={3} style={{textAlign:'center'}}>You have not created any tests</td>
+                            <td colSpan={3} style={{textAlign:'center'}}>You have no tests pending approval</td>
                         </tr>
                     </tbody>
                     <tfoot style={{border: 'none'}}>

@@ -25,11 +25,11 @@
 
 .cancel{
     margin-left: 10px;
-    background-color: rgb(148, 0, 0);
+    background-color: rgb(182, 0, 0);
 }
 
 .cancel:hover{
-    background-color: rgb(184, 0, 0);
+    background-color: rgb(200, 0, 0);
 }
 
 .form-check-input:checked{

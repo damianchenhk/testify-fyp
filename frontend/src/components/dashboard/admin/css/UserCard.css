@@ -1,0 +1,13 @@
+.cancel{
+    background-color: rgb(182, 0, 0);
+    font-size: 10px;
+}
+
+.cancel:hover{
+    background-color: rgb(200, 0, 0);
+}
+
+.confirm{
+    font-size: 10px;
+    margin-right: 5px;
+}

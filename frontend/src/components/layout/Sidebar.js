@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
-import { BsHouse,BsPen, BsGear, BsLaptop } from "react-icons/bs";
+import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson } from "react-icons/bs";
 import { connect } from "react-redux";
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
@@ -43,15 +43,17 @@ const Sidebar = ({auth}) => {
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
+            {auth.user.role==='Admin' ? <Menu.Item key="/admincourses" onClick={() => history.push("/admincourses")}>All Courses</Menu.Item> : null}
             {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
             {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
             {auth.user.role==='Student' ? <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item> : null}
             {auth.user.role==='Student' ? <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item> : null}
           </SubMenu>
-          <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
-            <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>Your Tests</Menu.Item>
+          {auth.user.role==='Student' ? <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
+            <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>My Tests</Menu.Item>
             <Menu.Item key="/pendingtests" onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
-          </SubMenu>
+          </SubMenu> : null}
+          {auth.user.role==='Admin' ? <Menu.Item key="/adminuserlist" onClick={() => history.push("/adminuserlist")} icon={<BsFileEarmarkPerson/>}>View Users</Menu.Item> : null}
           <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>
         </Menu>
       </div>

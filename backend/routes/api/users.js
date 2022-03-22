@@ -101,6 +101,18 @@ router.get('/:id', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this user'}));
 });
 
+router.post('/allUsers', (req, res) => {
+    User.find({_id: {$ne: req.body.user_id}}).sort({ $natural: -1 })
+        .then(users => res.json(users))
+        .catch(err => res.status(404).json({nocoursesfound: 'No Users Found'}));
+});
+
+router.post('/allUsersRecent', (req, res) => {
+    User.find({_id: {$ne: req.body.user_id}}).sort({ $natural: -1 }).limit(5)
+        .then(users => res.json(users))
+        .catch(err => res.status(404).json({nocoursesfound: 'No Users Found'}));
+});
+
 router.put('/:id', (req, res) => {
     User.findByIdAndUpdate(req.params.id, req.body)
         .then(user => res.json({msg: 'Updated successfully'}))

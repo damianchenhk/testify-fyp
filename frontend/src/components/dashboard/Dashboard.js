@@ -7,6 +7,7 @@ import { Col } from "react-bootstrap";
 import Sidebar from "../layout/Sidebar";
 import StudentDashboard from "./StudentDashboard";
 import InstructorDashboard from "./InstructorDashboard";
+import AdminDashboard from "./AdminDashboard";
 import "../../App.css";
 
 const Dashboard = ({auth}) => {
@@ -17,6 +18,8 @@ const Dashboard = ({auth}) => {
                 return <StudentDashboard/>
             case 'Instructor':
                 return <InstructorDashboard/>
+            case 'Admin':
+                return <AdminDashboard/>
             default:
                 return <StudentDashboard/>
         }

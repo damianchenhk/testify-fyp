@@ -32,6 +32,12 @@ const InstructorReport = ({ auth }) => {
         filled: false
     });
     const [testSort, setTestSort] = useState('students_completed');
+    const [topTests, setTopTests] = useState({
+        mostPopularScore: 0,
+        mostPopularTests: [],
+        mostEffectiveScore: 0,
+        mostEffectiveTests: []
+    });
 
     useEffect(() => {
         axios
@@ -48,15 +54,15 @@ const InstructorReport = ({ auth }) => {
                         setTests(res.data)
                     axios
                         .post('/api/feedback/getCourseFeedback', {course_id: id})
-                        .then(res => [
+                        .then(res => {
                             setFeedbacks(res.data)
-                        ])
+                        })
                         .catch(err => {
                             console.log("Error from courseFeedback")    
                         })
                     })
                     .catch(err => {
-                        console.log("Error from courseTests")
+                        console.log("Error from courseTests: " + err)
                     })
                 })
                 .catch(err => {
@@ -94,14 +100,26 @@ const InstructorReport = ({ auth }) => {
         if(reports.length){
             let sortedReports = [...reports];
             for (let i = 0; i < sortedReports?.length; i++) {
-                var score = 0
+                var score = 0;
+                var bonusScore = 0;
 
                 for(let testIndex = 0; testIndex < sortedReports[i].tests_taken?.length; testIndex++){
                     for(let questionIndex = 0; questionIndex < sortedReports[i].tests_taken[testIndex].result?.length; questionIndex++){
                         score += sortedReports[i].tests_taken[testIndex].result[questionIndex] * sortedReports[i].tests_taken[testIndex].weightage[questionIndex]
                     }
                 }
-                sortedReports[i].totalScore = score + sortedReports[i].participation_score
+                if(tests.length){
+                    if(topTests?.mostEffectiveTests.map(test => test.creator_id).includes(reports[i].student_id)){
+                        bonusScore += 100
+                    }
+    
+                    if(topTests?.mostPopularTests.map(test => test.creator_id).includes(reports[i].student_id)){
+                        bonusScore += 100
+                    }
+                }
+
+                sortedReports[i].bonusScore = bonusScore;
+                sortedReports[i].totalScore = score + bonusScore + sortedReports[i].participation_score
 
             }
             sortedReports.sort((a, b) => {
@@ -128,6 +146,7 @@ const InstructorReport = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Bonus Points</th>
                             <th style={{textAlign:'center', width:'10%'}}>Participation Score</th>
                             <th style={{textAlign:'center', width:'10%'}}>Participation %</th>
                         </tr>
@@ -139,6 +158,7 @@ const InstructorReport = ({ auth }) => {
                                 <td style={{border:'solid 1px #dee2e6'}}>{report.student_name}</td>
                                 <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_created.length}</td>
                                 <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_taken.length}</td>
+                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.bonusScore}</td>
                                 <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.totalScore}</td>
                                 <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{report.percentageScore + "%"}</td>
                             </tr>
@@ -362,6 +382,8 @@ const InstructorReport = ({ auth }) => {
     const testStatsTable = () => {
         if(tests.length){
             let sortedTests = [...tests];
+            let tempEffectiveScore = topTests.mostEffectiveScore;
+            let tempPopularScore = topTests.mostPopularScore;
             for (let i = 0; i < sortedTests?.length; i++) {
                 var numStudentsCompleted = 0;
                 for(let reportIndex = 0; reportIndex < reports?.length; reportIndex++){
@@ -384,19 +406,54 @@ const InstructorReport = ({ auth }) => {
                     }
                 }
 
-                sortedTests[i].test_effectiveness = ((tempEffective / numStudentsCompleted) / 6 * 100).toFixed(0);
-                sortedTests[i].test_popularity = (((tempPopularity / numStudentsCompleted) / 6 * 50) + ((sortedTests[i].students_completed / (reports?.length - 1)) * 50)).toFixed(0);
+                if(numStudentsCompleted > 0){
+                    sortedTests[i].test_effectiveness = ((tempEffective / numStudentsCompleted) / 6 * 100).toFixed(0);
+                    sortedTests[i].test_popularity = (((tempPopularity / numStudentsCompleted) / 6 * 50) + ((sortedTests[i].students_completed / (reports?.length - 1)) * 50)).toFixed(0);
 
-                if(tempDifficulty / numStudentsCompleted < 2){
-                    sortedTests[i].test_difficulty = "Too Difficult"
-                } else if(tempDifficulty / numStudentsCompleted < 3){
-                    sortedTests[i].test_difficulty = "Difficult"
-                } else if(tempDifficulty / numStudentsCompleted < 4){
-                    sortedTests[i].test_difficulty = "Just Right"
-                } else if(tempDifficulty / numStudentsCompleted < 5){
-                    sortedTests[i].test_difficulty = "Easy"
-                } else{
-                    sortedTests[i].test_difficulty = "Too Easy"
+                    if(tempDifficulty / numStudentsCompleted < 2){
+                        sortedTests[i].test_difficulty = "Too Difficult"
+                    } else if(tempDifficulty / numStudentsCompleted < 3){
+                        sortedTests[i].test_difficulty = "Difficult"
+                    } else if(tempDifficulty / numStudentsCompleted < 4){
+                        sortedTests[i].test_difficulty = "Just Right"
+                    } else if(tempDifficulty / numStudentsCompleted < 5){
+                        sortedTests[i].test_difficulty = "Easy"
+                    } else{
+                        sortedTests[i].test_difficulty = "Too Easy"
+                    }
+                } else {
+                    sortedTests[i].test_effectiveness = 0;
+                    sortedTests[i].test_popularity = 0;
+                    sortedTests[i].test_difficulty = "-";
+                }
+
+                if(feedbacks.length){
+                    if(sortedTests[i].test_effectiveness > tempEffectiveScore){
+                        let tempTopTest = topTests;
+                        let tempEffectiveTest = []
+                        tempEffectiveScore = Number(sortedTests[i].test_effectiveness);
+                        tempTopTest.mostEffectiveScore = Number(sortedTests[i].test_effectiveness);
+                        tempEffectiveTest.push({test_id: sortedTests[i]._id, creator_id: sortedTests[i].creator_id})
+                        tempTopTest.mostEffectiveTests = tempEffectiveTest
+                        setTopTests(tempTopTest);
+                    }else if(sortedTests[i].test_effectiveness === tempEffectiveScore){
+                        let tempTopTest = topTests;
+                        tempTopTest.mostEffectiveTests.push({test_id: sortedTests[i]._id, creator_id: sortedTests[i].creator_id});
+                        setTopTests(tempTopTest);
+                    }
+                    if(sortedTests[i].test_popularity > tempPopularScore){
+                        let tempTopTest = topTests;
+                        let tempPopularTest = []
+                        tempPopularScore = Number(sortedTests[i].test_popularity);
+                        tempTopTest.mostPopularScore = Number(sortedTests[i].test_popularity);
+                        tempPopularTest.push({test_id: sortedTests[i]._id, creator_id: sortedTests[i].creator_id})
+                        tempTopTest.mostPopularTests = tempPopularTest
+                        setTopTests(tempTopTest);
+                    }else if(sortedTests[i].test_effectiveness === tempPopularScore){
+                        let tempTopTest = topTests;
+                        tempTopTest.mostPopularTests.push({test_id: sortedTests[i]._id, creator_id: sortedTests[i].creator_id});
+                        setTopTests(tempTopTest);
+                    }
                 }
             }
 

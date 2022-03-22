@@ -14,7 +14,6 @@ const DoTest = ({auth}) => {
   const [test, setTest] = useState({});
   const [report, setReport] = useState({});
   const [answer_selected, setAnswerSelected] = useState([]);
-  const [score, setScore] = useState(0);
   const history = useHistory();
     
   useEffect(() => {
@@ -42,39 +41,41 @@ const DoTest = ({auth}) => {
 
   const onChange = (value, index) => {
     let items = answer_selected;
-    let answers = [...test.answers];
     let item = {...items[index]};
-    let currentScore = [];
+    
     item.answer_selected = value;
     items[index] = item.answer_selected;
+    console.log(items)
 
     setAnswerSelected(items);
-    for(var i=0; i < answers.length; i++){
-      if(items[i] === answers[i]){
+  }
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    let currentScore = [];
+
+    for(var i=0; i < test.answers.length; i++){
+      if(answer_selected[i] === test.answers[i]){
         currentScore[i] = 1;
       }else{
         currentScore[i] = 0;
       }
     }
-    setScore(currentScore);
-  }
-
-  const onSubmit = e => {
-    e.preventDefault();
 
     const data = {
       tests_taken: report.tests_taken.concat({
         test_id: id,
         answers: answer_selected,
         weightage: test.concept_weightage,
-        result: score,
+        result: currentScore,
         lesson_tested: test.concept_tested
       })
     }
     axios
       .put('/api/reports/'+report._id, data)
       .then(res => {
-          history.push('/result', {answer: answer_selected, test: test, score: score});
+          history.push('/result', {answer: answer_selected, test: test, score: currentScore});
       })
       .catch(err => {
           console.log("Error in Reports!");

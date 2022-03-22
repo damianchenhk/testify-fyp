@@ -29,6 +29,12 @@ router.post('/myTestsRecent', (req, res) => {
         .catch(err => res.status(400).json({error: 'Unable to find this test'}));
 });
 
+router.post('/myPendingTestsRecent', (req, res) => {
+    Test.find({creator_id: req.body.creator_id, $expr:{$lt:[{$size:"$tester_id"},2]}}).sort({ $natural: -1 }).limit(5)
+        .then(test => res.json(test))
+        .catch(err => res.status(400).json({error: 'Unable to find this test'}));
+});
+
 router.post('/courseTests', (req, res) => {
     Test.find({course_id: req.body.course_id})
         .then(test => res.json(test))
