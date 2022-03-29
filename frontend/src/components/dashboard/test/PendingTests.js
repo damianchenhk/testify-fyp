@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container } from "react-bootstrap";
+import { BsFillPatchCheckFill, BsFillPersonFill, BsPersonCheck } from "react-icons/bs";
 import axios from "axios";
 import TestCard from "./TestCard";
 
@@ -41,15 +42,17 @@ const PendingTest = ({ auth }) => {
         <Col className="align-items-center dashboard">
           <div className="hero">
             <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/testHero.png"/>
-            <h3 className="hero-text">Pending Tests</h3>
+            <h3 className="hero-text"><BsPersonCheck style={{marginBottom:'7px'}}/> Pending Tests</h3>
           </div>
           <Container className="dash-cards" style={{width:'90%'}}>
-            <br></br>
             <Table>
               <thead>
                 <tr>
-                  <th style={{width:'33%', textAlign:'center'}}>Title</th>
+                  <th style={{textAlign:'center'}}>Title</th>
                   <th style={{textAlign:'center'}}>Description</th>
+                  <th style={{textAlign:'center'}}>Course</th>
+                  <th style={{textAlign:'center', width:'5%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                  <th style={{textAlign:'center', width:'5%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
                   <th style={{width:'10%'}}></th>
                 </tr>
               </thead>

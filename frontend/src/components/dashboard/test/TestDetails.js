@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container } from "react-bootstrap";
-import { BsBarChartLine } from "react-icons/bs";
-import { MdOutlineFeedback } from "react-icons/md";
+import { BsBarChartLine, BsFillPatchCheckFill } from "react-icons/bs";
+import { MdOutlineFeedback, MdCancel } from "react-icons/md";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
@@ -162,9 +162,9 @@ const TestDetails = ({ auth }) => {
                 <>
                     <div className="test-stats">
                         <div className="test-checked">
-                            <h6 className="test-checked-color"><strong>No. Students Checked</strong></h6>
+                            <h6 className="test-checked-color"><strong>Approved?</strong></h6>
                         </div>
-                        <h5 className="test-checked-color"><strong>{test.tester_id?.length}</strong></h5>
+                        <h5 className="test-checked-color">{test.tester_id?.length === 2 ? <BsFillPatchCheckFill style={{marginBottom:'5px'}} title='Approved'/> : <MdCancel style={{marginBottom:'5px'}} title='Not Approved'/>}</h5>
                         <div className="test-attempt">
                             <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
                         </div>
@@ -189,9 +189,9 @@ const TestDetails = ({ auth }) => {
                 <>
                     <div className="test-stats">
                         <div className="test-checked">
-                            <h6 className="test-checked-color"><strong>No. Students Checked</strong></h6>
+                            <h6 className="test-checked-color"><strong>Approved?</strong></h6>
                         </div>
-                        <h5 className="test-checked-color"><strong>-</strong></h5>
+                        <h5 className="test-checked-color"><MdCancel style={{marginBottom:'5px'}} title='Not Approved'/></h5>
                         <div className="test-attempt">
                             <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
                         </div>
@@ -225,16 +225,18 @@ const TestDetails = ({ auth }) => {
                     <h3>{test.test_name}</h3>
                     <h6>{test.test_description}</h6>
                     <Row>
-                        <Container className="dash-cards" style={{width:'90%'}}>
+                        <Container className="dash-cards">
                             <br></br>
                             <h4><BsBarChartLine style={{marginBottom:'10px'}}/> Test Statistics</h4>
                             <hr></hr>
+                            <br></br>
                             {testStats()}
+                            <br></br>
                             <br></br>
                         </Container>
                     </Row>
                     <Row>
-                        <Container className="dash-cards" style={{width:'90%'}}>
+                        <Container className="dash-cards">
                             <br></br>
                             <h4><BsBarChartLine style={{marginBottom:'5px'}}/> Question Statistics</h4>
                             {testSummary()}
@@ -242,7 +244,7 @@ const TestDetails = ({ auth }) => {
                         </Container>
                     </Row>
                     <Row>
-                        <Container className="dash-cards" style={{width:'90%'}}>
+                        <Container className="dash-cards">
                             <br></br>
                             <h4><MdOutlineFeedback style={{marginBottom:'5px'}}/> Feedback</h4>
                             <FeedbackList feedbacks={feedbacks}/>

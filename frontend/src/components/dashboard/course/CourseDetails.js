@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
-import { BsCameraVideo, BsPen, BsFillPersonCheckFill } from "react-icons/bs";
+import { BsCameraVideo, BsPen, BsPersonCheck } from "react-icons/bs";
 import { RiPencilRuler2Line } from "react-icons/ri";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
@@ -301,7 +301,7 @@ const CourseDetails = ({ auth }) => {
                     <h5>Instructor: {course.instructor_name}</h5>
                     <h6>{course.course_description}</h6>
                     <br></br>
-                    <Container className="dash-cards" style={{width:'90%'}}>
+                    <Container className="dash-cards">
                         <br></br>
                         <h4><BsCameraVideo style={{marginBottom:'5px'}}/> Lessons</h4>
                         <Table bordered responsive style={{border:'1'}}>
@@ -344,15 +344,15 @@ const CourseDetails = ({ auth }) => {
                     {report.beta_tester ? 
                         <>
                             <br></br>
-                            <Container className="dash-cards" style={{width:'90%'}}>
+                            <Container className="dash-cards">
                                 <br></br>
-                                <h4><BsFillPersonCheckFill style={{marginBottom:'10px'}}/> Tests Pending Approval</h4>
+                                <h4><BsPersonCheck style={{marginBottom:'9px'}}/> Tests Pending Approval</h4>
                                 {pendingTestsTable()}
                             </Container> 
                         </>
                     : null}
                     <br></br>
-                    {registered ? <Container className="dash-cards" style={{width:'90%'}}>
+                    {registered ? <Container className="dash-cards">
                         <br></br>
                         <h4><RiPencilRuler2Line style={{marginBottom:'10px'}}/> Available Tests</h4>
                         <Table bordered responsive style={{border:'1'}}>
@@ -371,7 +371,7 @@ const CourseDetails = ({ auth }) => {
                     {registered ?
                     <>
                         <br></br>
-                        <Container className="dash-cards" style={{width:'90%'}}>
+                        <Container className="dash-cards">
                             <br></br>
                             <h4><BsPen style={{marginBottom:'10px'}}/> My Tests</h4>
                             {myTestsTable()}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Row, Col } from "react-bootstrap";
-import { BsPen, BsLaptop, BsPersonSquare, BsFillPersonCheckFill,BsFillPatchCheckFill } from "react-icons/bs";
+import { BsPen, BsLaptop, BsPersonSquare, BsPersonCheck, BsFillPatchCheckFill, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
 import axios from "axios";
 
 import StudentNewCourses from "./homepage/StudentNewCourses";
@@ -60,10 +60,10 @@ const StudentDashboard = ({ auth }) => {
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Registered?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,10 +79,10 @@ const StudentDashboard = ({ auth }) => {
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Registered?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,8 +103,8 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center'}}>Instructor</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Tests Remaining</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="Tests Remaining"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,8 +121,8 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center'}}>Instructor</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Tests Remaining</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="Tests Remaining"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,8 +143,8 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Approved?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,8 +161,8 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Approved</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,7 +183,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students Approved</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -200,7 +200,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -225,7 +225,7 @@ const StudentDashboard = ({ auth }) => {
             <Row style={{margin:'0 10px 20px'}}>
                 <Col xs={12} lg={7} md style={{padding:'0'}}>
                     <div className="course-summary">
-                        <h5><BsPersonSquare/> <strong>My Courses</strong></h5>
+                        <h5><BsPersonSquare style={{marginBottom:'3px'}}/> <strong>My Courses</strong></h5>
                         {myCourseSummary()}
                     </div>
                     <div style={{position:'relative', bottom:'50px'}}>
@@ -236,7 +236,7 @@ const StudentDashboard = ({ auth }) => {
                 </Col>
                 <Col xs={12} lg={5} md style={{padding:'0'}}>
                     <div className="course-summary">
-                        <h5><BsLaptop/> <strong>New Courses</strong></h5>
+                        <h5><BsLaptop style={{marginBottom:'4px'}}/> <strong>New Courses</strong></h5>
                         {newCourseSummary()}
                     </div>
                     <div style={{position:'relative', bottom:'50px'}}>
@@ -249,7 +249,7 @@ const StudentDashboard = ({ auth }) => {
             <Row style={{margin:'0 10px 20px'}}>
                 <Col xs={12} lg={5} md style={{padding:'0'}}>
                     <div className="course-summary">
-                        <h5><BsFillPersonCheckFill/> <strong>Tests Pending Approval</strong></h5>
+                        <h5><BsPersonCheck style={{marginBottom:'5px'}}/> <strong>Tests Pending Approval</strong></h5>
                         {pendingTestsSummary()}
                     </div>
                     <div style={{position:'relative', bottom:'50px'}}>
@@ -260,7 +260,7 @@ const StudentDashboard = ({ auth }) => {
                 </Col>
                 <Col xs={12} lg={7} md style={{padding:'0'}}>
                     <div className="course-summary">
-                        <h5><BsPen/> <strong>My Tests</strong></h5>
+                        <h5><BsPen style={{marginBottom:'5px'}}/> <strong>My Tests</strong></h5>
                         {myTestsSummary()}
                     </div>
                     <div style={{position:'relative', bottom:'50px'}}>

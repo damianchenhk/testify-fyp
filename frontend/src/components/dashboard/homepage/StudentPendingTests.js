@@ -25,7 +25,10 @@ const StudentPendingTests = (props) => {
             <td>
                 <Link to={{
                         pathname: `/coursedetails/${test.course_id}`,
-                    }}>
+                    }}
+                    style={{color:'black'}}
+                    className="test-summary-card"
+                >
                         { course_name }
                 </Link>
             </td>

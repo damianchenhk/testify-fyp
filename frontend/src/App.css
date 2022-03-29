@@ -259,3 +259,7 @@
 .clickable-table th:hover{
  cursor: auto;
 }
+
+.test-summary-card:hover{
+  text-decoration: underline;
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
-import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson, BsPersonSquare, BsFillPersonCheckFill } from "react-icons/bs";
+import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson, BsPersonSquare, BsPersonCheck } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { RiPencilRuler2Line } from "react-icons/ri";
 import { connect } from "react-redux";
@@ -54,7 +54,7 @@ const Sidebar = ({auth}) => {
           </SubMenu>
           {auth.user.role==='Student' ? <SubMenu key="tests" title="Tests" icon={<RiPencilRuler2Line/>}>
             <Menu.Item key="/yourtests" icon={<BsPen/>} style={{color:'#0f443f'}} onClick={() => history.push("/yourtests")}>My Tests</Menu.Item>
-            <Menu.Item key="/pendingtests" icon={<BsFillPersonCheckFill/>} style={{color:'#0f443f'}} onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
+            <Menu.Item key="/pendingtests" icon={<BsPersonCheck/>} style={{color:'#0f443f'}} onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
           </SubMenu> : null}
           {auth.user.role==='Admin' ? <Menu.Item key="/adminuserlist" onClick={() => history.push("/adminuserlist")} icon={<BsFileEarmarkPerson/>}>View Users</Menu.Item> : null}
           <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>
