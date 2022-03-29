@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
+import { BsCameraVideo, BsPen, BsFillPersonCheckFill } from "react-icons/bs";
+import { RiPencilRuler2Line } from "react-icons/ri";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
@@ -211,6 +213,7 @@ const CourseDetails = ({ auth }) => {
                         <tr>
                             <td colSpan={3} style={{textAlign:'center'}}>You have not created any tests</td>
                         </tr>
+                        
                     </tbody>
                 </Table>
             )
@@ -292,15 +295,16 @@ const CourseDetails = ({ auth }) => {
                 <Col>
                     <Sidebar/>
                 </Col>
-                <Col className="align-items-center dashboard">
+                <Col className="dashboard course-details">
                     <br></br>
-                    <h2>{course.course_name}</h2>
+                    <h3>{course.course_name}</h3>
                     <h5>Instructor: {course.instructor_name}</h5>
                     <h6>{course.course_description}</h6>
                     <br></br>
-                    <Container>
-                        <h4>Lessons</h4>
-                        <Table bordered hover responsive style={{border:'1'}}>
+                    <Container className="dash-cards" style={{width:'90%'}}>
+                        <br></br>
+                        <h4><BsCameraVideo style={{marginBottom:'5px'}}/> Lessons</h4>
+                        <Table bordered responsive style={{border:'1'}}>
                             <thead>
                                 <tr>
                                     <th style={{width:'10%', textAlign:'center'}}>No.</th>
@@ -312,32 +316,45 @@ const CourseDetails = ({ auth }) => {
                                 {lessonTable()}
                             </tbody>
                         </Table>
+                        {registered ? 
+                            <>
+                                <Link to={{
+                                    pathname: `/viewcourse/${course._id}`,
+                                }}
+                                    className="btn btn-large waves-effect waves-light accent-3"
+                                    style={{zIndex:'0', marginBottom:'15px'}}
+                                >
+                                    Start Course
+                                </Link> 
+                            </>
+                        : null}
+                        {!registered ? 
+                        <> 
+                            <br></br>
+                            <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0'}}>Register</Button>
+                            <br></br>
+                        </>
+                        : null}
+                        <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
+                            <h5>Register for {course.course_name}?</h5>
+                            <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
+                            <br></br>
+                        </RegisterPopUp>
                     </Container>
+                    {report.beta_tester ? 
+                        <>
+                            <br></br>
+                            <Container className="dash-cards" style={{width:'90%'}}>
+                                <br></br>
+                                <h4><BsFillPersonCheckFill style={{marginBottom:'10px'}}/> Tests Pending Approval</h4>
+                                {pendingTestsTable()}
+                            </Container> 
+                        </>
+                    : null}
                     <br></br>
-                    {registered ? <Link to={{
-                            pathname: `/viewcourse/${course._id}`,
-                        }}
-                        className="btn btn-large waves-effect waves-light accent-3"
-                        style={{zIndex:'0'}}
-                    >
-                        Start Course
-                    </Link> : null}
-                    {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0'}}>Register</Button> : null}
-                    <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
-                        <h5>Register for {course.course_name}?</h5>
-                        <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
+                    {registered ? <Container className="dash-cards" style={{width:'90%'}}>
                         <br></br>
-                    </RegisterPopUp>
-                    {report.beta_tester ? <Container>
-                        <br></br>
-                        <br></br>
-                        <h4>Tests Requiring Checks</h4>
-                        {pendingTestsTable()}
-                    </Container> : null}
-                    {registered ? <Container>
-                        <br></br>
-                        <br></br>
-                        <h4>Course Tests</h4>
+                        <h4><RiPencilRuler2Line style={{marginBottom:'10px'}}/> Available Tests</h4>
                         <Table bordered responsive style={{border:'1'}}>
                             <thead>
                                 <tr>
@@ -350,10 +367,21 @@ const CourseDetails = ({ auth }) => {
                                 {testTable()}
                             </tbody>
                         </Table>
-                        <br></br>
-                        <h4>My Tests</h4>
-                        {myTestsTable()}
                     </Container> : null}
+                    {registered ?
+                    <>
+                        <br></br>
+                        <Container className="dash-cards" style={{width:'90%'}}>
+                            <br></br>
+                            <h4><BsPen style={{marginBottom:'10px'}}/> My Tests</h4>
+                            {myTestsTable()}
+                            <Link to={{pathname: `/addtest/${id}`}} className="btn btn-large waves-effect waves-light accent-3" style={{marginBottom:'20px'}}>
+                                Create Test
+                            </Link>
+                        </Container> 
+                    </>
+                    : null}
+                    <br></br>
                 </Col>
             </div>
         </>

@@ -40,15 +40,17 @@ const MyCourses = ({auth}) => {
                     <Sidebar/>
                 </Col>
                 <Col className="align-items-center dashboard">
-                  <Container>
-                    <br></br>
-                    <h3>My Courses</h3>
+                  <div className="hero">
+                    <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/courseHero.png"/>
+                    <h3 className="hero-text">My Courses</h3>
+                  </div>
+                  <Container className="dash-cards" style={{width:'90%'}}>
                     <Table responsive>
                       <thead>
                         <tr>
-                          <td style={{width:'33%'}}></td>
-                          <td></td>
-                          <td style={{width:'10%'}}></td>
+                          <th style={{width:'33%', textAlign:'center'}}>Course Title</th>
+                          <th style={{textAlign:'center'}}>Description</th>
+                          <th style={{width:'20%', textAlign:'center'}}></th>
                         </tr>
                       </thead>
                       <tbody>

@@ -8,22 +8,24 @@ const TestCard = (props) => {
         <>
             <tr>
                 <td>
-                    <h5>
+                    <h6 style={{margin:'auto'}}>
                         <Link to={{
-                            pathname: `/test/${test._id}`,
-                        }}>
+                            pathname: `/testdetails/${test._id}`,
+                        }}
+                            style={{color: 'black'}}
+                        >
                             { test.test_name }
                         </Link>
-                    </h5>
+                    </h6>
                 </td>
                 <td>
-                    <p>{test.test_description}</p>
+                    <p style={{margin:'auto'}}>{test.test_description}</p>
                 </td>
                 <td style={{textAlign:'center'}}>
                     <Link to={{
                         pathname: `/testdetails/${test._id}`,
                     }}
-                        style={{width:'110px', fontSize:'10px'}}
+                        style={{width:'150px', fontSize:'15px'}}
                         className='btn waves-effect waves-light accent-3'
                     >
                         View Details

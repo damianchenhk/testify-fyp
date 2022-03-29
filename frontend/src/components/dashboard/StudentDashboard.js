@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Row, Col } from "react-bootstrap";
+import { BsPen, BsLaptop, BsPersonSquare, BsFillPersonCheckFill,BsFillPatchCheckFill } from "react-icons/bs";
 import axios from "axios";
 
 import StudentNewCourses from "./homepage/StudentNewCourses";
@@ -55,14 +56,14 @@ const StudentDashboard = ({ auth }) => {
     const newCourseSummary = () => {
         if(newCourses.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
-                            <th style={{textAlign:'center', width:'10%'}}></th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,15 +71,6 @@ const StudentDashboard = ({ auth }) => {
                             <StudentNewCourses course={course} key={k} student_id={auth.user.id} />
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                                <Link to="/course" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -89,8 +81,8 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
-                            <th style={{textAlign:'center', width:'10%'}}></th>
+                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,12 +90,6 @@ const StudentDashboard = ({ auth }) => {
                             <td colSpan={5} style={{textAlign:'center'}}>There are no courses available</td>
                         </tr>
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }
@@ -112,12 +98,13 @@ const StudentDashboard = ({ auth }) => {
     const myCourseSummary = () => {
         if(registeredCourses.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center'}}>Instructor</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Tests Not Attempted</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Tests Remaining</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,15 +112,6 @@ const StudentDashboard = ({ auth }) => {
                             <StudentMyCourses key={k} report={report} />
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                                <Link to="/mycourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -142,21 +120,16 @@ const StudentDashboard = ({ auth }) => {
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
+                            <th style={{textAlign:'center'}}>Instructor</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Tests Not Attempted</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Tests Remaining</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colSpan={3} style={{textAlign:'center'}}>There are no courses registered</td>
+                            <td colSpan={4} style={{textAlign:'center'}}>There are no courses registered</td>
                         </tr>
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }
@@ -165,12 +138,13 @@ const StudentDashboard = ({ auth }) => {
     const myTestsSummary = () => {
         if(myTests.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill title="Approved?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,15 +152,6 @@ const StudentDashboard = ({ auth }) => {
                             <StudentMyTests key={k} test={test}/>
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                                <Link to="/yourtests" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -197,19 +162,14 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}>Students Attempted</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Approved</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td colSpan={3} style={{textAlign:'center'}}>You have not created any tests</td>
+                            <td colSpan={4} style={{textAlign:'center'}}>You have not created any tests</td>
                         </tr>
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }
@@ -218,7 +178,7 @@ const StudentDashboard = ({ auth }) => {
     const pendingTestsSummary = () => {
         if(myPendingTests.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
@@ -231,15 +191,6 @@ const StudentDashboard = ({ auth }) => {
                             <StudentPendingTests key={k} test={test}/>
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                                <Link to="/yourtests" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -257,12 +208,6 @@ const StudentDashboard = ({ auth }) => {
                             <td colSpan={3} style={{textAlign:'center'}}>You have no tests pending approval</td>
                         </tr>
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={3} style={{textAlign: 'center'}}>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }
@@ -270,28 +215,59 @@ const StudentDashboard = ({ auth }) => {
 
     return (
         <>
+            <div className="hero">
+                <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/studentHero.png"/>
+                <h4 className="hero-text">
+                    Welcome back, {auth.user.name?.split(" ")[0]}
+                </h4>
+            </div>
             <br></br>
-            <h4>
-                <b>Welcome back,</b> {auth.user.name?.split(" ")[0]}
-            </h4>
-            <Row>
-                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>My Courses</h5>
-                    {myCourseSummary()}
+            <Row style={{margin:'0 10px 20px'}}>
+                <Col xs={12} lg={7} md style={{padding:'0'}}>
+                    <div className="course-summary">
+                        <h5><BsPersonSquare/> <strong>My Courses</strong></h5>
+                        {myCourseSummary()}
+                    </div>
+                    <div style={{position:'relative', bottom:'50px'}}>
+                        <Link to="/mycourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            View More
+                        </Link>
+                    </div>
                 </Col>
-                <Col xs={12} lg md className="course-summary">
-                    <h5 style={{marginTop: '10px'}}>New Courses</h5>
-                    {newCourseSummary()}
+                <Col xs={12} lg={5} md style={{padding:'0'}}>
+                    <div className="course-summary">
+                        <h5><BsLaptop/> <strong>New Courses</strong></h5>
+                        {newCourseSummary()}
+                    </div>
+                    <div style={{position:'relative', bottom:'50px'}}>
+                        <Link to="/course" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            View More
+                        </Link>
+                    </div>
                 </Col>
             </Row>
-            <Row>
-                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>Tests Pending Approval</h5>
-                    {pendingTestsSummary()}
+            <Row style={{margin:'0 10px 20px'}}>
+                <Col xs={12} lg={5} md style={{padding:'0'}}>
+                    <div className="course-summary">
+                        <h5><BsFillPersonCheckFill/> <strong>Tests Pending Approval</strong></h5>
+                        {pendingTestsSummary()}
+                    </div>
+                    <div style={{position:'relative', bottom:'50px'}}>
+                        <Link to="/yourtests" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            View More
+                        </Link>
+                    </div>
                 </Col>
-                <Col xs={12} lg md className="course-summary">
-                    <h5 style={{marginTop: '10px'}}>My Tests</h5>
-                    {myTestsSummary()}
+                <Col xs={12} lg={7} md style={{padding:'0'}}>
+                    <div className="course-summary">
+                        <h5><BsPen/> <strong>My Tests</strong></h5>
+                        {myTestsSummary()}
+                    </div>
+                    <div style={{position:'relative', bottom:'50px'}}>
+                        <Link to="/yourtests" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            View More
+                        </Link>
+                    </div>
                 </Col>
             </Row>
         </>

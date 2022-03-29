@@ -29,7 +29,8 @@ class AddTest extends Component {
             student_scores: [],
             course: {},
             report: {},
-            totalScore: ''
+            totalScore: '',
+            error: ''
         };
     }
 
@@ -83,7 +84,10 @@ class AddTest extends Component {
             student_scores: this.state.student_scores,
         };
 
-        axios
+        if(!this.state.inputList.length){
+            this.setState({error: 'You have not added any lessons'})
+        }else {
+            axios
             .post('/api/tests/', data)
             .then(res => {
                 console.log(res.data.data._id)
@@ -123,6 +127,7 @@ class AddTest extends Component {
             .catch(err => {
                 console.log("Error in AddTest!");
             })
+        }
     };
 
 
@@ -222,6 +227,7 @@ class AddTest extends Component {
                     <Col className="dashboard">
                         <br></br>
                         <h4><b>Add Test Here</b></h4>
+                        <h6 style={{color: 'red'}}>{this.state.error}</h6>
                         <Form onSubmit={this.onSubmit}>
                             <FloatingLabel
                                 controlId="floatingInput"
@@ -241,6 +247,7 @@ class AddTest extends Component {
                                     }}
                                     value={this.state.test_name}
                                     onChange={this.onChange}
+                                    required
                                 />
                             </FloatingLabel>
                             <FloatingLabel
@@ -261,6 +268,7 @@ class AddTest extends Component {
                                 }}
                                 value={this.state.test_description}
                                 onChange={this.onChange}
+                                required
                                 />
                             </FloatingLabel>
                             {this.state.inputList}

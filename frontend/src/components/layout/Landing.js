@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 class Landing extends Component {
     render() {
         return (
-            <div style={{ height: "75vh" }} className="container valign-wrapper">
+            <div style={{ height: "93vh" }} className="container valign-wrapper">
                 <div className="row">
                     <div className="col s12 center-align">
                         <h2 style={{fontFamily: "monospace"}}>
@@ -21,7 +21,7 @@ class Landing extends Component {
                                     borderRadius: "3px",
                                     letterSpacing: "1.5px"
                                 }}
-                                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+                                className="btn btn-large waves-effect waves-light"
                             >
                                 Register
                             </Link>
@@ -34,7 +34,7 @@ class Landing extends Component {
                                     borderRadius: "3px",
                                     letterSpacing: "1.5px"
                                 }}
-                                className="btn btn-large btn-flat waves-effect white black-text"
+                                className="btn btn-large waves-effect white black-text"
                             >
                                 Log In
                             </Link>

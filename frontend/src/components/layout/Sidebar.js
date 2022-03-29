@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
-import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson } from "react-icons/bs";
+import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson, BsPersonSquare, BsFillPersonCheckFill } from "react-icons/bs";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { RiPencilRuler2Line } from "react-icons/ri";
 import { connect } from "react-redux";
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
+import "../../App.css";
 
 const { SubMenu } = Menu;
 
@@ -39,19 +42,19 @@ const Sidebar = ({auth}) => {
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={[subMenuOpen()]}
           mode="inline"
-          style={{position: 'fixed', width: '250px'}}
+          style={{position: 'fixed', width: '300px', fontSize:'15px', color:'#0f443f', letterSpacing: '1px'}}
         >
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
-          <SubMenu key="courses" title="Courses" icon={<BsLaptop/>}>
-            {auth.user.role==='Admin' ? <Menu.Item key="/admincourses" onClick={() => history.push("/admincourses")}>All Courses</Menu.Item> : null}
-            {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
-            {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
-            {auth.user.role==='Student' ? <Menu.Item key="/mycourses" onClick={() => history.push("/mycourses")}>My Courses</Menu.Item> : null}
-            {auth.user.role==='Student' ? <Menu.Item key="/course" onClick={() => history.push("/course")}>All Courses</Menu.Item> : null}
+          <SubMenu key="courses" title="Courses" icon={<FaChalkboardTeacher/>}>
+            {auth.user.role==='Admin' ? <Menu.Item key="/admincourses" style={{color:'#0f443f'}} onClick={() => history.push("/admincourses")}>All Courses</Menu.Item> : null}
+            {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" style={{color:'#0f443f'}} onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
+            {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" style={{color:'#0f443f'}} onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
+            {auth.user.role==='Student' ? <Menu.Item key="/mycourses" style={{color:'#0f443f'}} icon={<BsPersonSquare/>} onClick={() => history.push("/mycourses")}>My Courses</Menu.Item> : null}
+            {auth.user.role==='Student' ? <Menu.Item key="/course" style={{color:'#0f443f'}} icon={<BsLaptop/>} onClick={() => history.push("/course")}>All Courses</Menu.Item> : null}
           </SubMenu>
-          {auth.user.role==='Student' ? <SubMenu key="tests" title="Tests" icon={<BsPen/>}>
-            <Menu.Item key="/yourtests" onClick={() => history.push("/yourtests")}>My Tests</Menu.Item>
-            <Menu.Item key="/pendingtests" onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
+          {auth.user.role==='Student' ? <SubMenu key="tests" title="Tests" icon={<RiPencilRuler2Line/>}>
+            <Menu.Item key="/yourtests" icon={<BsPen/>} style={{color:'#0f443f'}} onClick={() => history.push("/yourtests")}>My Tests</Menu.Item>
+            <Menu.Item key="/pendingtests" icon={<BsFillPersonCheckFill/>} style={{color:'#0f443f'}} onClick={() => history.push("/pendingtests")}>Pending Tests</Menu.Item>
           </SubMenu> : null}
           {auth.user.role==='Admin' ? <Menu.Item key="/adminuserlist" onClick={() => history.push("/adminuserlist")} icon={<BsFileEarmarkPerson/>}>View Users</Menu.Item> : null}
           <Menu.Item key="settings" icon={<BsGear/>}>Settings</Menu.Item>

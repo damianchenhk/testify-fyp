@@ -39,15 +39,18 @@ const YourTest = ({ auth }) => {
           <Sidebar />
         </Col>
         <Col className="align-items-center dashboard">
-          <Container>
+          <div className="hero">
+            <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/testHero.png"/>
+            <h3 className="hero-text">My Tests</h3>
+          </div>
+          <Container className="dash-cards" style={{width:'90%'}}>
             <br></br>
-            <h3>My Tests</h3>
             <Table>
               <thead>
                 <tr>
-                  <td style={{width:'33%'}}></td>
-                  <td></td>
-                  <td style={{width:'10%'}}></td>
+                  <th style={{width:'33%', textAlign:'center'}}>Test Title</th>
+                  <th style={{textAlign:'center'}}>Description</th>
+                  <th style={{width:'10%'}}></th>
                 </tr>
               </thead>
               <tbody>

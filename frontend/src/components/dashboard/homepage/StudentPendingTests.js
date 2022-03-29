@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const StudentPendingTests = (props) => {
     const  test  = props.test;
     const [course_name, setCourseName] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         axios
@@ -18,22 +20,16 @@ const StudentPendingTests = (props) => {
     }, []);
 
     return(
-        <tr key={test._id}>
-            <td style={{border:'solid 1px #dee2e6', borderLeft:'none'}}>
-                <Link to={{
-                        pathname: `/testdetails/${test._id}`,
-                    }}>
-                        { test.test_name }
-                </Link>
-            </td>
-            <td style={{border:'solid 1px #dee2e6'}}>
+        <tr key={test._id} onClick={() => {history.push('/testdetails/'+test._id)}}>
+            <td>{ test.test_name }</td>
+            <td>
                 <Link to={{
                         pathname: `/coursedetails/${test.course_id}`,
                     }}>
                         { course_name }
                 </Link>
             </td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{test.tester_id.length}</td>
+            <td style={{textAlign:'center'}}>{test.tester_id.length}</td>
         </tr>
     )
 };

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { BsFillPatchCheckFill } from 'react-icons/bs';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const StudentNewCourses = (props) => {
     const  course  = props.course;
     const [student_count, setStudentCount] = useState('');
     const [test_count, setTestCount] = useState('');
     const [registered, setRegistered] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         axios
@@ -36,18 +38,12 @@ const StudentNewCourses = (props) => {
     }, []);
 
     return(
-        <tr key={course._id}>
-            <td style={{border:'solid 1px #dee2e6', borderLeft:'none'}}>
-                <Link to={{
-                        pathname: `/coursedetails/${course._id}`,
-                    }}>
-                        { course.course_name }
-                </Link>
-            </td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{course.lesson_names?.length}</td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{student_count}</td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test_count}</td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{registered ? "Registered" : null}</td>
+        <tr key={course._id} onClick={() => {history.push('/coursedetails/'+course._id)}}>
+            <td>{ course.course_name }</td>
+            <td style={{textAlign:'center'}}>{course.lesson_names?.length}</td>
+            <td style={{textAlign:'center'}}>{student_count}</td>
+            <td style={{textAlign:'center'}}>{test_count}</td>
+            <td style={{textAlign:'center'}}>{registered ? <BsFillPatchCheckFill color='#26a69a' title='Registered'/> : null}</td>
         </tr>
     )
 };

@@ -15,7 +15,6 @@ class AddLesson extends Component{
         const file = e.target.files[0]
 
         const  {url}  = await fetch("/s3Url").then(res => res.json())
-        console.log(url)
 
         axios.put(url, file, {
                 headers: {
@@ -24,7 +23,6 @@ class AddLesson extends Component{
                 onUploadProgress: (ProgressEvent) => {
                     const {loaded, total} = ProgressEvent;
                     let percent = Math.floor(loaded * 100 / total)
-                    console.log(`${loaded} of ${total} | ${percent}%`);
 
                     if(percent < 100){
                         this.setState({uploadPercentage: percent})
@@ -33,14 +31,12 @@ class AddLesson extends Component{
                 transformRequest: [(data, headers) => {delete headers.common.Authorization;     return data }]
         })
         .then(response => { 
-            console.log(response)
             this.setState({uploadPercentage: 100}, () => {
                 setTimeout(() => {
                     this.setState({uploadPercentage: 0})
                 }, 1000);
             })
             const imageUrl = url.split('?')[0]
-            console.log(imageUrl)
             this.props.onChange(imageUrl, "lesson_urls")
         })
         .catch((error) => console.log(error.response) )

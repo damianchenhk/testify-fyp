@@ -8,6 +8,28 @@
   margin-top: -66px;
 }
 
+.dash-cards{
+  margin-top:10px;
+  border: 1px solid #dee2e6;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 3px 3px 5px 0 rgba(0, 0, 0, 0.19);
+}
+
+.view-course{
+  width: 95%;
+  text-align: left;
+}
+
+.view-course h3{
+  color: #1d8177;
+  margin-bottom: 15px;
+}
+
+.breadcrumb{
+  margin-bottom: 5px;
+}
+
 .previous-button{
   float: left;
 }
@@ -22,13 +44,42 @@
   margin-top: 20px;
 }
 
+.ant-menu-item-selected{
+  background-color: #26A69A15 !important;
+  color: #26A69A !important;
+}
+
+.ant-menu-inline .ant-menu-item::after{
+  border-right: 3px solid #26A69A !important;
+}
+
+.ant-menu-item-active{
+  color: #26A69A !important;
+}
+
+.ant-menu-item:hover,
+.ant-menu-item-active,
+.ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+.ant-menu-submenu-active,
+.ant-menu-submenu-title:hover {
+  color: #26A69A !important;
+}
+
+.ant-menu-submenu-selected{
+  color: #26A69A !important;
+}
+
 .App{
-  background-color: aliceblue;
+  background-color: rgb(255, 255, 255);
 }
 
 .dashboard{
-  background-color: white;
+  background-color: rgb(245, 245, 245);
   text-align: center;
+}
+
+.main-dash{
+  background-color: rgb(245, 245, 245);
 }
 
 .main-page{
@@ -49,7 +100,7 @@
 
 .web-page {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 300px 1fr;
 }
 
 [type="radio"]:not(:checked), [type="radio"]:checked  {
@@ -79,7 +130,22 @@
 .course-summary{
   border: solid 1px #dee2e6;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 3px 3px 5px 0 rgba(0, 0, 0, 0.19);
-  margin-right: 10px;
+  margin: 0 10px;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1.1rem;
+  padding: 10px;
+  height: 100%;
+}
+
+.course-summary h5{
+  margin: 10px 0 20px;
+  color: #1d8177;
+  font-family: monospace;
+}
+
+.card-first{
+  margin-left: 20px;
 }
 
 .page-item.active .page-link{
@@ -93,4 +159,103 @@
 .col .row{
   margin-right: auto;
   margin-left: auto;
+}
+
+.hero{
+  position: relative;
+  text-align: center;
+}
+
+.hero img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.hero-text{
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  width: 100%;
+  font-family: monospace;
+}
+
+.test-details h3{
+  color: #1d8177;
+}
+
+.test-details h4{
+  color: #1d8177;
+}
+
+.course-details h3{
+  color: #1d8177;
+}
+
+.course-details h4{
+  color: #1d8177;
+}
+
+.test-stats{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    "check attempt effective diff pop"
+  ;
+}
+
+.test-checked{
+  grid-area: check;
+  margin: auto;
+}
+
+.test-checked-color{
+  color: rgb(2, 104, 199);
+}
+
+.test-attempt{
+  grid-area: attempt;
+  margin: auto;
+}
+
+.test-attempt-color{
+  color: purple;
+}
+
+.test-effective{
+  grid-area: effective;
+  margin: auto;
+}
+
+.test-effective-color{
+  color: rgb(133, 7, 7);
+}
+
+.test-diff{
+  grid-area: diff;
+  margin: auto;
+}
+
+.test-diff-color{
+  color: rgb(185, 111, 0);
+}
+
+.test-pop{
+  grid-area: pop;
+  margin: auto;
+}
+
+.test-pop-color{
+  color: rgb(140, 143, 0);
+}
+
+.clickable-table tr:hover{
+  cursor: pointer;
+}
+
+.clickable-table th:hover{
+ cursor: auto;
 }

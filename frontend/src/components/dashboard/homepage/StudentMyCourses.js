@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const StudentNewCourses = (props) => {
     const  report  = props.report;
     const [course, setCourse] = useState({});
     const [test_count, setTestCount] = useState(0);
+    const history = useHistory();
 
     useEffect(() => {
         axios
@@ -28,16 +29,11 @@ const StudentNewCourses = (props) => {
     }, []);
 
     return(
-        <tr key={course._id}>
-            <td style={{border:'solid 1px #dee2e6', borderLeft:'none'}}>
-                <Link to={{
-                        pathname: `/coursedetails/${course._id}`,
-                    }}>
-                        { course.course_name }
-                </Link>
-            </td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{course.lesson_names?.length}</td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight: 'none'}}>{(test_count - report.tests_created?.length - report.tests_taken?.length) > 1 ? (test_count - report.tests_created?.length - report.tests_taken?.length) : 0}</td>
+        <tr key={course._id} onClick={() => {history.push('/coursedetails/'+course._id)}}>
+            <td>{ course.course_name }</td>
+            <td style={{textAlign:'center'}}>{course.instructor_name}</td>
+            <td style={{textAlign:'center'}}>{course.lesson_names?.length}</td>
+            <td style={{textAlign:'center'}}>{(test_count - report.tests_created?.length - report.tests_taken?.length) > 1 ? (test_count - report.tests_created?.length - report.tests_taken?.length) : 0}</td>
         </tr>
     )
 };

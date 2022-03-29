@@ -77,7 +77,7 @@ const AdminDashboard = ({ auth }) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td colSpan={5} style={{textAlign:'center'}}>You have no courses created</td>
+                            <td colSpan={5} style={{textAlign:'center'}}>There are no courses created</td>
                         </tr>
                     </tbody>
                 </Table>

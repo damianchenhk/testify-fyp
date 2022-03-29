@@ -31,7 +31,7 @@ const Dashboard = ({auth}) => {
             <Col>
                 <Sidebar/>
             </Col>
-            <Col className="dashboard">
+            <Col className="dashboard main-dash">
                 {renderSwitch(user.role)}
             </Col>
         </div>

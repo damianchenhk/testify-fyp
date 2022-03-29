@@ -14,16 +14,16 @@ const CourseCard = (props) => {
                         { course.course_name }
                     </Link>
                 </h5>
-                <h6>{course.instructor_name}</h6>
+                <h6 style={{margin:'auto'}}>{course.instructor_name}</h6>
             </td>
             <td>
-                <p>{course.course_description}</p>
+                <p style={{margin:'auto'}}>{course.course_description}</p>
             </td>
             <td style={{textAlign:'center'}}>
                 <Link to={{
                     pathname: `/coursedetails/${course._id}`,
                 }}
-                    style={{width:'110px', fontSize:'10px'}}
+                    style={{width:'150px', fontSize:'14px'}}
                     className='btn waves-effect waves-light accent-3'
                 >
                     View Details

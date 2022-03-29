@@ -69,7 +69,7 @@ const FeedbackCard = (props) => {
 
     return(
         <>
-            <Row style={{textAlign: 'left', border: 'solid 1px #dee2e6', paddingTop: '8.625px'}}>
+            <Row style={{textAlign: 'left', border: 'solid 1px #dee2e6', paddingTop: '8.625px', borderRadius:'10px'}}>
                 <h6><strong>Effectiveness: </strong>{effective}</h6>
                 <h6><strong>Difficulty: </strong>{difficulty}</h6>
                 <h6><strong>Would Student Recommend: </strong>{popularity}</h6>

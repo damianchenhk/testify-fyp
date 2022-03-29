@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container } from "react-bootstrap";
+import { BsBarChartLine } from "react-icons/bs";
+import { MdOutlineFeedback } from "react-icons/md";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
@@ -92,7 +94,7 @@ const TestDetails = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Answer</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Students Correct</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Students Wrong</th>
-                            <th style={{textAlign:'center', width:'10%'}}>% of Student Correct</th>
+                            <th style={{textAlign:'center', width:'10%'}}>% of Students Correct</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,12 +121,12 @@ const TestDetails = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Answer</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Students Correct</th>
                             <th style={{textAlign:'center', width:'10%'}}>No. Students Wrong</th>
-                            <th style={{textAlign:'center', width:'10%'}}>% of Student Correct</th>
+                            <th style={{textAlign:'center', width:'10%'}}>% of Students Correct</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr key={0}>
-                            <td colSpan={6} style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>No students have attempted your test</td>
+                            <td colSpan={6} style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none', borderRight:'none'}}>No students have attempted your test</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -158,21 +160,55 @@ const TestDetails = ({ auth }) => {
 
             return(
                 <>
-                    <h6><strong>No. Students Checked: </strong>{test.tester_id?.length}</h6>
-                    <h6><strong>No. Students Attempted: </strong>{reports?.length}</h6>
-                    <h6><strong>Test Effectiveness: </strong>{((effective / reports?.length) / 6 * 100).toFixed(0)}%</h6>
-                    <h6><strong>Test Difficulty: </strong>{difficulty}</h6>
-                    <h6><strong>Test Popularity: </strong>{(((popularity / reports?.length) / 6 * 50) + ((reports?.length / (studentCount - 1)) * 50)).toFixed(0)}%</h6>
+                    <div className="test-stats">
+                        <div className="test-checked">
+                            <h6 className="test-checked-color"><strong>No. Students Checked</strong></h6>
+                        </div>
+                        <h5 className="test-checked-color"><strong>{test.tester_id?.length}</strong></h5>
+                        <div className="test-attempt">
+                            <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
+                        </div>
+                        <h5 className="test-attempt-color"><strong>{reports?.length}</strong></h5>
+                        <div className="test-effective">
+                            <h6 className="test-effective-color"><strong>Test Effectiveness</strong></h6>
+                        </div>
+                        <h5 className="test-effective-color"><strong>{((effective / reports?.length) / 6 * 100).toFixed(0)}%</strong></h5>
+                        <div className="test-diff">
+                            <h6 className="test-diff-color"><strong>Test Difficulty</strong></h6>
+                        </div>
+                        <h5 className="test-diff-color"><strong>{difficulty}</strong></h5>
+                        <div className="test-pop">
+                            <h6 className="test-pop-color"><strong>Test Popularity</strong></h6>
+                        </div>
+                        <h5 className="test-pop-color"><strong>{(((popularity / reports?.length) / 6 * 50) + ((reports?.length / (studentCount - 1)) * 50)).toFixed(0)}%</strong></h5>
+                    </div>
                 </>
             )
         } else {
             return(
                 <>
-                    <h6><strong>No. Students Checked: </strong>0</h6>
-                    <h6><strong>No. Students Attempted: </strong>0</h6>
-                    <h6><strong>Test Effectiveness: </strong>0%</h6>
-                    <h6><strong>Test Difficulty: </strong></h6>
-                    <h6><strong>Test Popularity: </strong>0%</h6>
+                    <div className="test-stats">
+                        <div className="test-checked">
+                            <h6 className="test-checked-color"><strong>No. Students Checked</strong></h6>
+                        </div>
+                        <h5 className="test-checked-color"><strong>-</strong></h5>
+                        <div className="test-attempt">
+                            <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
+                        </div>
+                        <h5 className="test-attempt-color"><strong>-</strong></h5>
+                        <div className="test-effective">
+                            <h6 className="test-effective-color"><strong>Test Effectiveness</strong></h6>
+                        </div>
+                        <h5 className="test-effective-color"><strong>-</strong></h5>
+                        <div className="test-diff">
+                            <h6 className="test-diff-color"><strong>Test Difficulty</strong></h6>
+                        </div>
+                        <h5 className="test-diff-color"><strong>-</strong></h5>
+                        <div className="test-pop">
+                            <h6 className="test-pop-color"><strong>Test Popularity</strong></h6>
+                        </div>
+                        <h5 className="test-pop-color"><strong>-</strong></h5>
+                    </div>
                 </>
             )
         }
@@ -184,30 +220,31 @@ const TestDetails = ({ auth }) => {
                 <Col>
                     <Sidebar/>
                 </Col>
-                <Col className="align-items-center dashboard">
+                <Col className="dashboard test-details">
                     <br></br>
-                    <h2>{test.test_name}</h2>
+                    <h3>{test.test_name}</h3>
                     <h6>{test.test_description}</h6>
-                    <br></br>
                     <Row>
-                        <Container style={{textAlign: 'left'}}>
+                        <Container className="dash-cards" style={{width:'90%'}}>
+                            <br></br>
+                            <h4><BsBarChartLine style={{marginBottom:'10px'}}/> Test Statistics</h4>
                             <hr></hr>
-                            <h4 style={{textDecoration: 'underline'}}>Test Statistics</h4>
                             {testStats()}
-                            <hr></hr>
+                            <br></br>
                         </Container>
                     </Row>
                     <Row>
-                        <Container>
-                            <h4 style={{textAlign: 'left', textDecoration: 'underline'}}>Question Statistics</h4>
+                        <Container className="dash-cards" style={{width:'90%'}}>
+                            <br></br>
+                            <h4><BsBarChartLine style={{marginBottom:'5px'}}/> Question Statistics</h4>
                             {testSummary()}
                             <br></br>
-                            <hr></hr>
                         </Container>
                     </Row>
                     <Row>
-                        <Container>
-                            <h4 style={{textAlign: 'left', textDecoration: 'underline'}}>Feedback</h4>
+                        <Container className="dash-cards" style={{width:'90%'}}>
+                            <br></br>
+                            <h4><MdOutlineFeedback style={{marginBottom:'5px'}}/> Feedback</h4>
                             <FeedbackList feedbacks={feedbacks}/>
                         </Container>
                     </Row>
