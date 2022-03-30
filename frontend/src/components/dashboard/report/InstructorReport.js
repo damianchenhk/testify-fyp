@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row , Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
+import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill } from "react-icons/bs";
+import { MdOutlinePostAdd } from "react-icons/md";
+import { FaHandshake } from "react-icons/fa";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
@@ -142,25 +145,25 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive style={{border:'1'}}>
                     <thead>
                         <tr>
-                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Student Name</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Bonus Points</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Participation Score</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Participation %</th>
+                            <th style={{textAlign:'center', width:'10%'}}><MdOutlinePostAdd size={'25px'} title="No. Tests Created"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPenFill size={'20px'} title="No. Tests Done"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsAwardFill size={'25px'} title="Bonus Points"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><FaHandshake size={'25px'} title="Participation Score"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><FaHandshake size={'25px'} title="Participation %"/> %</th>
                         </tr>
                     </thead>
                     <tbody>
                         {sortedReports.map(report => (
                             <tr key={report.id}>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>{report.ranking}</td>
-                                <td style={{border:'solid 1px #dee2e6'}}>{report.student_name}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_created.length}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.tests_taken.length}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.bonusScore}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{report.totalScore}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{report.percentageScore + "%"}</td>
+                                <td style={{textAlign:'center'}}>{report.ranking}</td>
+                                <td>{report.student_name}</td>
+                                <td style={{textAlign:'center'}}>{report.tests_created.length}</td>
+                                <td style={{textAlign:'center'}}>{report.tests_taken.length}</td>
+                                <td style={{textAlign:'center'}}>{report.bonusScore}</td>
+                                <td style={{textAlign:'center'}}>{report.totalScore}</td>
+                                <td style={{textAlign:'center'}}>{report.percentageScore + "%"}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -171,12 +174,13 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive>
                     <thead>
                         <tr>
-                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Student Name</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. Tests Created</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. Tests Done</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Participation Score</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Participation %</th>
+                            <th style={{textAlign:'center', width:'10%'}}><MdOutlinePostAdd size={'25px'} title="No. Tests Created"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPenFill size={'20px'} title="No. Tests Done"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsAwardFill size={'25px'} title="Bonus Points"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><FaHandshake size={'25px'} title="Participation Score"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><FaHandshake size={'25px'} title="Participation %"/> %</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -477,25 +481,25 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive style={{border:'1'}}>
                     <thead>
                         <tr>
-                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Test Name</th>
                             <th style={{textAlign:'center'}}>Test Creator</th>
-                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('students_completed')}>No. Students Completed</button></th>
-                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_effectiveness')}>Test Effectiveness</button></th>
-                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_difficulty')}>Test Difficulty</button></th>
-                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_popularity')}>Test Popularity</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('students_completed')}><BsFillPersonFill size={'25px'} title="No. Students Completed"/></button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_effectiveness')}>Effectiveness</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_difficulty')}>Difficulty</button></th>
+                            <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_popularity')}>Popularity</button></th>
                         </tr>
                     </thead>
                     <tbody>
                         {sortedTests.map(test => (
                             <tr key={test._id}>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>{test.index}</td>
-                                <td style={{border:'solid 1px #dee2e6'}}>{test.test_name}</td>
-                                <td style={{border:'solid 1px #dee2e6'}}>{test.creator_name}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.students_completed}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.test_effectiveness}%</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6'}}>{test.test_difficulty}</td>
-                                <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>{test.test_popularity}%</td>
+                                <td style={{textAlign:'center'}}>{test.index}</td>
+                                <td>{test.test_name}</td>
+                                <td style={{textAlign:'center'}}>{test.creator_name}</td>
+                                <td style={{textAlign:'center'}}>{test.students_completed}</td>
+                                <td style={{textAlign:'center'}}>{test.test_effectiveness}%</td>
+                                <td style={{textAlign:'center'}}>{test.test_difficulty}</td>
+                                <td style={{textAlign:'center'}}>{test.test_popularity}%</td>
                             </tr>
                         ))}
                     </tbody>
@@ -506,13 +510,13 @@ const InstructorReport = ({ auth }) => {
                 <Table bordered responsive>
                     <thead>
                         <tr>
-                            <th style={{textAlign:'center', width:'5%'}}>No.</th>
+                            <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Test Name</th>
                             <th style={{textAlign:'center'}}>Test Creator</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. Students Completed</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Test Effectiveness</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Test Difficulty</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Test Popularity</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. Students Completed"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}>Effectiveness</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Difficulty</th>
+                            <th style={{textAlign:'center', width:'10%'}}>Popularity</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -531,13 +535,14 @@ const InstructorReport = ({ auth }) => {
                 <Col>
                     <Sidebar/>
                 </Col>
-                <Col className="align-items-center dashboard">
+                <Col className="dashboard course-details">
                     <br></br>
-                    <h2>{course.course_name}</h2>
+                    <h3>{course.course_name}</h3>
                     <h6>{course.course_description}</h6>
                     <br></br>
-                    <Container>
-                        <h4>Lessons</h4>
+                    <Container className="dash-cards">
+                        <br></br>
+                        <h4><BsCameraVideo style={{marginBottom:'5px'}}/> Lessons</h4>
                         <Table bordered responsive style={{border:'1'}}>
                             <thead>
                                 <tr>
@@ -552,10 +557,9 @@ const InstructorReport = ({ auth }) => {
                         </Table>
                     </Container>
                     <br></br>
-                    <Container>
+                    <Container className="dash-cards">
                         <br></br>
-                        <br></br>
-                        <h4>Course Statistics</h4>
+                        <h4><BsBarChartLine style={{marginBottom:'5px'}}/> Course Statistics</h4>
                         <Tabs defaultActiveKey="studentScores" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="studentScores" title="Student Scores">
                                 {statsTable()}
@@ -595,7 +599,7 @@ const InstructorReport = ({ auth }) => {
                                     </Col>
                                 </Row>}
                                 {selectedQuestion !== null && 
-                                    <Row style={{border: '1px solid rgb(222, 226, 230)', marginBottom: '10px'}}>
+                                    <Row style={{border: '1px solid rgb(222, 226, 230)', marginBottom: '10px', borderRadius:'10px'}}>
                                         <h5 style={{marginTop: '10px'}}>Question {selectedQuestion.indexValue + 1}:</h5>
                                         <ViewTestQuestions
                                             question={selectedQuestion.question}
@@ -613,6 +617,7 @@ const InstructorReport = ({ auth }) => {
                             </Tab>
                         </Tabs>
                     </Container>
+                    <br></br>
                 </Col>
             </div>
         </>

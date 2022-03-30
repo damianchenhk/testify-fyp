@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Table, Row, Col } from "react-bootstrap";
-import { BsPen, BsLaptop, BsPersonSquare, BsPersonCheck, BsFillPatchCheckFill, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
+import { BsPen, BsLaptop, BsPersonSquare, BsPersonCheck, BsFillCheckCircleFill, BsCheckAll, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
 import axios from "axios";
 
 import StudentNewCourses from "./homepage/StudentNewCourses";
@@ -63,7 +63,7 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Registered?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCheckCircleFill size={'20px'} title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +82,7 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Registered?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCheckCircleFill size={'20px'} title="Registered?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,7 +144,7 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsCheckAll size={'25px'} title="Approved?"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,7 +162,7 @@ const StudentDashboard = ({ auth }) => {
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsCheckAll size={'25px'} title="Approved?"/></th>
                         </tr>
                     </thead>
                     <tbody>

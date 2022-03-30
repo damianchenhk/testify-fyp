@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BsFillPatchCheckFill } from 'react-icons/bs';
-import { MdCancel } from 'react-icons/md';
+import { BsCheckAll, BsClock } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -44,7 +43,7 @@ const StudentMyTests = (props) => {
                 </Link>
             </td>
             <td style={{textAlign:'center'}}>{studentCount}</td>
-            <td style={{textAlign:'center'}}>{ test.tester_id.length === 2 ? <BsFillPatchCheckFill color='#26a69a' title='Approved'/> : <MdCancel color='rgb(182, 0, 0)' size={'20px'} title='Not Approved'/>}</td>
+            <td style={{textAlign:'center'}}>{ test.tester_id.length === 2 ? <BsCheckAll color='#26a69a' size={'20px'} title='Approved'/> : <BsClock color='#a0a0a0' size={'15px'} title='Not Approved'/>}</td>
         </tr>
     )
 };

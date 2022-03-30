@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container, Table } from "react-bootstrap";
-import { BsFillCameraVideoFill, BsFillPersonFill, BsPenFill, BsFillPatchCheckFill, BsLaptop } from "react-icons/bs";
+import { BsFillCameraVideoFill, BsFillPersonFill, BsPenFill, BsFillCheckCircleFill, BsLaptop } from "react-icons/bs";
 import { connect } from "react-redux";
 import axios from "axios";
 import CourseCard from "./CourseCard";
@@ -53,7 +53,7 @@ const Course = ({auth}) => {
                           <th style={{textAlign:'center', width:'5%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
                           <th style={{textAlign:'center', width:'5%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
                           <th style={{textAlign:'center', width:'5%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
-                          <th style={{textAlign:'center', width:'5%'}}><BsFillPatchCheckFill size={'20px'} title="Registered?"/></th>
+                          <th style={{textAlign:'center', width:'5%'}}><BsFillCheckCircleFill size={'20px'} title="Registered?"/></th>
                           <th style={{width:'10%'}}></th>
                         </tr>
                       </thead>

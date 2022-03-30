@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BsFillPatchCheckFill } from 'react-icons/bs';
+import { BsFillCheckCircleFill } from 'react-icons/bs';
 import axios from 'axios';
 
 const CourseCard = (props) => {
@@ -56,7 +56,7 @@ const CourseCard = (props) => {
             <td style={{textAlign:'center'}}>{course.lesson_names.length}</td>
             <td style={{textAlign:'center'}}>{student_count}</td>
             <td style={{textAlign:'center'}}>{test_count}</td>
-            <td style={{textAlign:'center'}}>{registered ? <BsFillPatchCheckFill size={'20px'} color='#26a69a' title='Registered'/> : null}</td>
+            <td style={{textAlign:'center'}}>{registered ? <BsFillCheckCircleFill size={'20px'} color='#26a69a' title='Registered'/> : null}</td>
             <td style={{textAlign:'center'}}>
                 <Link to={{
                     pathname: `/coursedetails/${course._id}`,

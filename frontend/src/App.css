@@ -1,3 +1,9 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .logo{
   margin-left: 20px;
 }
@@ -67,6 +73,18 @@
 
 .ant-menu-submenu-selected{
   color: #26A69A !important;
+}
+
+.ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow{
+  color: #26A69A !important;
+}
+
+.ant-menu-submenu-title:active{
+  background-color: #26A69A15 !important;
+}
+
+.ant-menu-item:active{
+  background-color: #26A69A15 !important;
 }
 
 .App{
@@ -262,4 +280,41 @@
 
 .test-summary-card:hover{
   text-decoration: underline;
+}
+
+.nav-link{
+  color: #26A69A;
+}
+
+.nav-link:hover{
+  color: #1e857a;
+}
+
+.outline-btn{
+  background-color: white;
+  color: #26A69A;
+  border: 1px solid #26A69A;
+  box-shadow: none;
+}
+
+.outline-btn:hover{
+  background-color: #26A69A;
+  color: white;
+  border: none;
+  box-shadow: none;
+}
+
+.error-message{
+  background-color: rgb(255, 110, 110);
+  border: 3px solid red;
+  color: white;
+  padding: 10px;
+  margin: auto;
+  width: 90%;
+  border-radius: 10px;
+}
+
+.page-item.active .page-link{
+  background-color: #26A69A;
+  border-color: #26A69A;
 }

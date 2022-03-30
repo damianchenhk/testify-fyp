@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Container, Table } from "react-bootstrap";
+import { BsPersonCheck, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
 import axios from "axios";
 import InstructorCourseCard from "./InstructorCourseCard";
 
@@ -40,15 +41,20 @@ const InstructorMyCourse = ({auth}) => {
                     <Sidebar/>
                 </Col>
                 <Col className="align-items-center dashboard">
-                  <Container>
-                    <br></br>
-                    <h3>My Courses</h3>
+                  <div className="hero">
+                    <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/courseHero.png"/>
+                    <h3 className="hero-text"><BsPersonCheck style={{marginBottom:'5px'}}/> My Courses</h3>
+                  </div>
+                  <Container className="dash-cards" style={{width:'90%'}}>
                     <Table responsive>
                       <thead>
                         <tr>
-                          <td style={{width:'33%'}}></td>
-                          <td></td>
-                          <td style={{width:'10%'}}></td>
+                          <th style={{textAlign:'center'}}>Course Title</th>
+                          <th style={{textAlign:'center'}}>Description</th>
+                          <th style={{textAlign:'center', width:'5%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                          <th style={{textAlign:'center', width:'5%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                          <th style={{textAlign:'center', width:'5%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
+                          <th style={{width:'10%'}}></th>
                         </tr>
                       </thead>
                       <tbody>

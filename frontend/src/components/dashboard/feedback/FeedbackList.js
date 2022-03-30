@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pagination } from "react-bootstrap";
+import { Pagination, Container } from "react-bootstrap";
 
 import FeedbackCard from './FeedbackCard';
 
@@ -69,7 +69,9 @@ const FeedbackList = (props) => {
     return(
         <>
             {feedbackView()}
-            {paginationBar()}
+            <div style={{display:'flex', justifyContent:'center'}}>
+                {paginationBar()}
+            </div>
         </>
     )
 };

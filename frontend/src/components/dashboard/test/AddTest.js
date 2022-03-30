@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Col, FloatingLabel, Form, Button } from "react-bootstrap";
+import { Col, FloatingLabel, Form, Button, Container } from "react-bootstrap";
+import { IoMdAdd } from "react-icons/io";
 import axios from 'axios';
 
 import Sidebar from "../../layout/Sidebar";
@@ -30,7 +31,8 @@ class AddTest extends Component {
             course: {},
             report: {},
             totalScore: '',
-            error: ''
+            error: '',
+            error_view: false
         };
     }
 
@@ -85,7 +87,8 @@ class AddTest extends Component {
         };
 
         if(!this.state.inputList.length){
-            this.setState({error: 'You have not added any lessons'})
+            this.setState({error: 'You have not added any questions!'})
+            this.setState({error_view: true})
         }else {
             axios
             .post('/api/tests/', data)
@@ -133,6 +136,7 @@ class AddTest extends Component {
 
     onAddBtnClick(event) {
         const inputList = this.state.inputList;
+        this.setState({error_view: false})
         this.setState({
             inputList: inputList.concat(
                 <AddQuestion
@@ -225,61 +229,71 @@ class AddTest extends Component {
                         <Sidebar/>
                     </Col>
                     <Col className="dashboard">
-                        <br></br>
-                        <h4><b>Add Test Here</b></h4>
-                        <h6 style={{color: 'red'}}>{this.state.error}</h6>
-                        <Form onSubmit={this.onSubmit}>
-                            <FloatingLabel
-                                controlId="floatingInput"
-                                label="Test Title"
-                                className="mb-3"
-                                style={{
-                                    width: '60%',
-                                    margin: 'auto'
-                                }}
-                            >
-                                <Form.Control
-                                    type="text"
-                                    name="test_name"
-                                    placeholder="My Test Title"
+                        <div className="hero">
+                            <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/testHero.png"/>
+                            <h3 className="hero-text"><IoMdAdd style={{marginBottom:'10px', marginRight:'10px'}}/>Create Test</h3>
+                        </div>
+                        <Container className="dash-cards" style={{width:'80%'}}>
+                            <br></br>
+                            {this.state.error_view && 
+                                <>
+                                    <h6 className="error-message">{this.state.error}</h6>
+                                    <br></br>
+                                </>
+                            }
+                            <Form onSubmit={this.onSubmit}>
+                                <FloatingLabel
+                                    controlId="floatingInput"
+                                    label="Test Title"
+                                    className="mb-3"
                                     style={{
+                                        width:'90%',
+                                        margin:'auto'
+                                    }}
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        name="test_name"
+                                        placeholder="My Test Title"
+                                        style={{
+                                            marginBottom: '30px'
+                                        }}
+                                        value={this.state.test_name}
+                                        onChange={this.onChange}
+                                        required
+                                    />
+                                </FloatingLabel>
+                                <FloatingLabel
+                                    controlId="floatingTextarea"
+                                    label="Description"
+                                    style={{
+                                        width:'90%',
+                                        margin:'auto'
+                                    }}
+                                >
+                                    <Form.Control
+                                    as="textarea"
+                                    name="test_description"
+                                    placeholder="Leave a description here"
+                                    style={{ 
+                                        height: '100px',
                                         marginBottom: '30px'
                                     }}
-                                    value={this.state.test_name}
+                                    value={this.state.test_description}
                                     onChange={this.onChange}
                                     required
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel
-                                controlId="floatingTextarea"
-                                label="Description"
-                                style={{
-                                    width: '60%',
-                                    margin: 'auto'
-                                }}
-                            >
-                                <Form.Control
-                                as="textarea"
-                                name="test_description"
-                                placeholder="Leave a description here"
-                                style={{ 
-                                    height: '100px',
-                                    marginBottom: '30px'
-                                }}
-                                value={this.state.test_description}
-                                onChange={this.onChange}
-                                required
-                                />
-                            </FloatingLabel>
-                            {this.state.inputList}
-                            <Button type="button" onClick={this.onAddBtnClick} style={{marginBottom: '30px'}}>
-                                Add Question
-                            </Button>
-                            <hr></hr>
-                            <Button variant="primary" type="submit" style={{marginBottom: '30px'}}>
-                                Submit
-                            </Button>
-                        </Form>
+                                    />
+                                </FloatingLabel>
+                                {this.state.inputList}
+                                <Button className="btn waves-effect waves-light accent-3 outline-btn" onClick={this.onAddBtnClick} style={{marginBottom: '30px'}}>
+                                    Add Question
+                                </Button>
+                                <hr></hr>
+                                <Button className="btn btn-large waves-effect waves-light accent-3" type="submit" style={{marginBottom: '30px'}}>
+                                    Submit
+                                </Button>
+                            </Form>
+                        </Container>
                     </Col>
                 </div>
             </>

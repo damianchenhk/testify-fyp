@@ -46,12 +46,14 @@ render(){
     return (
         <>
             <hr></hr>
+            <br></br>
+            <h5>Lesson {this.props.indexValue + 1}</h5>
             <FloatingLabel
                 controlId="floatingInput"
                 label="Lesson Title"
                 className="mb-3"
                 style={{
-                    width: '60%',
+                    width: '90%',
                     margin: 'auto'
                 }}
             >
@@ -63,13 +65,14 @@ render(){
                         marginBottom: '30px'
                     }}
                     onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                    required
                 />
             </FloatingLabel>
             <FloatingLabel
                 controlId="floatingTextarea"
                 label="Description"
                 style={{
-                    width: '60%',
+                    width: '90%',
                     margin: 'auto'
                 }}
             >
@@ -82,6 +85,7 @@ render(){
                     marginBottom: '30px'
                 }}
                 onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                required
                 />
             </FloatingLabel>
                 <Form.Group controlId="formFile" className="mb-3">
@@ -94,7 +98,7 @@ render(){
                         type="file"
                         accept="video/mp4"
                         style={{
-                            width: '60%',
+                            width: '90%',
                             margin: 'auto',
                             marginBottom: '30px'
                         }}
@@ -106,7 +110,7 @@ render(){
                         label={`${this.state.uploadPercentage}%`}
                         style={{
                             height: '15px',
-                            width: '60%',
+                            width: '90%',
                             margin: 'auto'
                         }}
                     />}
@@ -116,18 +120,19 @@ render(){
                 label="Lesson Weightage"
                 className="mb-3"
                 style={{
-                    width: '60%',
+                    width: '90%',
                     margin: 'auto'
                 }}
             >
                 <Form.Control
-                    type="text"
+                    type="number"
                     name="lesson_weightage"
                     placeholder="My Lesson Weightage"
                     style={{
                         marginBottom: '30px'
                     }}
                     onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                    required
                 />
             </FloatingLabel>
         </>

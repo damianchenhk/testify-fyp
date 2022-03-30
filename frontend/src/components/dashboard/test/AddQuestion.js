@@ -16,14 +16,15 @@ render(){
     return (
         <>
             <hr></hr>
+            <br></br>
             <h5>Question {this.props.indexValue + 1}</h5>
             <FloatingLabel
                 controlId="floatingInput"
                 label="Question"
                 className="mb-3"
                 style={{
-                    width: '60%',
-                    margin: 'auto'
+                    width:'90%',
+                    margin:'auto'
                 }}
             >
                 <Form.Control
@@ -34,9 +35,10 @@ render(){
                         marginBottom: '30px'
                     }}
                     onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                    required
                 />
             </FloatingLabel>
-            <Form.Group as={Row} className="mb-3" style={{width: '60%'}}>
+            <Form.Group as={Row} className="mb-3" style={{width:'90%',margin:'auto'}}>
             <p style={{textAlign: 'left', color:'#26A69A'}}>Select the correct answer:</p>
                 <Col sm={1} style={{padding: '0'}}>
                     <Form.Check
@@ -46,6 +48,7 @@ render(){
                         id="answer-options"
                         value="A"
                         onChange={(event) => this.props.onChange(event.target.value, event.target.id)}
+                        required
                     />
                 </Col>
                 <Col sm={11} style={{padding: '0'}}>
@@ -58,6 +61,7 @@ render(){
                             marginBottom: '20px'
                         }}
                         onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                        required
                     />
                 </Col>
                 <Col sm={1} style={{padding: '0'}}>
@@ -68,6 +72,7 @@ render(){
                         id="answer-options"
                         value="B"
                         onChange={(event) => this.props.onChange(event.target.value, event.target.id)}
+                        required
                     />
                 </Col>
                 <Col sm={11} style={{padding: '0'}}>
@@ -80,6 +85,7 @@ render(){
                             marginBottom: '20px'
                         }}
                         onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                        required
                     />
                 </Col>
                 <Col sm={1} style={{padding: '0'}}>
@@ -90,6 +96,7 @@ render(){
                         id="answer-options"
                         value="C"
                         onChange={(event) => this.props.onChange(event.target.value, event.target.id)}
+                        required
                     />
                 </Col>
                 <Col sm={11} style={{padding: '0'}}>
@@ -102,6 +109,7 @@ render(){
                             marginBottom: '20px'
                         }}
                         onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                        required
                     />
                 </Col>
                 <Form.Select

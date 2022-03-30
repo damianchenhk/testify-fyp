@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container } from "react-bootstrap";
-import { BsFillPatchCheckFill, BsFillPersonFill, BsPersonCheck } from "react-icons/bs";
+import { BsCheckAll, BsFillPersonFill, BsPersonCheck } from "react-icons/bs";
 import axios from "axios";
 import TestCard from "./TestCard";
 
@@ -52,7 +52,7 @@ const PendingTest = ({ auth }) => {
                   <th style={{textAlign:'center'}}>Description</th>
                   <th style={{textAlign:'center'}}>Course</th>
                   <th style={{textAlign:'center', width:'5%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
-                  <th style={{textAlign:'center', width:'5%'}}><BsFillPatchCheckFill size={'20px'} title="Approved?"/></th>
+                  <th style={{textAlign:'center', width:'5%'}}><BsCheckAll size={'25px'} title="Approved?"/></th>
                   <th style={{width:'10%'}}></th>
                 </tr>
               </thead>

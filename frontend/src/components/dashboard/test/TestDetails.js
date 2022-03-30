@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Table, Container } from "react-bootstrap";
-import { BsBarChartLine, BsFillPatchCheckFill } from "react-icons/bs";
-import { MdOutlineFeedback, MdCancel } from "react-icons/md";
+import { BsBarChartLine, BsCheckAll, BsClock } from "react-icons/bs";
+import { MdOutlineFeedback } from "react-icons/md";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 
@@ -164,7 +164,7 @@ const TestDetails = ({ auth }) => {
                         <div className="test-checked">
                             <h6 className="test-checked-color"><strong>Approved?</strong></h6>
                         </div>
-                        <h5 className="test-checked-color">{test.tester_id?.length === 2 ? <BsFillPatchCheckFill style={{marginBottom:'5px'}} title='Approved'/> : <MdCancel style={{marginBottom:'5px'}} title='Not Approved'/>}</h5>
+                        <h5 className="test-checked-color">{test.tester_id?.length === 2 ? <BsCheckAll style={{marginBottom:'5px'}} title='Approved'/> : <BsClock size={'20px'} style={{marginBottom:'5px'}} title='Not Approved'/>}</h5>
                         <div className="test-attempt">
                             <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
                         </div>
@@ -191,7 +191,7 @@ const TestDetails = ({ auth }) => {
                         <div className="test-checked">
                             <h6 className="test-checked-color"><strong>Approved?</strong></h6>
                         </div>
-                        <h5 className="test-checked-color"><MdCancel style={{marginBottom:'5px'}} title='Not Approved'/></h5>
+                        <h5 className="test-checked-color"><BsClock size={'20px'} style={{marginBottom:'5px'}} title='Not Approved'/></h5>
                         <div className="test-attempt">
                             <h6 className="test-attempt-color"><strong>No. Students Attempted</strong></h6>
                         </div>

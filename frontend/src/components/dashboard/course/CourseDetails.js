@@ -4,7 +4,7 @@ import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
 import { BsCameraVideo, BsPen, BsPersonCheck } from "react-icons/bs";
 import { RiPencilRuler2Line } from "react-icons/ri";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
@@ -36,6 +36,7 @@ const CourseDetails = ({ auth }) => {
     const [courses_taken, setStudentCourses] = useState(auth.user.ongoing_courses);
     const [registered, setRegistered] = useState(courses_taken.includes(id));
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const onSubmit = e => {
         e.preventDefault();
@@ -129,15 +130,15 @@ const CourseDetails = ({ auth }) => {
                     children.push(
                         <td>
                             {report.tests_taken?.map(test => test.test_id).includes(tests[i]._id) ? <Button 
-                                    style={{width:'130px', fontSize:'9px'}}
+                                    style={{width:'130px', fontSize:'12px'}}
                                     className='btn waves-effect waves-light accent-3'
                                     disabled
                                 >
-                                    Test Completed
+                                    Completed
                                 </Button> : <Link 
                                     to={{pathname: `/test/${tests[i]._id}`,}}
-                                    style={{width:'130px', fontSize:'9px'}}
-                                    className='btn waves-effect waves-light accent-3'
+                                    style={{width:'130px', fontSize:'12px'}}
+                                    className='btn waves-effect waves-light accent-3 outline-btn'
                                 >
                                     Attempt Test
                                 </Link>}
@@ -173,13 +174,13 @@ const CourseDetails = ({ auth }) => {
                             <td><h6>{tests[testIndex].test_name}</h6></td>
                             <td>{tests[testIndex].test_description}</td>
                             <td>
-                                <Link 
-                                    to={{pathname: `/testdetails/${tests[testIndex]._id}`,}}
-                                    style={{width:'130px', fontSize:'9px'}}
-                                    className='btn waves-effect waves-light accent-3'
+                                <Button
+                                    onClick={() => {history.push('/testdetails/' + tests[testIndex]._id)}}
+                                    style={{width:'130px', fontSize:'12px'}}
+                                    className='btn waves-effect waves-light accent-3 outline-btn'
                                 >
                                     View Details
-                                </Link>
+                                </Button>
                             </td>
                         </tr>
                     )
@@ -328,13 +329,7 @@ const CourseDetails = ({ auth }) => {
                                 </Link> 
                             </>
                         : null}
-                        {!registered ? 
-                        <> 
-                            <br></br>
-                            <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0'}}>Register</Button>
-                            <br></br>
-                        </>
-                        : null}
+                        {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0', marginBottom:'15px'}}>Register</Button> : null}
                         <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
                             <h5>Register for {course.course_name}?</h5>
                             <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>

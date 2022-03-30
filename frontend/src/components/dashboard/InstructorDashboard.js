@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Table } from "react-bootstrap";
+import { BsFillCameraVideoFill, BsFillPersonFill, BsPenFill, BsPersonSquare } from "react-icons/bs";
 import axios from "axios";
 
 import '../../App.css';
@@ -27,14 +28,14 @@ const InstructorDashboard = ({ auth }) => {
     const courseSummary = () => {
         if(courses.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center'}}>Course Description</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,15 +43,6 @@ const InstructorDashboard = ({ auth }) => {
                             <InstructorCourseSummary course={course} key={k} />
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                                <Link to="/instructorcourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -60,9 +52,9 @@ const InstructorDashboard = ({ auth }) => {
                     <tr>
                             <th style={{textAlign:'center'}}>Course</th>
                             <th style={{textAlign:'center'}}>Course Description</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,15 +62,6 @@ const InstructorDashboard = ({ auth }) => {
                             <td colSpan={5} style={{textAlign:'center'}}>You have no courses created</td>
                         </tr>
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                                <Link to="/addcourse" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    Add Course
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }
@@ -86,10 +69,12 @@ const InstructorDashboard = ({ auth }) => {
 
     return (
         <>
-            <br></br>
-            <h4>
-                <strong>Welcome back,</strong> {auth.user.name?.split(" ")[0]}
-            </h4>
+            <div className="hero">
+                <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/instructorHero.png"/>
+                <h4 className="hero-text">
+                    Welcome back, {auth.user.name?.split(" ")[0]}
+                </h4>
+            </div>
             <br></br>
             <Row>
                 <Col>
@@ -99,11 +84,20 @@ const InstructorDashboard = ({ auth }) => {
                     </Link>
                 </Col>
             </Row>
-            <br></br>
-            <Row>
-                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>My Courses</h5>
-                    {courseSummary()}
+            <Row style={{margin:'0 10px 20px'}}>
+                <Col xs={12} lg md>
+                    <div className="course-summary">
+                        <h5><BsPersonSquare style={{marginBottom:'3px'}}/> <strong>My Courses</strong></h5>
+                        {courseSummary()}
+                    </div>
+                    <div style={{position:'relative', bottom:'50px'}}>
+                        { courses.length ? <Link to="/instructorcourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            View More
+                        </Link> : 
+                        <Link to="/addcourse" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px'}}>
+                            Add Course
+                        </Link> }
+                    </div>
                 </Col>
             </Row>
         </>

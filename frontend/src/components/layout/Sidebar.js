@@ -4,6 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { BsHouse,BsPen, BsGear, BsLaptop, BsFileEarmarkPerson, BsPersonSquare, BsPersonCheck } from "react-icons/bs";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { RiPencilRuler2Line } from "react-icons/ri";
+import { IoMdAdd } from "react-icons/io";
 import { connect } from "react-redux";
 import { Menu } from 'antd';
 import 'antd/dist/antd.css';
@@ -47,8 +48,8 @@ const Sidebar = ({auth}) => {
           <Menu.Item key="/dashboard" icon={<BsHouse/>} onClick={() => history.push("/dashboard")}>Home</Menu.Item>
           <SubMenu key="courses" title="Courses" icon={<FaChalkboardTeacher/>}>
             {auth.user.role==='Admin' ? <Menu.Item key="/admincourses" style={{color:'#0f443f'}} onClick={() => history.push("/admincourses")}>All Courses</Menu.Item> : null}
-            {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" style={{color:'#0f443f'}} onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
-            {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" style={{color:'#0f443f'}} onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
+            {auth.user.role==='Instructor' ? <Menu.Item key="/addcourse" style={{color:'#0f443f'}} icon={<IoMdAdd size={'15px'} style={{marginBottom:'2px'}}/>} onClick={() => history.push("/addcourse")}>Add Course</Menu.Item> : null}
+            {auth.user.role==='Instructor' ? <Menu.Item key="/instructorcourses" style={{color:'#0f443f'}} icon={<BsPersonSquare/>} onClick={() => history.push("/instructorcourses")}>My Courses</Menu.Item> : null}
             {auth.user.role==='Student' ? <Menu.Item key="/mycourses" style={{color:'#0f443f'}} icon={<BsPersonSquare/>} onClick={() => history.push("/mycourses")}>My Courses</Menu.Item> : null}
             {auth.user.role==='Student' ? <Menu.Item key="/course" style={{color:'#0f443f'}} icon={<BsLaptop/>} onClick={() => history.push("/course")}>All Courses</Menu.Item> : null}
           </SubMenu>
