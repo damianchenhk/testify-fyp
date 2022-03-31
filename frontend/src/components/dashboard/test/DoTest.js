@@ -6,6 +6,7 @@ import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
 import TestQuestion from "./TestQuestions";
+import "../../../App.css";
 
 const DoTest = ({auth}) => {
 
@@ -87,7 +88,7 @@ const DoTest = ({auth}) => {
   let questionList;
 
   if(!questions) {
-      questionList = "there is no questions record!";
+      questionList = "There are no question records!";
   } else {
       questionList = questions.map((question, k) =>
       <TestQuestion
@@ -105,17 +106,20 @@ const DoTest = ({auth}) => {
           <Col>
               <Sidebar/>
           </Col>
-          <Col className="align-items-center dashboard">
+          <Col className="dashboard">
               <br></br>
-              <h2>{test.test_name}</h2>
-              <br></br>
-              <Container>
+              <h3 className="test-taking">{test.test_name}</h3>
+              <Container className="dash-cards" style={{width:'80%'}}>
+                <br></br>
+                <div style={{margin:'20px'}}>
                   <Form onSubmit={onSubmit}>
                       {questionList}
+                      <hr></hr>
                       <Button type="submit" className="btn btn-large waves-effect waves-light accent-3">Submit</Button>
-                      <br></br>
                   </Form>
+                  </div>
               </Container>
+              <br></br>
           </Col>
       </div>
     </>

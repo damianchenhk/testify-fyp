@@ -55,15 +55,16 @@ class Register extends Component {
     
         return (
             <div className="container">
+                <br></br>
                 <div className="row">
                     <div className="col s8 offset-s2">
                         <Link to="/" className="btn-flat waves-effect">
                             <i className="material-icons left">keyboard_backspace</i> Back to home
                         </Link>
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <h4><b>Register</b> below</h4>
+                            <h4><b>Register</b></h4>
                             <p className="grey-text text-darken-1">
-                                Already have an account? <Link to="/login">Log in</Link>
+                                Already have an account? <Link style={{color:'#26A69A'}} to="/login">Log in</Link>
                             </p>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>

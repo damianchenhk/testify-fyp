@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Container, Table } from "react-bootstrap";
-import { BsPersonCheck, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
+import { BsPersonSquare, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
 import axios from "axios";
 import InstructorCourseCard from "./InstructorCourseCard";
 
@@ -43,7 +43,7 @@ const InstructorMyCourse = ({auth}) => {
                 <Col className="align-items-center dashboard">
                   <div className="hero">
                     <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/courseHero.png"/>
-                    <h3 className="hero-text"><BsPersonCheck style={{marginBottom:'5px'}}/> My Courses</h3>
+                    <h3 className="hero-text"><BsPersonSquare style={{marginBottom:'5px'}}/> My Courses</h3>
                   </div>
                   <Container className="dash-cards" style={{width:'90%'}}>
                     <Table responsive>

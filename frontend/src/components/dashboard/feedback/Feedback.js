@@ -91,338 +91,342 @@ class Feedback extends Component {
                     <Col>
                         <Sidebar/>
                     </Col>
-                    <Col className="align-items-center dashboard">
-                        <br></br>
-                        <h2>Feedback</h2>
-                        <hr></hr>
-                        <br></br>
-                        <Container>
-                            <Form onSubmit={this.onSubmit}>
-                                <p
-                                    style={{
-                                        fontSize: '20px',
-                                        textAlign: 'left'
-                                    }}
-                                >
-                                    1.  The test was effective in testing the concepts taught in the course.
-                                </p>
-                                <Table responsive>
-                                    <thead>
-                                        <tr>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Agree</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-1"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="1"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-2"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="2"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-3"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="3"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-4"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="4"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-5"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="5"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-6"
-                                                    name="q1-feedback"
-                                                    id="q1-feedback"
-                                                    value="6"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                                <br></br>
-                                <p
-                                    style={{
-                                        fontSize: '20px',
-                                        textAlign: 'left'
-                                    }}
-                                >
-                                    2.  How difficult was the test?
-                                </p>
-                                <Table responsive>
-                                    <thead>
-                                        <tr>
-                                            <th style={{textAlign: 'center', width: '20%'}}>Very Difficult</th>
-                                            <th style={{textAlign: 'center', width: '20%'}}>Difficult</th>
-                                            <th style={{textAlign: 'center', width: '20%'}}>Just Right</th>
-                                            <th style={{textAlign: 'center', width: '20%'}}>Easy</th>
-                                            <th style={{textAlign: 'center', width: '20%'}}>Very Easy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-1"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="1"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-2"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="2"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-3"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="3"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-4"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="4"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-5"
-                                                    name="q2-feedback"
-                                                    id="q2-feedback"
-                                                    value="5"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                                <br></br>
-                                <p
-                                    style={{
-                                        fontSize: '20px',
-                                        textAlign: 'left'
-                                    }}
-                                >
-                                    3.  I would recommend this test to my fellow students in the cohort.
-                                </p>
-                                <Table responsive>
-                                    <thead>
-                                        <tr>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Disagree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Slightly Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Agree</th>
-                                            <th style={{textAlign: 'center', width: '16%'}}>Strongly Agree</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-1"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="1"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-2"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="2"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-3"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="3"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-4"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="4"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-5"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="5"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Form.Check
-                                                    type="radio"
-                                                    aria-label="answer-6"
-                                                    name="q3-feedback"
-                                                    id="q3-feedback"
-                                                    value="6"
-                                                    style={{
-                                                        textAlign: 'center'
-                                                    }}
-                                                    onChange={this.onChange}
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                                <br></br>
-                                <p
-                                    style={{
-                                        fontSize: '20px',
-                                        textAlign: 'left'
-                                    }}
-                                >
-                                    4.  Do you have anymore feedback for this test?
-                                </p>
-                                <FloatingLabel
-                                    controlId="floatingTextarea"
-                                    label="Feedback"
-                                    style={{
-                                        margin: 'auto'
-                                    }}
-                                >
-                                    <Form.Control
-                                        as="textarea"
-                                        name="detailed_feedback"
-                                        placeholder="Leave a description here"
-                                        style={{ 
-                                            height: '100px',
-                                            marginBottom: '30px'
+                    <Col className="dashboard">
+                        <div className="hero">
+                            <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/feedbackHero.png"/>
+                            <h3 className="hero-text">Feedback</h3>
+                        </div>
+                        <Container className="dash-cards" style={{width:'80%'}}>
+                            <div style={{margin:'20px'}}>
+                                <Form onSubmit={this.onSubmit}>
+                                    <p
+                                        style={{
+                                            fontSize: '20px',
+                                            textAlign: 'left'
                                         }}
-                                        value={this.state.detailed_feedback}
-                                        onChange={this.onChange}
-                                    />
-                                </FloatingLabel>
-                                <Button type="submit">Submit</Button>
-                            </Form>
+                                    >
+                                        1.  The test was effective in testing the concepts taught in the course.
+                                    </p>
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Strongly Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Slightly Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Slightly Agree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Agree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Strongly Agree</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-1"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="1"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-2"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="2"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-3"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="3"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-4"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="4"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-5"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="5"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-6"
+                                                        name="q1-feedback"
+                                                        id="q1-feedback"
+                                                        value="6"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <br></br>
+                                    <p
+                                        style={{
+                                            fontSize: '20px',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        2.  How difficult was the test?
+                                    </p>
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                <th style={{textAlign: 'center', width: '20%'}}>Very Difficult</th>
+                                                <th style={{textAlign: 'center', width: '20%'}}>Difficult</th>
+                                                <th style={{textAlign: 'center', width: '20%'}}>Just Right</th>
+                                                <th style={{textAlign: 'center', width: '20%'}}>Easy</th>
+                                                <th style={{textAlign: 'center', width: '20%'}}>Very Easy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-1"
+                                                        name="q2-feedback"
+                                                        id="q2-feedback"
+                                                        value="1"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-2"
+                                                        name="q2-feedback"
+                                                        id="q2-feedback"
+                                                        value="2"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-3"
+                                                        name="q2-feedback"
+                                                        id="q2-feedback"
+                                                        value="3"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-4"
+                                                        name="q2-feedback"
+                                                        id="q2-feedback"
+                                                        value="4"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-5"
+                                                        name="q2-feedback"
+                                                        id="q2-feedback"
+                                                        value="5"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <br></br>
+                                    <p
+                                        style={{
+                                            fontSize: '20px',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        3.  I would recommend this test to my fellow students in the cohort.
+                                    </p>
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Strongly Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Slightly Disagree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Slightly Agree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Agree</th>
+                                                <th style={{textAlign: 'center', width: '16%'}}>Strongly Agree</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-1"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="1"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-2"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="2"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-3"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="3"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-4"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="4"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-5"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="5"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Form.Check
+                                                        type="radio"
+                                                        aria-label="answer-6"
+                                                        name="q3-feedback"
+                                                        id="q3-feedback"
+                                                        value="6"
+                                                        style={{
+                                                            textAlign: 'center'
+                                                        }}
+                                                        onChange={this.onChange}
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <br></br>
+                                    <p
+                                        style={{
+                                            fontSize: '20px',
+                                            textAlign: 'left'
+                                        }}
+                                    >
+                                        4.  Do you have anymore feedback for this test?
+                                    </p>
+                                    <FloatingLabel
+                                        controlId="floatingTextarea"
+                                        label="Feedback"
+                                        style={{
+                                            margin: 'auto'
+                                        }}
+                                    >
+                                        <Form.Control
+                                            as="textarea"
+                                            name="detailed_feedback"
+                                            placeholder="Leave a description here"
+                                            style={{ 
+                                                height: '100px',
+                                                marginBottom: '30px'
+                                            }}
+                                            value={this.state.detailed_feedback}
+                                            onChange={this.onChange}
+                                        />
+                                    </FloatingLabel>
+                                    <hr></hr>
+                                    <Button className="btn btn-large waves-effect waves-light accent-3" type="submit">Submit</Button>
+                                </Form>
+                            </div>
                         </Container>
+                        <br></br>
                     </Col>
                 </div>
             </>

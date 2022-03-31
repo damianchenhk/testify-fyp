@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row, Col, Container, Table } from "react-bootstrap";
+import { BsPersonBadgeFill, BsCalendarDateFill } from "react-icons/bs";
 import axios from "axios";
 import UserCard from "./UserCard";
 
@@ -39,21 +40,23 @@ const Users = ({ auth }) => {
                 <Col>
                     <Sidebar/>
                 </Col>
-                <Col className="align-items-center dashboard">
-                <Container>
-                    <br></br>
-                    <h3>All Users</h3>
+                <Col className="dashboard">
+                <div className="hero">
+                    <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/adminHero.png"/>
+                    <h4 className="hero-text">All Users</h4>
+                </div>
+                <Container className="dash-cards" style={{width:'90%'}}>
                     <Table responsive>
-                    <thead>
-                        <tr>
-                            <th style={{textAlign: 'center'}}>User Name</th>
-                            <th style={{textAlign: 'center'}}>User Role</th>
-                            <th style={{textAlign: 'center'}}>Date & Time Joined</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userList}
-                    </tbody>
+                        <thead>
+                            <tr>
+                                <th style={{textAlign: 'center'}}>User Name</th>
+                                <th style={{textAlign:'center'}}><BsPersonBadgeFill size={'20px'} title="User Role"/></th>
+                            <th style={{textAlign:'center'}}><BsCalendarDateFill size={'20px'} title="Date & Time of Registration"/></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {userList}
+                        </tbody>
                     </Table>
                 </Container>
                 </Col>

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 const AdminUserSummary = (props) => {
     const  user  = props.user;
@@ -8,15 +7,9 @@ const AdminUserSummary = (props) => {
 
     return(
         <tr key={user._id}>
-            <td style={{border:'solid 1px #dee2e6', borderLeft:'none'}}>
-                <Link to={{
-                        pathname: `/coursereport/${user._id}`,
-                    }}>
-                        { user.name }
-                </Link>
-            </td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderLeft:'none'}}>{user.role}</td>
-            <td style={{textAlign:'center', border:'solid 1px #dee2e6', borderRight:'none'}}>
+            <td>{ user.name }</td>
+            <td style={{textAlign:'center'}}>{user.role}</td>
+            <td style={{textAlign:'center'}}>
                 {dateString}
             </td>
         </tr>

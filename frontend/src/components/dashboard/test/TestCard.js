@@ -32,31 +32,23 @@ const TestCard = (props) => {
         <>
             <tr>
                 <td>
-                    <h6 style={{margin:'auto'}}>
-                        <Link to={{
-                            pathname: `/testdetails/${test._id}`,
-                        }}
-                            style={{color: 'black'}}
-                        >
-                            { test.test_name }
-                        </Link>
-                    </h6>
+                    <h6 style={{margin:'auto'}}>{ test.test_name }</h6>
                 </td>
                 <td>
                     <p style={{margin:'auto'}}>{test.test_description}</p>
                 </td>
                 <td>
-                <Link to={{
-                        pathname: `/coursedetails/${test.course_id}`,
-                    }}
-                    style={{color:'black'}}
-                    className="test-summary-card"
-                >
-                        { course_name }
-                </Link>
-            </td>
-            <td style={{textAlign:'center'}}>{studentCount}</td>
-            <td style={{textAlign:'center'}}>{ test.tester_id.length === 2 ? <BsCheckAll size={'20px'} color='#26a69a' title='Approved'/> : <BsClock color='#a0a0a0' size={'15px'} title='Not Approved'/>}</td>
+                    <Link to={{
+                            pathname: `/coursedetails/${test.course_id}`,
+                        }}
+                        style={{color:'black'}}
+                        className="test-summary-card"
+                    >
+                            { course_name }
+                    </Link>
+                </td>
+                <td style={{textAlign:'center'}}>{studentCount}</td>
+                <td style={{textAlign:'center'}}>{ test.tester_id.length === 2 ? <BsCheckAll size={'20px'} color='#26a69a' title='Approved'/> : <BsClock color='#a0a0a0' size={'15px'} title='Not Approved'/>}</td>
                 <td style={{textAlign:'center'}}>
                     <Link to={{
                         pathname: `/testdetails/${test._id}`,

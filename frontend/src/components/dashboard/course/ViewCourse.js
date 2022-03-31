@@ -75,17 +75,21 @@ const ViewCourse = () => {
                                 </button>}
                             </Col>
                         </Row>
-                        <h4> {course.lesson_names ? course.lesson_names[lessonIndex] : null} </h4>
-                        <p> {course.lesson_descriptions ? course.lesson_descriptions[lessonIndex] : null} </p>
+                    </Container>
+                    <Container className="dash-cards" style={{textAlign:'left', width:'90%'}}>
+                        <br></br>
+                        <div style={{marginLeft:'10px'}}>
+                            <h4> {course.lesson_names ? course.lesson_names[lessonIndex] : null} </h4>
+                            <p> {course.lesson_descriptions ? course.lesson_descriptions[lessonIndex] : null} </p>
+                        </div>
                         <hr></hr>
                         <div style={{textAlign:'center'}}>
-                            <Link to={{pathname: `/addtest/${id}`}} className="btn btn-large waves-effect waves-light hoverable accent-3">
+                            <Link to={{pathname: `/addtest/${id}`}} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{marginBottom:'15px'}}>
                                 Create Test
                             </Link>
                         </div>
-                        <br></br>
-                        <br></br>
                     </Container>
+                    <br></br>
                 </Col>
             </div>
         </>

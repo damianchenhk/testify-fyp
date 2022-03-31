@@ -143,7 +143,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. Students Attempted"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsCheckAll size={'25px'} title="Approved?"/></th>
                         </tr>
                     </thead>
@@ -161,7 +161,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. Students Attempted"/></th>
                             <th style={{textAlign:'center', width:'10%'}}><BsCheckAll size={'25px'} title="Approved?"/></th>
                         </tr>
                     </thead>
@@ -183,7 +183,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. Students Approved"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -200,7 +200,7 @@ const StudentDashboard = ({ auth }) => {
                         <tr>
                             <th style={{textAlign:'center'}}>Test</th>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="Students Attempted"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. Students Approved"/></th>
                         </tr>
                     </thead>
                     <tbody>

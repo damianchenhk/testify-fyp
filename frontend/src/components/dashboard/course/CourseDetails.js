@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
-import { BsCameraVideo, BsPen, BsPersonCheck } from "react-icons/bs";
+import { BsCameraVideo, BsPen, BsPersonCheck, BsBarChartLine, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
 import { RiPencilRuler2Line } from "react-icons/ri";
 import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
@@ -27,6 +27,7 @@ const CourseDetails = ({ auth }) => {
     const [tests, setTests] = useState({});
     const [seen, setSeen] = useState(false);
     const [report, setReport] = useState({});
+    const [studentCount, setStudentCount] = useState(0);
 
     const [student_id, setStudentId] = useState(auth.user.id);
     const [student_name, setStudentName] = useState(auth.user.name);
@@ -83,16 +84,24 @@ const CourseDetails = ({ auth }) => {
                 .post('/api/tests/courseTests', {course_id: id})
                 .then(res => {
                     setTests(res.data)
-                    if(registered){
-                        axios
-                            .post('/api/reports/getReportID/', {student_id: auth.user.id, course_id: id})
-                            .then(res => {
-                                setReport(res.data[0])
-                            })
-                            .catch(err => {
-                                console.log("Error from getReportID");
-                            })
-                    }
+                    axios
+                        .post('/api/reports/getCourseStudentsCount', {course_id: id})
+                        .then(res => {
+                            setStudentCount(res.data);
+                            if(registered){
+                                axios
+                                    .post('/api/reports/getReportID/', {student_id: auth.user.id, course_id: id})
+                                    .then(res => {
+                                        setReport(res.data[0])
+                                    })
+                                    .catch(err => {
+                                        console.log("Error from getReportID");
+                                    })
+                            }
+                        })
+                        .catch(err => {
+                            console.log("Error from getCourseStudentsCount");
+                        })
                 })
                 .catch(err => {
                     console.log("Error from courseTests");
@@ -171,7 +180,7 @@ const CourseDetails = ({ auth }) => {
                 if(tests[testIndex].creator_id === auth.user.id){
                     myTestTable.push(
                         <tr>
-                            <td><h6>{tests[testIndex].test_name}</h6></td>
+                            <td><h6 style={{margin:'auto'}}>{tests[testIndex].test_name}</h6></td>
                             <td>{tests[testIndex].test_description}</td>
                             <td>
                                 <Button
@@ -239,8 +248,8 @@ const CourseDetails = ({ auth }) => {
                                     Test Completed
                                 </Button> : <Link 
                                     to={{pathname: `/betatest/${tests[testIndex]._id}`,}}
-                                    style={{width:'130px', fontSize:'9px'}}
-                                    className='btn waves-effect waves-light accent-3'
+                                    style={{width:'130px', fontSize:'12px'}}
+                                    className='btn waves-effect waves-light accent-3 outline-btn'
                                 >
                                     Attempt Test
                                 </Link>}
@@ -290,6 +299,27 @@ const CourseDetails = ({ auth }) => {
         }
     }
 
+    const courseStats = () => {
+        return(
+            <>
+                <div className="course-stats">
+                    <div className="course-checked">
+                        <h6 className="course-checked-color"><BsFillCameraVideoFill size={'30px'} title='No. of Lessons'/></h6>
+                    </div>
+                    <h5 className="course-checked-color"><strong>{course.lesson_names?.length ? course.lesson_names?.length : 0}</strong></h5>
+                    <div className="course-attempt">
+                        <h6 className="course-attempt-color"><BsFillPersonFill size={'30px'} title='No. of Students'/></h6>
+                    </div>
+                    <h5 className="course-attempt-color"><strong>{studentCount}</strong></h5>
+                    <div className="course-effective">
+                        <h6 className="course-effective-color"><BsPenFill size={'25px'} title='No. of Tests'/></h6>
+                    </div>
+                    <h5 className="course-effective-color"><strong>{tests?.length ? tests?.length : 0}</strong></h5>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <div className="web-page">
@@ -301,6 +331,14 @@ const CourseDetails = ({ auth }) => {
                     <h3>{course.course_name}</h3>
                     <h5>Instructor: {course.instructor_name}</h5>
                     <h6>{course.course_description}</h6>
+                    <br></br>
+                    <Container className="dash-cards">
+                        <br></br>
+                        <h4><BsBarChartLine style={{marginBottom:'10px'}}/> Course Statistics</h4>
+                        <hr></hr>
+                        {courseStats()}
+                        <br></br>
+                    </Container>
                     <br></br>
                     <Container className="dash-cards">
                         <br></br>
@@ -331,7 +369,7 @@ const CourseDetails = ({ auth }) => {
                         : null}
                         {!registered ? <Button onClick={() => togglePop()} className="btn btn-large waves-effect waves-light accent-3" style={{zIndex:'0', marginBottom:'15px'}}>Register</Button> : null}
                         <RegisterPopUp trigger={seen} setTrigger={togglePop} setSubmit={onSubmit}>
-                            <h5>Register for {course.course_name}?</h5>
+                            <h5 style={{color:'#1d8177'}}>Register for {course.course_name}?</h5>
                             <Form.Check onChange={() => toggleTester()} label="I want to be a pre-tester for student tests"/>
                             <br></br>
                         </RegisterPopUp>

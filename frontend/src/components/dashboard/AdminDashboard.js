@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Table } from "react-bootstrap";
+import { BsLaptop, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill, BsPersonBadgeFill, BsCalendarDateFill, BsFileEarmarkPerson } from "react-icons/bs";
 import axios from "axios";
 
 import '../../App.css';
@@ -37,14 +38,14 @@ const AdminDashboard = ({ auth }) => {
     const courseSummary = () => {
         if(courses.length){
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center'}}>Course Description</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                            <th style={{textAlign:'center'}}>Instructor</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,15 +53,6 @@ const AdminDashboard = ({ auth }) => {
                             <AdminCourseSummary course={course} key={k} />
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                                <Link to="/admincourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -69,10 +61,10 @@ const AdminDashboard = ({ auth }) => {
                     <thead>
                     <tr>
                             <th style={{textAlign:'center'}}>Course</th>
-                            <th style={{textAlign:'center'}}>Course Description</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Lessons</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Students</th>
-                            <th style={{textAlign:'center', width:'10%'}}>No. of Tests Created</th>
+                            <th style={{textAlign:'center'}}>Instructor</th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillCameraVideoFill size={'20px'} title="No. of Lessons"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsFillPersonFill size={'25px'} title="No. of Students"/></th>
+                            <th style={{textAlign:'center', width:'10%'}}><BsPenFill size={'20px'} title="No. of Tests"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,8 +84,8 @@ const AdminDashboard = ({ auth }) => {
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Name</th>
-                            <th style={{textAlign:'center'}}>User Role</th>
-                            <th style={{textAlign:'center'}}>Date & Time of Registration</th>
+                            <th style={{textAlign:'center'}}><BsPersonBadgeFill size={'20px'} title="User Role"/></th>
+                            <th style={{textAlign:'center'}}><BsCalendarDateFill size={'20px'} title="Date & Time of Registration"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,15 +93,6 @@ const AdminDashboard = ({ auth }) => {
                             <AdminUserSummary user={user} key={k} />
                         )}
                     </tbody>
-                    <tfoot style={{border: 'none'}}>
-                        <tr>
-                            <td colSpan={5} style={{textAlign: 'center'}}>
-                                <Link to="/adminuserlist" className="btn waves-effect waves-light accent-3" style={{fontSize: '10px'}}>
-                                    View More
-                                </Link>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </Table>
             )
         }else {
@@ -118,8 +101,8 @@ const AdminDashboard = ({ auth }) => {
                     <thead>
                         <tr>
                             <th style={{textAlign:'center'}}>Name</th>
-                            <th style={{textAlign:'center'}}>User Role</th>
-                            <th style={{textAlign:'center', width:'10%'}}>Date of Registration</th>
+                            <th style={{textAlign:'center'}}><BsPersonBadgeFill size={'20px'} title="User Role"/></th>
+                            <th style={{textAlign:'center'}}><BsCalendarDateFill size={'20px'} title="Date & Time of Registration"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -134,19 +117,31 @@ const AdminDashboard = ({ auth }) => {
 
     return (
         <>
+            <div className="hero">
+                <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/adminHero.png"/>
+                <h4 className="hero-text">
+                    Welcome back, {auth.user.name?.split(" ")[0]}
+                </h4>
+            </div>
             <br></br>
-            <h4>
-                <strong>Welcome back,</strong> {auth.user.name?.split(" ")[0]}
-            </h4>
-            <br></br>
-            <Row>
-                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>Recent Courses</h5>
-                    {courseSummary()}
+            <Row style={{margin:'0 10px 20px'}}>
+                <Col xs={12} lg={8} md style={{padding:'0'}}>
+                    <div className="course-summary" style={{height:'auto'}}>
+                        <h5 style={{marginTop: '10px'}}><BsLaptop style={{marginBottom:'4px'}}/> <strong>New Courses</strong></h5>
+                        {courseSummary()}
+                        {courses.length ? <Link to="/admincourses" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px', marginBottom:'6px'}}>
+                            View More
+                        </Link> : null}
+                    </div>
                 </Col>
-                <Col xs={12} lg md className="course-summary" style={{marginLeft: '10px'}}>
-                    <h5 style={{marginTop: '10px'}}>Recent Users</h5>
-                    {userSummary()}
+                <Col xs={12} lg={4} md style={{padding:'0'}}>
+                    <div className="course-summary" style={{height:'auto'}}>
+                        <h5 style={{marginTop: '10px'}}><BsFileEarmarkPerson style={{marginBottom:'4px'}}/> <strong>New Users</strong></h5>
+                        {userSummary()}
+                        {users.length ? <Link to="/adminuserlist" className="btn waves-effect waves-light accent-3" style={{fontSize: '15px', marginBottom:'6px'}}>
+                            View More
+                        </Link> : null}
+                    </div>
                 </Col>
             </Row>
         </>

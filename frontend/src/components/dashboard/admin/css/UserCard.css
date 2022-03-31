@@ -1,6 +1,6 @@
 .cancel{
     background-color: rgb(182, 0, 0);
-    font-size: 10px;
+    font-size: 14px;
 }
 
 .cancel:hover{
@@ -8,6 +8,6 @@
 }
 
 .confirm{
-    font-size: 10px;
+    font-size: 14px;
     margin-right: 5px;
 }

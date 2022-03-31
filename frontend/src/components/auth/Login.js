@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 import {loginUser} from "../../actions/authActions";
 import classnames from "classnames";
 
+import "../../App.css";
+
 class Login extends Component {
     constructor() {
         super();
@@ -48,7 +50,6 @@ class Login extends Component {
         };
 
         this.props.loginUser(userData);
-        // since we handle the redirect within our component, we don't need to pass in this.props.history as a parameter
     };
 
     render() {
@@ -63,9 +64,9 @@ class Login extends Component {
                             home
                         </Link>
                         <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-                            <h4><b>Login</b> below</h4>
+                            <h4><b>Login</b></h4>
                             <p className="grey-text text-darken-1">
-                                Don't have an account? <Link to="/register">Register</Link>
+                                Don't have an account? <Link style={{color:'#26A69A'}} to="/register">Register</Link>
                             </p>
                         </div>
                         <form noValidate onSubmit={this.onSubmit}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row , Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
-import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill } from "react-icons/bs";
+import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill, BsFillCameraVideoFill, BsPenFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHandshake } from "react-icons/fa";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
@@ -529,6 +529,27 @@ const InstructorReport = ({ auth }) => {
         }
     }
 
+    const courseStats = () => {
+        return(
+            <>
+                <div className="course-stats">
+                    <div className="course-checked">
+                        <h6 className="course-checked-color"><BsFillCameraVideoFill size={'30px'} title='No. of Lessons'/></h6>
+                    </div>
+                    <h5 className="course-checked-color"><strong>{course.lesson_names?.length ? course.lesson_names?.length : 0}</strong></h5>
+                    <div className="course-attempt">
+                        <h6 className="course-attempt-color"><BsFillPersonFill size={'30px'} title='No. of Students'/></h6>
+                    </div>
+                    <h5 className="course-attempt-color"><strong>{reports?.length ? reports?.length : 0}</strong></h5>
+                    <div className="course-effective">
+                        <h6 className="course-effective-color"><BsPenFill size={'25px'} title='No. of Tests'/></h6>
+                    </div>
+                    <h5 className="course-effective-color"><strong>{tests?.length ? tests?.length : 0}</strong></h5>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <div className="web-page">
@@ -539,6 +560,14 @@ const InstructorReport = ({ auth }) => {
                     <br></br>
                     <h3>{course.course_name}</h3>
                     <h6>{course.course_description}</h6>
+                    <br></br>
+                    <Container className="dash-cards">
+                        <br></br>
+                        <h4><BsBarChartLine style={{marginBottom:'10px'}}/> Course Statistics</h4>
+                        <hr></hr>
+                        {courseStats()}
+                        <br></br>
+                    </Container>
                     <br></br>
                     <Container className="dash-cards">
                         <br></br>
@@ -559,7 +588,7 @@ const InstructorReport = ({ auth }) => {
                     <br></br>
                     <Container className="dash-cards">
                         <br></br>
-                        <h4><BsBarChartLine style={{marginBottom:'5px'}}/> Course Statistics</h4>
+                        <h4><BsBarChartLine style={{marginBottom:'5px'}}/> Student Statistics</h4>
                         <Tabs defaultActiveKey="studentScores" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="studentScores" title="Student Scores">
                                 {statsTable()}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { BsFillPencilFill } from "react-icons/bs";
 
 import "./css/UserCard.css";
 
@@ -48,8 +49,8 @@ const UserCard = (props) => {
             </td>
             <td style={{textAlign:'center'}}>{dateString}</td>
             <td style={{textAlign:'center'}}>
-                {!edit ? <Button style={{fontSize: '10px'}} onClick={() => changeEdit()}>
-                    Change Role
+                {!edit ? <Button style={{fontSize: '14px'}} onClick={() => changeEdit()}>
+                    <BsFillPencilFill style={{marginBottom:'3px'}}/> Edit Role
                 </Button> : null}
                 {edit ? <Button className='confirm' onClick={e => onSubmit(e)}>
                     Confirm

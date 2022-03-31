@@ -6,12 +6,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .logo{
   margin-left: 20px;
-}
-
-.logout-nav{
-  float: right;
-  margin-right: 20px;
-  margin-top: -66px;
+  margin-top: -70px;
 }
 
 .dash-cards{
@@ -23,7 +18,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .view-course{
-  width: 95%;
+  width: 90%;
   text-align: left;
 }
 
@@ -118,7 +113,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .web-page {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 250px 1fr;
 }
 
 [type="radio"]:not(:checked), [type="radio"]:checked  {
@@ -290,6 +285,10 @@ input[type=number]::-webkit-outer-spin-button {
   color: #1e857a;
 }
 
+.btn:hover{
+  color: white;
+}
+
 .outline-btn{
   background-color: white;
   color: #26A69A;
@@ -317,4 +316,201 @@ input[type=number]::-webkit-outer-spin-button {
 .page-item.active .page-link{
   background-color: #26A69A;
   border-color: #26A69A;
+}
+
+.test-taking{
+  color: #1d8177;
+}
+
+.test-result-green{
+  background-color: #26A69A30;
+  color: #26A69A;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #26A69A;
+}
+
+.test-result-red{
+  background-color: #FF000030;
+  color: rgb(220, 0, 0);
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid rgb(220, 0, 0);
+}
+
+.test-result-yellow{
+  background-color: #FFFF0030;
+  color: #ffbf00;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #ffbf00;
+}
+
+.navbar-nav .dropdown-menu{
+  left: 170px;
+  top: 58px;
+  min-width: 9rem;
+}
+
+.dropdown-item{
+  line-height: 30px;
+  color: #0f443f;
+}
+
+.dropdown-item:hover{
+  color: #26A69A;
+  background-color: #26A69A15;
+}
+
+.dropdown-item:active{
+  background-color: #26A69A;
+  color: white;
+}
+
+.dropdown-toggle{
+  min-width: 300px;
+  text-align: right;
+}
+
+.profile-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.profile-popup-inner {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  text-align: center;
+  border-radius: 10px;
+  top: -100px;
+}
+
+.profile-details{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-areas:
+    "header header"
+    "id id-detail" 
+    "name name-detail"
+    "email email-detail"
+    "role role-detail"
+    "cancel cancel"
+  ;
+  grid-column-gap: 5px;
+}
+
+.profile-cancel{
+  background-color: rgb(182, 0, 0);
+  grid-area: cancel;
+}
+
+.profile-cancel:hover{
+  background-color: rgb(200, 0, 0);
+}
+
+.profile-header h4{
+  color: #1d8177;
+}
+
+.profile-header{
+  text-align: center;
+  grid-area: header;
+}
+
+.profile-details strong{
+  color: #1d8177;
+}
+
+.profile-details h6{
+  margin: 6px 0;
+}
+
+.user-id{
+  grid-area: id;
+  text-align: right;
+}
+
+.user-id-detail{
+  grid-area: id-detail;
+  text-align: left;
+}
+
+.name{
+  grid-area: name;
+  text-align: right;
+}
+
+.name-detail{
+  grid-area: name-detail;
+  text-align: left;
+}
+
+.email{
+  grid-area: email;
+  text-align: right;
+}
+
+.email-detail{
+  grid-area: email-detail;
+  text-align: left;
+}
+
+.role{
+  grid-area: role;
+  text-align: right;
+}
+
+.role-detail{
+  grid-area: role-detail;
+  text-align: left;
+}
+
+.course-stats{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 
+    "check attempt effective"
+  ;
+}
+
+.course-checked{
+  grid-area: check;
+  margin: auto;
+}
+
+.course-checked-color{
+  color: rgb(2, 104, 199);
+}
+
+.course-attempt{
+  grid-area: attempt;
+  margin: auto;
+}
+
+.course-attempt-color{
+  color: purple;
+}
+
+.course-effective{
+  grid-area: effective;
+  margin: auto;
+}
+
+.course-effective-color{
+  color: rgb(133, 7, 7);
+}
+
+.btn-flat:hover{
+  color: #26A69A;
 }

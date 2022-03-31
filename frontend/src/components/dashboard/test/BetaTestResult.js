@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col, Container, Form } from "react-bootstrap";
@@ -19,6 +19,8 @@ const BetaTestResult = (props) => {
         }
     }
 
+    const [percentage, setPercentage] = useState((score / answer.length) * 100);
+
     let questionList;
     questionList = test.questions.map((question, k) =>
       <ViewTestQuestions
@@ -36,20 +38,24 @@ const BetaTestResult = (props) => {
                 <Col>
                     <Sidebar/>
                 </Col>
-                <Col className="align-items-center dashboard">
-                    <Container>
-                        <br></br>
-                        <h3>You scored {score}/{answer.length}</h3>
-                        <br></br>
-                        {questionList}
-                        <Link
-                            to={{
-                            pathname: `/betafeedback/${test._id}`,
-                                state: {course_id: test.course_id, tester_id: test.tester_id}
-                            }}
-                            className="btn btn-large waves-effect waves-light accent-3">
-                            Provide Feedback
-                        </Link>
+                <Col className="dashboard">
+                    <br></br>
+                    <h3 style={{color:'#1d8177'}}>{test.test_name}</h3>
+                    <Container className="dash-cards" style={{width:'80%'}}>
+                        <div style={{margin:'20px'}}>
+                            <h4 className={percentage > 66 ? "test-result-green" : percentage > 33 ? "test-result-yellow" : "test-result-red"}>You scored {score}/{answer.length}!</h4>
+                            <br></br>
+                            {questionList}
+                            <hr></hr>
+                            <Link
+                                to={{
+                                pathname: `/betafeedback/${test._id}`,
+                                    state: {course_id: test.course_id, tester_id: test.tester_id}
+                                }}
+                                className="btn btn-large waves-effect waves-light accent-3">
+                                Provide Feedback
+                            </Link>
+                        </div>
                     </Container>
                 </Col>
             </div>

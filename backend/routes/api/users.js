@@ -70,7 +70,8 @@ router.post("/login", (req, res) => {
                 id: user.id,
                 name: user.name,
                 role: user.role,
-                ongoing_courses: user.ongoing_courses
+                ongoing_courses: user.ongoing_courses,
+                email: user.email
             };
     // Sign token
             jwt.sign(

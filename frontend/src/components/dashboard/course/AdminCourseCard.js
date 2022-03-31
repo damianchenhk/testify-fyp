@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 import axios from 'axios';
 
-const CourseCard = (props) => {
+const AdminCourseCard = (props) => {
     const  course  = props.course;
     const [student_count, setStudentCount] = useState('');
     const [test_count, setTestCount] = useState('');
@@ -48,10 +48,9 @@ const CourseCard = (props) => {
             <td style={{textAlign:'center'}}>{course.lesson_names.length}</td>
             <td style={{textAlign:'center'}}>{student_count}</td>
             <td style={{textAlign:'center'}}>{test_count}</td>
-            <td style={{textAlign:'center'}}>{registered ? <BsFillCheckCircleFill size={'20px'} color='#26a69a' title='Registered'/> : null}</td>
             <td style={{textAlign:'center'}}>
                 <Link to={{
-                    pathname: `/coursedetails/${course._id}`,
+                    pathname: `/admincourseview/${course._id}`,
                 }}
                     style={{width:'120px', fontSize:'12px'}}
                     className='btn waves-effect waves-light accent-3'
@@ -63,4 +62,4 @@ const CourseCard = (props) => {
     )
 };
 
-export default CourseCard;
+export default AdminCourseCard;
