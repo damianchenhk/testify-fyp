@@ -614,3 +614,60 @@ input[type=number]::-webkit-outer-spin-button {
 .report-view-test{
   margin: 20px;
 }
+
+.edit-score{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 
+    "created done bonus"
+    "created-detail done-detail bonus-detail"
+    "total total total"
+    "form form form"
+  ;
+}
+
+.edit-score-tests-created{
+  grid-area: created;
+}
+
+.edit-score-tests-created-detail{
+  grid-area: created-detail;
+}
+
+.edit-score-tests-done{
+  grid-area: done;
+}
+
+.edit-score-tests-done-detail{
+  grid-area: done-detail;
+}
+
+.edit-score-bonus{
+  grid-area: bonus;
+}
+
+.edit-score-bonus-detail{
+  grid-area: bonus-detail;
+}
+
+.edit-score-total{
+  grid-area: total;
+  padding-top: 20px;
+}
+
+.edit-score-form{
+  grid-area: form;
+}
+
+.score-cancel{
+  background-color: rgb(182, 0, 0);
+  margin-left: 20px;
+}
+
+.score-cancel:hover{
+  background-color: rgb(200, 0, 0);
+}
+
+.score-confirm{
+  margin-right: 20px;
+}

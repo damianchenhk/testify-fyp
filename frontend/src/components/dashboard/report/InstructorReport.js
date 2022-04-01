@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row , Col, Table, Container, Tabs, Tab, Form, Button } from "react-bootstrap";
+import { Row , Col, Table, Container, Tabs, Tab, Form, Button, FloatingLabel } from "react-bootstrap";
 import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill, BsFillCameraVideoFill, BsPenFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHandshake } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { RiFilePaper2Fill } from "react-icons/ri";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
@@ -46,6 +46,13 @@ const InstructorReport = ({ auth }) => {
         test: {},
         view: false
     });
+    const [selectedStudent, setSelectedStudent] = useState({
+        report: {},
+        view: false
+    });
+    const [editScore, setEditScore] = useState(false);
+    const [editScoreDetails, setEditScoreDetails] = useState(0);
+    const history = useHistory();
 
     useEffect(() => {
         axios
@@ -148,7 +155,7 @@ const InstructorReport = ({ auth }) => {
 
             }
             return (
-                <Table bordered responsive>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
                         <tr style={{borderTop:'none'}}>
                             <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
@@ -162,7 +169,7 @@ const InstructorReport = ({ auth }) => {
                     </thead>
                     <tbody>
                         {sortedReports.map(report => (
-                            <tr key={report.id}>
+                            <tr key={report.id} onClick={() => setSelectedStudent({report: report, view: true})}>
                                 <td style={{textAlign:'center'}}>{report.ranking}</td>
                                 <td>{report.student_name}</td>
                                 <td style={{textAlign:'center'}}>{report.tests_created.length}</td>
@@ -603,6 +610,73 @@ const InstructorReport = ({ auth }) => {
         }
     }
 
+    const viewStudent = () => {
+        if(selectedStudent.view){
+            return(
+                <>
+                    <h4>{selectedStudent.report.student_name}</h4>
+                    <Container className="edit-score">
+                        <h5 className="edit-score-tests-created"><strong><MdOutlinePostAdd style={{marginTop:'-7px'}} size={'50px'} title="No. Tests Created"/></strong></h5>
+                        <h5 className="edit-score-tests-created-detail">{selectedStudent.report.tests_created.length}</h5>
+                        <h5 className="edit-score-tests-done"><strong><BsFillPenFill size={'35px'} title="No. Tests Done"/></strong></h5>
+                        <h5 className="edit-score-tests-done-detail">{selectedStudent.report.tests_taken.length}</h5>
+                        <h5 className="edit-score-bonus"><strong><BsAwardFill size={'40px'} title="Bonus Points"/></strong></h5>
+                        <h5 className="edit-score-bonus-detail">{selectedStudent.report.bonusScore}</h5>
+                        <h5 className="edit-score-total"><strong>Participation Score: </strong>{selectedStudent.report.totalScore}</h5>
+                        {editScore ? 
+                            <>
+                                <Form className="edit-score-form" onSubmit={changeStudentScore}>
+                                    <hr></hr>
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label="New Score"
+                                        className="mb-3"
+                                        style={{
+                                            width:'90%',
+                                            margin:'auto'
+                                        }}
+                                    >
+                                        <Form.Control
+                                            type="number"
+                                            name="new_score"
+                                            placeholder="My Test Title"
+                                            style={{
+                                                marginBottom: '30px'
+                                            }}
+                                            onChange={e => setEditScoreDetails(e.target.value)}
+                                            value={editScoreDetails}
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                    <Button className="score-confirm btn waves-effect waves-light accent-3" type="submit">Confirm</Button>
+                                    <Button className="score-cancel btn waves-effect waves-light accent-3" onClick={() => setEditScore(false)}>Cancel</Button>
+                                </Form>
+                                <br></br>
+                            </> :
+                            <>
+                                <div className="edit-score-form">
+                                    <hr></hr>
+                                    <Button className="btn waves-effect waves-light accent-3 outline-btn" onClick={() => setEditScore(true)}>Edit Score</Button>
+                                </div>
+                            </>}
+                    </Container>
+                    <br></br>
+                </>
+            )
+        }
+    }
+
+    const changeStudentScore = e => {
+
+        const tempScore = selectedStudent.report.participation_score - (selectedStudent.report.totalScore - editScoreDetails)
+        axios
+            .put('/api/reports/'+selectedStudent.report._id, {participation_score: tempScore})
+            .then(res => {})
+            .catch(err => {
+                console.log("Error in update student score");
+            })
+    }
+
     return (
         <>
             <div className="web-page">
@@ -649,6 +723,7 @@ const InstructorReport = ({ auth }) => {
                         <Tabs defaultActiveKey="studentScores" id="uncontrolled-tab-example" className="mb-3">
                             <Tab eventKey="studentScores" title="Student Scores">
                                 {statsTable()}
+                                {viewStudent()}
                             </Tab>
                             <Tab eventKey="lessonBreakdown" title="Lesson Breakdown">
                                 <Row>
