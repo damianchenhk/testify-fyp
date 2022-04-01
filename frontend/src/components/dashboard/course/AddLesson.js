@@ -8,7 +8,16 @@ class AddLesson extends Component{
         super(props);
         this.state = {
           uploadPercentage: 0,
+          lesson_names: props.lesson_name || '',
+          lesson_descriptions: props.lesson_description || '',
+          lesson_weightage: props.lesson_weightage || '',
+          lesson_urls: props.lesson_url || ''
     };}
+
+    onTempChange = e => {
+        this.setState({[e.target.name]: e.target.value})
+        this.props.onChange(e.target.value, e.target.name)
+    }
 
     uploadFile = async e => {
         e.preventDefault();
@@ -37,7 +46,7 @@ class AddLesson extends Component{
                 }, 1000);
             })
             const imageUrl = url.split('?')[0]
-            this.props.onChange(imageUrl, "lesson_urls")
+            this.onTempChange({target:{value: imageUrl, name: "lesson_urls"}})
         })
         .catch((error) => console.log(error.response) )
 
@@ -64,7 +73,8 @@ render(){
                     style={{
                         marginBottom: '30px'
                     }}
-                    onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                    onChange={(event) => this.onTempChange(event)}
+                    value={this.state.lesson_names}
                     required
                 />
             </FloatingLabel>
@@ -84,7 +94,8 @@ render(){
                     height: '100px',
                     marginBottom: '30px'
                 }}
-                onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                onChange={(event) => this.onTempChange(event)}
+                value={this.state.lesson_descriptions}
                 required
                 />
             </FloatingLabel>
@@ -131,7 +142,8 @@ render(){
                     style={{
                         marginBottom: '30px'
                     }}
-                    onChange={(event) => this.props.onChange(event.target.value, event.target.name)}
+                    onChange={(event) => this.onTempChange(event)}
+                    value={this.state.lesson_weightage}
                     required
                 />
             </FloatingLabel>

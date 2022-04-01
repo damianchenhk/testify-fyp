@@ -37,7 +37,7 @@ const TestCard = (props) => {
                 <td>
                     <p style={{margin:'auto'}}>{test.test_description}</p>
                 </td>
-                <td>
+                <td style={{textAlign:'center'}}>
                     <Link to={{
                             pathname: `/coursedetails/${test.course_id}`,
                         }}

@@ -22,7 +22,7 @@ const StudentPendingTests = (props) => {
     return(
         <tr key={test._id} onClick={() => {history.push('/testdetails/'+test._id)}}>
             <td>{ test.test_name }</td>
-            <td>
+            <td style={{textAlign:'center'}}>
                 <Link to={{
                         pathname: `/coursedetails/${test.course_id}`,
                     }}

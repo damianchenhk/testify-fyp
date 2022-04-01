@@ -47,7 +47,7 @@ const ViewCourse = () => {
                     <Container className="view-course">
                         <br></br>
                         <div style={{marginBottom:'5px'}}>
-                            <Link to={{pathname: `/coursedetails/${course._id}`}}>{course.course_name}</Link> {">"} {course.lesson_names ? course.lesson_names[lessonIndex] : null}
+                            <Link to={{pathname: `/coursedetails/${course._id}`}} style={{color:'#26A69A'}}>{course.course_name}</Link> {">"} {course.lesson_names ? course.lesson_names[lessonIndex] : null}
                         </div>
                         <h3>{course.course_name}</h3>
                         <ReactPlayer
@@ -84,7 +84,7 @@ const ViewCourse = () => {
                         </div>
                         <hr></hr>
                         <div style={{textAlign:'center'}}>
-                            <Link to={{pathname: `/addtest/${id}`}} className="btn btn-large waves-effect waves-light hoverable accent-3" style={{marginBottom:'15px'}}>
+                            <Link to={{pathname: `/addtest/${id}`}} className="btn btn-large waves-effect waves-light accent-3" style={{marginBottom:'15px'}}>
                                 Create Test
                             </Link>
                         </div>

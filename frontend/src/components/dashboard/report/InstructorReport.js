@@ -5,10 +5,11 @@ import { Row , Col, Table, Container, Tabs, Tab, Form, Button } from "react-boot
 import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill, BsFillCameraVideoFill, BsPenFill } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHandshake } from "react-icons/fa";
+import { RiFilePaper2Fill } from "react-icons/ri";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
@@ -40,6 +41,10 @@ const InstructorReport = ({ auth }) => {
         mostPopularTests: [],
         mostEffectiveScore: 0,
         mostEffectiveTests: []
+    });
+    const [selectedTest, setSelectedTest] = useState({
+        test: {},
+        view: false
     });
 
     useEffect(() => {
@@ -94,6 +99,7 @@ const InstructorReport = ({ auth }) => {
             children.push(<td style={{textAlign:'center'}}>{i + 1}</td>)
             children.push(<td style={{textAlign:'center'}}>{course.lesson_names ? course.lesson_names[i] : null}</td>)
             children.push(<td>{course.lesson_descriptions ? course.lesson_descriptions[i] : null}</td>)
+            children.push(<td style={{textAlign:'center'}}>{course.lesson_weightage ? course.lesson_weightage[i] : null}</td>)
             table.push(<tr key={i}>{children}</tr>)
         }
         return table
@@ -137,14 +143,14 @@ const InstructorReport = ({ auth }) => {
             const totalPercentage = sortedReports[0].totalScore;
             for (let i = 0; i < sortedReports?.length; i++) {
 
-                sortedReports[i].percentageScore = (sortedReports[i].totalScore / totalPercentage * 100).toFixed(0);
+                sortedReports[i].percentageScore = ((sortedReports[i].totalScore / totalPercentage) * course.participation_weightage).toFixed(0);
                 sortedReports[i].ranking = i + 1;
 
             }
             return (
-                <Table bordered responsive style={{border:'1'}}>
+                <Table bordered responsive>
                     <thead>
-                        <tr>
+                        <tr style={{borderTop:'none'}}>
                             <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}><MdOutlinePostAdd size={'25px'} title="No. Tests Created"/></th>
@@ -163,7 +169,7 @@ const InstructorReport = ({ auth }) => {
                                 <td style={{textAlign:'center'}}>{report.tests_taken.length}</td>
                                 <td style={{textAlign:'center'}}>{report.bonusScore}</td>
                                 <td style={{textAlign:'center'}}>{report.totalScore}</td>
-                                <td style={{textAlign:'center'}}>{report.percentageScore + "%"}</td>
+                                <td style={{textAlign:'center'}}>{report.percentageScore > 0 ? report.percentageScore : 0}%</td>
                             </tr>
                         ))}
                     </tbody>
@@ -173,7 +179,7 @@ const InstructorReport = ({ auth }) => {
             return (
                 <Table bordered responsive>
                     <thead>
-                        <tr>
+                        <tr style={{borderTop:'none'}}>
                             <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Student Name</th>
                             <th style={{textAlign:'center', width:'10%'}}><MdOutlinePostAdd size={'25px'} title="No. Tests Created"/></th>
@@ -307,6 +313,7 @@ const InstructorReport = ({ auth }) => {
                     <option key={index} value={JSON.stringify({index, test_id: filteredTests._id})}>{filteredTests.test_name}</option>
                 ))
             )
+            setSelectedTest({test: {}, view: false});
         }
       };
       
@@ -364,6 +371,7 @@ const InstructorReport = ({ auth }) => {
             }
             setQuestionOptions(tempOptions)
         }
+        setSelectedTest({test: {}, view: false});
     }
 
     const selectedQuestionSet = (event) => {
@@ -380,7 +388,8 @@ const InstructorReport = ({ auth }) => {
             key: 0,
             indexValue: tempQuestionNum
         }
-        setSelectedQuestion(tempQuestionSelect)
+        setSelectedQuestion(tempQuestionSelect);
+        setSelectedTest({test: {}, view: false});
     }
 
     const testStatsTable = () => {
@@ -462,13 +471,24 @@ const InstructorReport = ({ auth }) => {
             }
 
             sortedTests.sort((a, b) => {
-                if (a[testSort] < b[testSort]) {
-                    return 1;
+                if(testSort === 'creator_name'){
+                    if (a[testSort] > b[testSort]) {
+                        return 1;
+                    }
+                    if (a[testSort] < b[testSort]) {
+                        return -1;
+                    }
+                        return 0;
+                }else{
+                    if (a[testSort] < b[testSort]) {
+                        return 1;
+                    }
+                    if (a[testSort] > b[testSort]) {
+                        return -1;
+                    }
+                        return 0;
                 }
-                if (a[testSort] > b[testSort]) {
-                    return -1;
-                }
-                    return 0;
+                
             });
 
             for (let i = 0; i < sortedTests?.length; i++) {
@@ -478,12 +498,12 @@ const InstructorReport = ({ auth }) => {
             }
 
             return (
-                <Table bordered responsive style={{border:'1'}}>
+                <Table bordered hover responsive className="clickable-table">
                     <thead>
-                        <tr>
+                        <tr style={{borderTop:'none'}}>
                             <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Test Name</th>
-                            <th style={{textAlign:'center'}}>Test Creator</th>
+                            <th style={{textAlign:'center'}}><button className="table-header-click" type="button" onClick={() => setTestSort('creator_name')}>Test Creator</button></th>
                             <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('students_completed')}><BsFillPersonFill size={'25px'} title="No. Students Completed"/></button></th>
                             <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_effectiveness')}>Effectiveness</button></th>
                             <th style={{textAlign:'center', width:'10%'}}><button className="table-header-click" type="button" onClick={() => setTestSort('test_difficulty')}>Difficulty</button></th>
@@ -492,7 +512,7 @@ const InstructorReport = ({ auth }) => {
                     </thead>
                     <tbody>
                         {sortedTests.map(test => (
-                            <tr key={test._id}>
+                            <tr key={test._id} onClick={() => setSelectedTest({test: test, view: true})}>
                                 <td style={{textAlign:'center'}}>{test.index}</td>
                                 <td>{test.test_name}</td>
                                 <td style={{textAlign:'center'}}>{test.creator_name}</td>
@@ -509,7 +529,7 @@ const InstructorReport = ({ auth }) => {
             return (
                 <Table bordered responsive>
                     <thead>
-                        <tr>
+                        <tr style={{borderTop:'none'}}>
                             <th style={{textAlign:'center', width:'5%'}}><BsHash size={'20px'} title="Rank"/></th>
                             <th style={{textAlign:'center'}}>Test Name</th>
                             <th style={{textAlign:'center'}}>Test Creator</th>
@@ -532,11 +552,11 @@ const InstructorReport = ({ auth }) => {
     const courseStats = () => {
         return(
             <>
-                <div className="course-stats">
+                <div className="course-report-stats">
                     <div className="course-checked">
-                        <h6 className="course-checked-color"><BsFillCameraVideoFill size={'30px'} title='No. of Lessons'/></h6>
+                        <h6 className="course-checked-color"><BsFillCameraVideoFill style={{marginTop:'5px'}} size={'30px'} title='No. of Lessons'/></h6>
                     </div>
-                    <h5 className="course-checked-color"><strong>{course.lesson_names?.length ? course.lesson_names?.length : 0}</strong></h5>
+                    <h5 className="course-checked-color" style={{marginTop:'1px'}}><strong>{course.lesson_names?.length ? course.lesson_names?.length : 0}</strong></h5>
                     <div className="course-attempt">
                         <h6 className="course-attempt-color"><BsFillPersonFill size={'30px'} title='No. of Students'/></h6>
                     </div>
@@ -545,9 +565,42 @@ const InstructorReport = ({ auth }) => {
                         <h6 className="course-effective-color"><BsPenFill size={'25px'} title='No. of Tests'/></h6>
                     </div>
                     <h5 className="course-effective-color"><strong>{tests?.length ? tests?.length : 0}</strong></h5>
+                    <div className="course-exam">
+                        <h6 className="course-exam-color"><RiFilePaper2Fill size={'25px'} title='Exam Weightage'/></h6>
+                    </div>
+                    <h5 className="course-exam-color"><strong>{course.lesson_names?.length ? course.exam_weightage : 0}%</strong></h5>
+                    <div className="course-part">
+                        <h6 className="course-part-color"><FaHandshake size={'30px'} title='Participation Weightage'/></h6>
+                    </div>
+                    <h5 className="course-part-color"><strong>{course.lesson_names?.length ? course.participation_weightage : 0}%</strong></h5>
                 </div>
             </>
         )
+    }
+
+    const viewTest = () => {
+        if(selectedTest.view){
+            let questionList;
+            questionList = selectedTest.test.questions.map((question, k) =>
+                <ViewTestQuestions
+                    question={question}
+                    options={selectedTest.test.options}
+                    answer={selectedTest.test.answers}
+                    answer_selected={selectedTest.test.answers}
+                    key={k}
+                    indexValue={k}
+                />
+            )
+            return(
+                <>
+                    <h3>{selectedTest.test.test_name}</h3>
+                    <h5 style={{marginBottom:'40px'}}><strong>Test Creator:</strong> {selectedTest.test.creator_name}</h5>
+                    <div className="report-view-test">
+                        {questionList}
+                    </div>
+                </>
+            )
+        }
     }
 
     return (
@@ -578,12 +631,16 @@ const InstructorReport = ({ auth }) => {
                                     <th style={{width:'10%', textAlign:'center'}}>No.</th>
                                     <th style={{textAlign:'center'}}>Lesson Name</th>
                                     <th style={{textAlign:'center'}}>Lesson Description</th>
+                                    <th style={{width:'10%', textAlign:'center'}}>Lesson Weightage</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {lessonTable()}
                             </tbody>
                         </Table>
+                        <Link to={{pathname: `/editcourse/${id}`}} className="btn btn-large waves-effect waves-light accent-3" style={{marginBottom:'15px'}}>
+                            Edit Course
+                        </Link>
                     </Container>
                     <br></br>
                     <Container className="dash-cards">
@@ -630,19 +687,23 @@ const InstructorReport = ({ auth }) => {
                                 {selectedQuestion !== null && 
                                     <Row style={{border: '1px solid rgb(222, 226, 230)', marginBottom: '10px', borderRadius:'10px'}}>
                                         <h5 style={{marginTop: '10px'}}>Question {selectedQuestion.indexValue + 1}:</h5>
-                                        <ViewTestQuestions
-                                            question={selectedQuestion.question}
-                                            options={selectedQuestion.options}
-                                            answer={selectedQuestion.answer}
-                                            answer_selected={selectedQuestion.answer_selected}
-                                            key={selectedQuestion.indexValue}
-                                            indexValue={0}
-                                        />
+                                        <div className="report-view-test" style={{margin:'0'}}>
+                                            <ViewTestQuestions
+                                                question={selectedQuestion.question}
+                                                options={selectedQuestion.options}
+                                                answer={selectedQuestion.answer}
+                                                answer_selected={selectedQuestion.answer_selected}
+                                                key={selectedQuestion.indexValue}
+                                                indexValue={0}
+                                            />
+                                        </div>
                                     </Row>
                                 }
                             </Tab>
                             <Tab eventKey="testBreakdown" title="Test Breakdown">
                                 {testStatsTable()}
+                                <br></br>
+                                {viewTest()}
                             </Tab>
                         </Tabs>
                     </Container>

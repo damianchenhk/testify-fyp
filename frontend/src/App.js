@@ -35,6 +35,7 @@ import PendingTests from "./components/dashboard/test/PendingTests";
 import AdminCourse from "./components/dashboard/course/AdminCourses";
 import AdminCourseView from "./components/dashboard/course/AdminCourseView";
 import Users from "./components/dashboard/admin/Users";
+import EditCourse from "./components/dashboard/course/EditCourse";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -78,6 +79,7 @@ class App extends Component {
                 <PrivateRoute exact path="/coursedetails/:id" component={CourseDetails} />
                 <PrivateRoute exact path="/viewcourse/:id" component={ViewCourse} />
                 <PrivateRoute exact path="/addcourse" component={AddCourse} />
+                <PrivateRoute exact path="/editcourse/:id" component={EditCourse} />
                 <PrivateRoute exact path="/addtest/:id" component={AddTest} />
                 <PrivateRoute exact path="/yourtests" component={YourTest} />
                 <PrivateRoute exact path="/pendingtests" component={PendingTests} />
