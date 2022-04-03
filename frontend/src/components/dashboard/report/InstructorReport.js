@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Row , Col, Table, Container, Tabs, Tab, Form, Button, FloatingLabel } from "react-bootstrap";
-import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill, BsFillCameraVideoFill, BsPenFill } from "react-icons/bs";
+import { BsCameraVideo, BsBarChartLine, BsAwardFill, BsHash, BsFillPenFill, BsFillPersonFill, BsFillCameraVideoFill, BsPenFill, BsPencil } from "react-icons/bs";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { FaHandshake } from "react-icons/fa";
 import { RiFilePaper2Fill } from "react-icons/ri";
@@ -656,7 +656,7 @@ const InstructorReport = ({ auth }) => {
                             <>
                                 <div className="edit-score-form">
                                     <hr></hr>
-                                    <Button className="btn waves-effect waves-light accent-3 outline-btn" onClick={() => setEditScore(true)}>Edit Score</Button>
+                                    <Button className="btn waves-effect waves-light accent-3 outline-btn" onClick={() => setEditScore(true)}><BsPencil style={{marginBottom:'5px'}}/> Edit Score</Button>
                                 </div>
                             </>}
                     </Container>
@@ -713,7 +713,7 @@ const InstructorReport = ({ auth }) => {
                             </tbody>
                         </Table>
                         <Link to={{pathname: `/editcourse/${id}`}} className="btn btn-large waves-effect waves-light accent-3" style={{marginBottom:'15px'}}>
-                            Edit Course
+                            <BsPencil style={{marginBottom:'5px'}}/> Edit Course
                         </Link>
                     </Container>
                     <br></br>

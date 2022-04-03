@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Row, Col, Container, Table } from "react-bootstrap";
-import { BsPersonBadgeFill, BsCalendarDateFill } from "react-icons/bs";
+import { Col, Container, Table } from "react-bootstrap";
+import { BsPersonBadgeFill, BsCalendarDateFill, BsFileEarmarkPerson } from "react-icons/bs";
 import axios from "axios";
 import UserCard from "./UserCard";
 
@@ -43,7 +43,7 @@ const Users = ({ auth }) => {
                 <Col className="dashboard">
                 <div className="hero">
                     <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/adminHero.png"/>
-                    <h4 className="hero-text">All Users</h4>
+                    <h4 className="hero-text"><BsFileEarmarkPerson style={{marginBottom:'10px'}}/> All Users</h4>
                 </div>
                 <Container className="dash-cards" style={{width:'90%'}}>
                     <Table responsive>

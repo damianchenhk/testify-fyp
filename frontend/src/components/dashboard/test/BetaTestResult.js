@@ -57,6 +57,7 @@ const BetaTestResult = (props) => {
                             </Link>
                         </div>
                     </Container>
+                    <br></br>
                 </Col>
             </div>
         </>

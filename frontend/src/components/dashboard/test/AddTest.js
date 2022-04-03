@@ -26,8 +26,6 @@ class AddTest extends Component {
             concept_tested: [],
             concept_weightage: [],
             tester_id: [],
-            students_completed_id: [],
-            student_scores: [],
             course: {},
             report: {},
             totalScore: '',
@@ -82,8 +80,6 @@ class AddTest extends Component {
             concept_tested: this.state.concept_tested,
             concept_weightage: this.state.concept_weightage,
             tester_id: this.state.tester_id,
-            students_completed_id: this.state.students_completed_id,
-            student_scores: this.state.student_scores,
         };
 
         if(!this.state.inputList.length){
@@ -118,8 +114,6 @@ class AddTest extends Component {
                             concept_tested: [],
                             concept_weightage: [],
                             tester_id: [],
-                            students_completed_id: [],
-                            student_scores: [],
                         })
                         this.props.history.push('/dashboard');
                     })

@@ -116,6 +116,7 @@ const BetaTest = ({auth}) => {
                   </Form>
                 </div>
               </Container>
+              <br></br>
           </Col>
       </div>
     </>

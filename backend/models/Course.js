@@ -35,9 +35,6 @@ const CourseSchema = new Schema({
     type: [Number],
     required: true
   },
-  student_list: {
-    type: [String]
-  },
   exam_weightage: {
     type: Number,
     required: true
@@ -45,9 +42,6 @@ const CourseSchema = new Schema({
   participation_weightage:{
       type: Number,
       required: true
-  },
-  student_scores:{
-      type: [Number]
   }
 });
 module.exports = Course = mongoose.model("courses", CourseSchema);

@@ -45,12 +45,6 @@ const TestSchema = new Schema({
   },
   tester_id: {
     type: [String]
-  },
-  students_completed_id:{
-      type: [String]
-  },
-  student_scores:{
-      type: [Number]
   }
 });
 module.exports = Test = mongoose.model("tests", TestSchema);

@@ -478,9 +478,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 .course-stats{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas: 
-    "check attempt effective"
+    "check attempt effective exam part"
   ;
 }
 

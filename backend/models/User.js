@@ -25,9 +25,6 @@ const UserSchema = new Schema({
   },
   ongoing_courses: {
     type: [String]
-  },
-  completed_courses: {
-    type: [String]
   }
 });
 module.exports = User = mongoose.model("users", UserSchema);

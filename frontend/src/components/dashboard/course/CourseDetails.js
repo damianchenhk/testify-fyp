@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
 import { Row, Col, Table, Container, Button, Form } from "react-bootstrap";
 import { BsCameraVideo, BsPen, BsPersonCheck, BsBarChartLine, BsFillCameraVideoFill, BsFillPersonFill, BsPenFill } from "react-icons/bs";
-import { RiPencilRuler2Line } from "react-icons/ri";
+import { RiPencilRuler2Line, RiFilePaper2Fill } from "react-icons/ri";
+import { FaHandshake } from "react-icons/fa";
 import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
 
@@ -175,7 +176,7 @@ const CourseDetails = ({ auth }) => {
 
     const myTestsTable = () => {
         let myTestTable = []
-        if(tests.length){
+        if(tests.length && tests.map(test => test.creator_id).includes(auth.user.id)){
             for(let testIndex = 0; testIndex < tests?.length; testIndex++){
                 if(tests[testIndex].creator_id === auth.user.id){
                     myTestTable.push(
@@ -315,6 +316,14 @@ const CourseDetails = ({ auth }) => {
                         <h6 className="course-effective-color"><BsPenFill size={'25px'} title='No. of Tests'/></h6>
                     </div>
                     <h5 className="course-effective-color"><strong>{tests?.length ? tests?.length : 0}</strong></h5>
+                    <div className="course-exam">
+                        <h6 className="course-exam-color"><RiFilePaper2Fill size={'25px'} title='Exam Weightage'/></h6>
+                    </div>
+                    <h5 className="course-exam-color"><strong>{course.lesson_names?.length ? course.exam_weightage : 0}%</strong></h5>
+                    <div className="course-part">
+                        <h6 className="course-part-color"><FaHandshake size={'30px'} title='Participation Weightage'/></h6>
+                    </div>
+                    <h5 className="course-part-color"><strong>{course.lesson_names?.length ? course.participation_weightage : 0}%</strong></h5>
                 </div>
             </>
         )

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Col, Container, Form, Button, Table, FloatingLabel } from "react-bootstrap";
+import { MdOutlineFeedback } from "react-icons/md";
 import axios from "axios";
 
 import Sidebar from "../../layout/Sidebar";
@@ -94,7 +95,7 @@ class Feedback extends Component {
                     <Col className="dashboard">
                         <div className="hero">
                             <img src="https://testify-fyp.s3.ap-southeast-1.amazonaws.com/feedbackHero.png"/>
-                            <h3 className="hero-text">Feedback</h3>
+                            <h3 className="hero-text"><MdOutlineFeedback style={{marginBottom:'5px'}}/> Feedback</h3>
                         </div>
                         <Container className="dash-cards" style={{width:'80%'}}>
                             <div style={{margin:'20px'}}>
@@ -131,6 +132,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -144,6 +146,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -157,6 +160,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -170,6 +174,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -183,6 +188,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -196,6 +202,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                             </tr>
@@ -233,6 +240,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -246,6 +254,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -259,6 +268,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -272,6 +282,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -285,6 +296,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                             </tr>
@@ -323,6 +335,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -336,6 +349,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -349,6 +363,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -362,6 +377,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -375,6 +391,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                                 <td>
@@ -388,6 +405,7 @@ class Feedback extends Component {
                                                             textAlign: 'center'
                                                         }}
                                                         onChange={this.onChange}
+                                                        required
                                                     />
                                                 </td>
                                             </tr>
@@ -419,6 +437,7 @@ class Feedback extends Component {
                                             }}
                                             value={this.state.detailed_feedback}
                                             onChange={this.onChange}
+                                            required
                                         />
                                     </FloatingLabel>
                                     <hr></hr>

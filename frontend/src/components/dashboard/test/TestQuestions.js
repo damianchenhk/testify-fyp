@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Row, Col, Form } from "react-bootstrap";
 
 const TestQuestion = (props) => {
     const question = props.question;
     const options = props.options;
     const indexValue = props.indexValue;
+    const [answered, setAnswered] = useState(false);
 
     return(
         <div className="card-container">
@@ -22,6 +23,7 @@ const TestQuestion = (props) => {
                                 paddingTop: '2.5px'
                             }}
                             onChange={(event) => props.onChange(event.target.value)}
+                            required
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>
@@ -38,6 +40,7 @@ const TestQuestion = (props) => {
                                 paddingTop: '2.5px'
                             }}
                             onChange={(event) => props.onChange(event.target.value)}
+                            required
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>
@@ -54,6 +57,7 @@ const TestQuestion = (props) => {
                                 paddingTop: '2.5px'
                             }}
                             onChange={(event) => props.onChange(event.target.value)}
+                            required
                         />
                     </Col>
                     <Col sm={11} style={{padding: '0'}}>
